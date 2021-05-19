@@ -41,7 +41,7 @@
                     </div>
                     <div class="block-content">
                         <p>
-                            This page showcases how easily you can add a plugin’s JS/CSS assets and init it using a Dashmix JS helper.
+                            This page showcases how easily you can add a plugin’s JS/CSS assets.
                         </p>
                     </div>
                 </div>

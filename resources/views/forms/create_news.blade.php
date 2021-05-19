@@ -15,11 +15,11 @@
                     <i class="bi bi-x-lg"></i>
                 </a>
             </div>
-            <div class="block-content block-content-full p-5">
+            <div class="">
                 <form action="{{route('news.store')}}" method="POST" enctype="multipart/form-data" class="shadow rounded p-5">
                     @csrf
                     <div class="form-row">
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-12">
                             <label class="form-label">Headline</label>
                             <textarea name="headline" rows="2" class="form-control" placeholder="Headline..."></textarea>
                             <small class="text-danger">
@@ -95,9 +95,9 @@
                             </select>
                         </div>
                     </div>
-                    <div class="d-flex justify-content-between">
-                        <button type="submit" class="btn btn-primary my-5 mx-3">Create News</button>
-                        <a href="{{route('news.index')}}" class="btn btn-secondary my-5 mx-3">Cancel</a>
+                    <div class="form-row">
+                        <button type="submit" class="btn btn-primary ml-1">Save</button>
+                        <a href="{{route('news.index')}}" class="btn btn-secondary ml-3">Cancel</a>
                     </div>
                 </form>
             </div>

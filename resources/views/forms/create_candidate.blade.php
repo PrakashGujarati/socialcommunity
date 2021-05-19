@@ -14,7 +14,7 @@
                     <i class="bi bi-x-lg"></i>
                 </a>
             </div>
-            <div class="block-content block-content-full p-5">
+            <div class="">
                 <form action="{{route('candidate.store')}}" method="POST" enctype="multipart/form-data" class="shadow rounded p-5">
                     @csrf
                     <div class="form-row">
@@ -181,9 +181,9 @@
                             </select>
                         </div>
                     </div>
-                    <div class="d-flex justify-content-between">
-                        <button type="submit" class="btn btn-primary my-5 mx-3">Create Candidate</button>
-                        <a href="{{route('candidate.index')}}" class="btn btn-secondary my-5 mx-3">Cancel</a>
+                    <div class="form-row">
+                        <button type="submit" class="btn btn-primary ml-1">Save</button>
+                        <a href="{{route('candidate.index')}}" class="btn btn-secondary ml-3">Cancel</a>
                     </div>
                 </form>
             </div>
