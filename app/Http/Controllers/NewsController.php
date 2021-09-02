@@ -43,9 +43,10 @@ class NewsController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate($this->rules);
+
         $thumbnailName = '';
         $news_image = '';
-        $request->validate($this->rules);
         if ($request->file('thumbnail')) {
             $thumbnailName = time().$request->file('thumbnail')->getClientOriginalName();
             $request->file('thumbnail')->storeAs('thumbnails', $thumbnailName, 'public');

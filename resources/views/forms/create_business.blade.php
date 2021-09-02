@@ -15,7 +15,7 @@
                     <i class="bi bi-x-lg"></i>
                 </a>
             </div>
-            <div class="">
+            <div class="block-content block-content-full p-5">
                 <form action="{{route('business.store')}}" method="POST" enctype="multipart/form-data" class="shadow rounded p-5">
                     @csrf
                     <div class="form-row">
@@ -57,10 +57,6 @@
                             <label class="form-label">Description</label>
                             <textarea name="description" class="form-control" placeholder="Business Description..."></textarea>
                         </div>
-                        <div class="form-group col-md-6">
-                            <label class="form-label">Address</label>
-                            <textarea class="form-control" rows="2" name="address" placeholder="Address..."></textarea>
-                        </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
@@ -70,6 +66,12 @@
                         <div class="form-group col-md-6">
                             <label class="form-label">Email</label><br>
                             <input name="email" type="email" class="form-control" placeholder="Email Address">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label class="form-label">Address</label>
+                            <textarea class="form-control" rows="2" name="address" placeholder="Address..."></textarea>
                         </div>
                     </div>
                     <div class="form-row">
@@ -107,9 +109,9 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-row">
-                        <button type="submit" class="btn btn-primary ml-1">Save</button>
-                        <a href="{{route('business.index')}}" class="btn btn-secondary ml-3">Cancel</a>
+                    <div class="d-flex justify-content-between">
+                        <button type="submit" class="btn btn-primary my-5 mx-3">Create Business</button>
+                        <a href="{{route('business.index')}}" class="btn btn-secondary my-5 mx-3">Cancel</a>
                     </div>
                 </form>
             </div>
