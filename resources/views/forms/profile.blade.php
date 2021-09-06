@@ -1,13 +1,18 @@
 @extends('layouts.backend')
 
 @section('css_before')
-    <style>
-
-    </style>
     <!-- Page JS Plugins CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 @endsection
-
+@section('css_after')
+<style>
+    .profile-image{
+        height:150px;
+        border:2px solid black;
+        border-radius:50%;
+    }
+</style>
+@endsection
 @section('content')
     <!-- Page Content -->
     <div class="content">
@@ -22,18 +27,19 @@
                 <form action="{{route('user.update',auth()->user())}}" method="POST" enctype="multipart/form-data" class="shadow rounded p-5">
                     @csrf
                     @method('PUT')
-                    <div class="form-group col-md-1 border border-dark">
-                        <img class="img-fluid" src="{{asset('images/'.auth()->user()->picture)}}" alt="">
+                    <div class="form-row d-flex justify-content-end">
+                        <div>
+                            <div class="custom-file">
+                                <input type="file" style="display:none" name="file" class="custom-file-input" id="imgupload">
+                                <img class="img-fluid profile-image"  @if(auth()->user()->picture) src="{{asset('images/'.auth()->user()->picture)}}" @else src="https://e7.pngegg.com/pngimages/456/700/png-clipart-computer-icons-avatar-user-profile-avatar-heroes-logo.png" @endif alt="">
+                                <button type="button" id="OpenImgUpload" class="btn btn-light"><i class="fas fa-edit"></i></button>
+                            </div>
+                        </div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-8">
                             <label class="form-label">Email address</label>
                             <input name="email" type="email" class="form-control" placeholder="Enter email" value="{{auth()->user()->email}}" readonly>
-                            <small class="text-danger">
-                                @error('email')
-                                    <span class="text-red-500 text-xs"><i class="fa fa-bug"></i> {{ $message }}</span>
-                                @enderror
-                            </small>images
                         </div>
                     </div>
                     <div class="form-row">
@@ -50,7 +56,7 @@
                             <label class="form-label">Middle Name</label>
                             <input name="middle_name" type="text" class="form-control" placeholder="Middle Name" value="{{auth()->user()->middle_name}}">
                         </div>
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-5">
                             <label class="form-label">Last Name</label>
                             <input name="last_name" type="text" class="form-control" placeholder="Last Name" value="{{auth()->user()->last_name}}">
                         </div>
@@ -116,20 +122,6 @@
                             <input type="number" name="pincode" class="form-control" placeholder="xxxxxx" value="{{auth()->user()->pincode}}">
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-8">
-                            <label class="form-label">Picture</label>
-                            <div class="custom-file">
-                                <input type="file" name="file" class="custom-file-input" id="pictureInput">
-                                <label class="custom-file-label" for="pictureInput">Choose file</label>
-                                <small class="text-danger">
-                                    @error('file')
-                                        <span class="text-red-500 text-xs"><i class="fa fa-bug"></i> {{ $message }}</span>
-                                    @enderror
-                                </small>
-                            </div>
-                        </div>
-                    </div>
                     <div class="d-flex justify-content-between">
                         <button type="submit" class="btn btn-primary my-5 mx-3">Update Profile</button>
                         <a href="{{route('user.index')}}" class="btn btn-secondary my-5 mx-3">Cancel</a>
@@ -139,4 +131,9 @@
         </div>
     </div>
     <!-- END Page Content -->
+@endsection
+@section('js_after')
+<script>
+    $('#OpenImgUpload').click(function(){ $('#imgupload').trigger('click'); });
+</script>
 @endsection
