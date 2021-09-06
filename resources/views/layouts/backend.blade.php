@@ -436,14 +436,12 @@
                                         <i class="far fa-fw fa-user mr-1"></i> Profile
                                     </a>
                                     <div role="separator" class="dropdown-divider"></div>
-                                    <a class="dropdown-item">
                                     <form id="logout-form" action="{{ url('logout') }}" method="POST">
                                         {{ csrf_field() }}
-                                        <button type="submit" class="btn btn-info">
+                                        <button type="submit" class="dropdown-item btn btn-info">
                                             <i class="far fa-fw fa-arrow-alt-circle-left mr-1"></i> Sign Out
                                         </button>
                                     </form>
-                                    </a>
                                 </div>
                             </div>
                         </div>
