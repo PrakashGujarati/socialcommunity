@@ -41,9 +41,9 @@ Route::group(['middleware'=>'auth'], function () {
     Route::resource('recruitment', RecruitmentController::class);
     Route::resource('late', LateController::class);
 
-});
+    Route::view('profile','forms.profile')->name('user.profile');
 
-// Route::get('logout',[LoginController::class,'logout'])->name('logout');
+});
 
 Auth::routes();
 
