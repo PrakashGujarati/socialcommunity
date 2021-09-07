@@ -17148,7 +17148,7 @@ hljs.registerLanguage('php', function(hljs) {
       ),
       {
         className: 'string',
-        begin: /<<<['"]?\w+['"]?$/, end: /^\w+;?$/,
+        begin: /['"]?\w+['"]?$/, end: /^\w+;?$/,
         contains: [
           hljs.BACKSLASH_ESCAPE,
           {
@@ -22830,7 +22830,7 @@ hljs.registerLanguage('zephir', function(hljs) {
       ),
       {
         className: 'string',
-        begin: '<<<[\'"]?\\w+[\'"]?$', end: '^\\w+;',
+        begin: '[\'"]?\\w+[\'"]?$', end: '^\\w+;',
         contains: [hljs.BACKSLASH_ESCAPE]
       },
       {

@@ -43,19 +43,30 @@ class BusinessController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate($this->rules);
+    //     $request->validate($this->rules);
 
-        $visitingcard = '';
-        $logo = '';
-
-        if ($request->file('logo')) {
-            $logo = time().$request->file('logo')->getClientOriginalName();
-            $request->file('logo')->storeAs('business_logos', $logo, 'public');
-        }
+         $visitingcard = '';
+    //     $this->validate($request, [
+    //         'filenames' => 'required',
+    //         'filenames.*' => 'mimes:doc,pdf,docx,zip'
+    // ]);
+    $data=[];
+    if($request->hasfile('filename'))
+    {
+       foreach($request->file('filename') as $image)
+       {
+           $name=$image->getClientOriginalName();
+           $image->move(public_path().'/image/',$name);
+           $data[]=$name;  
+       }
+    }
+       
+       
         if ($request->file('visitingcard')) {
             $visitingcard = time().$request->file('visitingcard')->getClientOriginalName();
             $request->file('visitingcard')->storeAs('visiting_cards', $visitingcard, 'public');
         }
+        $logo=implode(",", $data);
         Business::create([
             'user_id' => 1,
             'first_name' => $request->first_name,
