@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\BusinessController;
 use App\Http\Controllers\CandidateController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\LateController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\RecruitmentController;
@@ -40,6 +41,7 @@ Route::group(['middleware'=>'auth'], function () {
     Route::resource('news', NewsController::class);
     Route::resource('recruitment', RecruitmentController::class);
     Route::resource('late', LateController::class);
+    Route::resource('gallery',GalleryController::class);
 
     Route::view('profile','forms.profile')->name('user.profile');
 

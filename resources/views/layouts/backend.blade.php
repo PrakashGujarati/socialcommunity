@@ -381,6 +381,12 @@
                                     <span class="nav-main-link-name">Late</span>
                                 </a>
                             </li>
+                            <li class="nav-main-item">
+                                <a class="nav-main-link{{ request()->is('gallery'.'*') ? ' active' : '' }}" href="{{route('gallery.index')}}">
+                                    <i class="nav-main-link-icon fas fa-list"></i>
+                                    <span class="nav-main-link-name">Gallery</span>
+                                </a>
+                            </li>
                             <!-- <li class="nav-main-heading">More</li>
                             <li class="nav-main-item">
                                 <a class="nav-main-link" href="/">
