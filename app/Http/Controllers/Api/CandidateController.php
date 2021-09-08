@@ -11,11 +11,11 @@ use Illuminate\Support\Facades\Storage;
 
 class CandidateController extends Controller
 {
-    public $rules = [
-        'first_name' => 'required',
-        'contact' => 'required|numeric',
-        'picture' => 'mimes:jpeg,jpg,png'
+    
+   public $rules = [
+       'candidate_id' => 'required'
     ];
+    
     /**
      * Display a listing of the resource.
      *
@@ -23,7 +23,7 @@ class CandidateController extends Controller
      */
     public function list()
     {
-        $data = Candidate::all();
+        $data = Candidate::where('status','=','Active')->get();                
         return $this->responseOut($data);
     }
 
@@ -83,7 +83,7 @@ class CandidateController extends Controller
             'expectations' => $request->expectations,
             'remark' => $request->remark,
             'picture' => $pictureName,
-            'status' => 'Active',
+            'status' => 'Inactive',
             'done_by' => Auth::user()->id
         ]);
         return $this->responseOut($newCandidate);
@@ -97,6 +97,7 @@ class CandidateController extends Controller
      */
     public function show(Request $request)
     {
+        // dd('show');
         $data = Candidate::where(['id' => $request->candidate_id])->first();
         return $this->responseOut($data);
     }
@@ -122,6 +123,7 @@ class CandidateController extends Controller
      */
     public function update(Request $request)
     {
+    
         $candidate = Candidate::where(['id'=>$request->candidate_id,'user_id'=>Auth::user()->id])->first();
 
         if (!empty($candidate)) {
@@ -178,6 +180,34 @@ class CandidateController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function getListUpdate(Request $request)
+    {
+       
+        $candidate = Candidate::where(['id' => $request->candidate_id]);
+        
+            $validator = Validator::make($request->all(), $this->rules);
+            if ($validator->fails()) {
+                return ['status' => "false",'msg' => $validator->messages()];
+            }           
+           
+            $candidate->update([
+                'column_status' => $request->column_status                
+            ]);            
+        
+            return $this->responseOut($candidate);
+        
+    }
+
+    public function getCandidateList(Request $request)
+    {
+       
+        $candidateList = Candidate::find(['id' => $request->candidate_id])->first();
+        
+        $candidateList->makeHidden(explode(",", $candidateList->column_status));            
+        
+        return $this->responseOut($candidateList);
     }
 
     public function responseOut($data)
