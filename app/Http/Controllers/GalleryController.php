@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Gallery;
+use App\Models\GalleryImage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class GalleryController extends Controller
 {
@@ -18,7 +20,7 @@ class GalleryController extends Controller
      */
     public function index()
     {
-        return view('pages.gallery');
+        return view('pages.gallery',['galleries' => Gallery::all()]);
     }
 
     /**
@@ -39,7 +41,7 @@ class GalleryController extends Controller
      */
     public function store(Request $request)
     {
-        // $request->validate($this->rules);
+
         $newGallery = Gallery::create([
             'category' => $request->category,
             'event_title' => $request->event_title,
@@ -48,7 +50,20 @@ class GalleryController extends Controller
             'date' => $request->date,
             'status' => $request->status
         ]);
-        return $newGallery;
+    
+
+        foreach($request->file('gallery_media') as $file){
+            $name = time().'.'.$file->getClientOriginalName();
+            $file->storeAs('Gallery Media', $name, 'public');
+
+            $newGallery->galleryImages()->create([
+                'gallery_id ' => $newGallery->id,
+                'path' => $name
+            ]);
+        }
+
+        return redirect()->route('gallery.index');
+        
     }
 
 
@@ -94,6 +109,13 @@ class GalleryController extends Controller
      */
     public function destroy(Gallery $gallery)
     {
-        //
+        $gallery_id = $gallery->id;
+        $gallery_images = GalleryImage::where('gallery_id',$gallery_id)->get();
+        foreach($gallery_images as $image){
+            Storage::delete('public/Gallery Media/'.$image->path);
+            $image->delete();
+        }
+        $gallery->delete();
+        return redirect()->route('gallery.index');
     }
 }

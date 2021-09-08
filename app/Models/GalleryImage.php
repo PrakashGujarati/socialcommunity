@@ -14,6 +14,7 @@ class GalleryImage extends Model
         'path'
 
     ];
+
     public function getGalleryId()
     {
         return $this->belongsTo(Gallery::class,'gallery_id');

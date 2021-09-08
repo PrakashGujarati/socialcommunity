@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\galleryImages;
 
 class Gallery extends Model
 {
@@ -18,4 +19,9 @@ class Gallery extends Model
         'status'
 
     ];
+
+    public function galleryImages()
+    {
+        return $this->hasMany(GalleryImage::class, 'gallery_id');
+    }
 }

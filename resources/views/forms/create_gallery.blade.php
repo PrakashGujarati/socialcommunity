@@ -71,9 +71,11 @@
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label class="form-label">Gallery Media</label>
-                            <div class="custom-file">
-                                <input type="file" name="gallery_media" class="custom-file-input" id="imageInput">
-                                <label class="custom-file-label" for="imageInput">Choose Image</label>
+                            <div class="media">
+                                <!-- <div class="custom-file">
+                                    <input type="file" name="gallery_media[]" class="custom-file-input" id="imageInput" multiple>
+                                    <label class="custom-file-label" id="inputLabel" for="imageInput">Choose Image</label>
+                                </div> -->
                             </div>
                             <small class="text-danger">
                                 @error('gallery_media')
@@ -105,9 +107,9 @@
         $("#category").change(function(){
             var categoryType = $("#category").val();
             if(categoryType == "Images"){
-                $("#imageInput").attr('accept','image/*');
+                $(".media").html('<div class="custom-file"><input type="file" name="gallery_media[]" class="custom-file-input" id="imageInput" multiple><label class="custom-file-label" id="inputLabel" for="imageInput">Choose Image</label</div>');
             }else{
-                $("#imageInput").attr('accept','video/*');
+                $(".media").html('<input type="url" class="form-control" placeholder="Video URL" name="video_url" id="">');
             }
         });
     });
