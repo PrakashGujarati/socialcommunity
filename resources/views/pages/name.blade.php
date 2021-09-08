@@ -22,6 +22,18 @@ table {
 
     <!-- Page JS Code -->
     <script src="{{ asset('js/pages/tables_datatables.js') }}"></script>
+    <script>
+        // Init full DataTable
+    jQuery('.js-dataTable').dataTable({
+            pageLength: 5,
+            lengthMenu: [[5, 10, 20], [5, 10, 20]],
+            autoWidth: false,
+            "columns": [
+                {"width": "80%"},
+                {"width": "20%"}
+            ]  
+        });
+    </script>
 @endsection
 
 @section('content')
@@ -37,10 +49,11 @@ table {
             </div>
             
             <div class="block-content block-content-full">
-                <table class="table table-responsive table-bordered table-striped table-vcenter js-dataTable-full">
+                <table class="table table-bordered table-striped table-vcenter js-dataTable">
                     <thead>
                         <tr class="text-center">
                             <th scope="col">Full Name</th>
+                            <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -48,7 +61,7 @@ table {
                                  @foreach($nams as $names)
                                             <tr>
                                               <td>{{$names->name}}</td>
-                                              <td>
+                                              <td style="text-align:center">
                                                 <a href="{{route('name.edit',$names->id)}}" class="btn btn-primary btn-shadow font-weight-bold mr-2">Edit</a>
                                                 <a href="{{route('name.delete',$names->id)}}" data-route="{{route('name.delete',$names->id)}}" class="btn btn-danger btn-shadow font-weight-bold mr-2 deleteCustomer">Delete</a>
                                               </td> 
