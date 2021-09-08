@@ -32,6 +32,23 @@
                     </div>
                 </div>
                 <hr class="modal-devider">
+                <div class="p-1">
+                    @if($gallery->category == "Images")
+                    <label>Gallery Images : </label>
+                    <div class="d-flex row justify-content-center">
+                        @foreach($gallery->galleryImages as $image)
+                        <div class="border border-1 border-dark m-2 p-2 rounded col-md-3 d-flex justify-content-center"> 
+                            <img class="media-image" src="{{asset('gallery_image/'.$image->path)}}" alt="" srcset="">
+                        </div>
+                        @endforeach
+                    </div>
+                    @else
+                    <label>Gallery Videos : </label>
+                            <p>
+                                => <a href="{{$gallery->galleryImages[0]->path}}" target="_blank">{{$gallery->galleryImages[0]->path}}</a>
+                            </p>
+                    @endif
+                </div>
             </div>
         </div>
         <div class="modal-footer">

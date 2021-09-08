@@ -7,6 +7,17 @@
 
 @endsection
 
+@section('css_after')
+<style>
+    .media-image{
+        height:150px;
+        width:150px;
+        border:2px solid black;
+        border-radius:50%;
+    }
+</style>
+@endsection
+
 @section('js_after')
     <!-- Page JS Plugins -->
     <script src="{{ asset('js/plugins/datatables/jquery.dataTables.min.js') }}"></script>

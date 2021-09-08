@@ -20,7 +20,7 @@ class GalleryController extends Controller
      */
     public function index()
     {
-        return view('pages.gallery',['galleries' => Gallery::all()]);
+        return view('pages.gallery',['galleries' => Gallery::with('galleryImages')->get()]);
     }
 
     /**
@@ -42,6 +42,8 @@ class GalleryController extends Controller
     public function store(Request $request)
     {
 
+        $request->validate($this->rules);
+
         $newGallery = Gallery::create([
             'category' => $request->category,
             'event_title' => $request->event_title,
@@ -50,18 +52,22 @@ class GalleryController extends Controller
             'date' => $request->date,
             'status' => $request->status
         ]);
-    
 
-        foreach($request->file('gallery_media') as $file){
-            $name = time().'.'.$file->getClientOriginalName();
-            $file->storeAs('Gallery Media', $name, 'public');
-
-            $newGallery->galleryImages()->create([
-                'gallery_id ' => $newGallery->id,
-                'path' => $name
+        if ($request->video_url) {
+            $newGallery->galleryImages()->create([                
+                'path' => $request->video_url
             ]);
+        } else {
+            foreach($request->file('gallery_media') as $file){
+                $name = time().'.'.$file->getClientOriginalName();
+                $file->storeAs('Gallery Media', $name, 'public');
+    
+                $newGallery->galleryImages()->create([                    
+                    'path' => $name
+                ]);
+            }
         }
-
+        
         return redirect()->route('gallery.index');
         
     }
@@ -86,7 +92,7 @@ class GalleryController extends Controller
      */
     public function edit(Gallery $gallery)
     {
-        //
+        return view('forms.edit_gallery',['gallery' => $gallery]);
     }
 
     /**
@@ -98,7 +104,19 @@ class GalleryController extends Controller
      */
     public function update(Request $request, Gallery $gallery)
     {
-        //
+        $request->validate($this->rules);
+        
+        $gallery->update([
+            'category' => $request->category,
+            'event_title' => $request->event_title,
+            'location' => $request->location,
+            'description' => $request->description,
+            'date' => $request->date,
+            'status' => $request->status
+        ]);
+        
+        return redirect()->route('gallery.index');
+        
     }
 
     /**
