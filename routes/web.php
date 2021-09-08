@@ -9,8 +9,10 @@ use App\Http\Controllers\LateController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\RecruitmentController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\NameController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +44,16 @@ Route::group(['middleware'=>'auth'], function () {
     Route::resource('recruitment', RecruitmentController::class);
     Route::resource('late', LateController::class);
     Route::resource('gallery',GalleryController::class);
+
+    Route::get('name/index',[NameController::class,'index'])->name('name.index');
+    Route::get('name/create',[NameController::class,'create'])->name('name.create');
+    Route::post('name/store',[NameController::class,'store'])->name('name.store');
+    Route::get('name/edit/{id}',[NameController::class,'edit'])->name('name.edit');
+    Route::put('name/update/{id}',[NameController::class,'update'])->name('name.update');
+    Route::get('name/delete/{id}',[NameController::class,'delete'])->name('name.delete');
+    
+
+   
 
     Route::view('profile','forms.profile')->name('user.profile');
 
