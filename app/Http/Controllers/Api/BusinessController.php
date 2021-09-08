@@ -25,7 +25,7 @@ class BusinessController extends Controller
      */
     public function list()
     {
-        $data = Business::all();
+        $data = Business::where('status','=','Active')->get();
         return $this->responseOut($data);
     }
 
@@ -77,7 +77,7 @@ class BusinessController extends Controller
             'address' => $request->address,
             'logo' => $logo,
             'visitingcard' => $visitingcard,
-            'status' => 'Active',
+            'status' => 'Inactive',
             'done_by' => Auth::user()->id,
         ]);
         return $this->responseOut($newBusiness);

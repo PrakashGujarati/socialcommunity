@@ -45,6 +45,7 @@ class CreateCandidatesTable extends Migration
             $table->string('picture')->nullable();
             $table->string('status')->nullable();
             $table->tinyInteger('done_by');
+            $table->text('column_status')->nullable();
             $table->timestamps();
         });
     }

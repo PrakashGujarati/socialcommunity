@@ -23,7 +23,7 @@ class LateController extends Controller
      */
     public function list()
     {
-        $data = Late::all();
+        $data = Late::where('status','=','Active')->get();
         return $this->responseOut($data);
     }
 
@@ -49,6 +49,7 @@ class LateController extends Controller
         if ($validator->fails()) {
             return ['status' => "false",'msg' => $validator->messages()];
         }
+    
         if ($request->file('picture')) {
             $pictureName = time().$request->file('picture')->getClientOriginalName();
             $request->file('picture')->storeAs('late_pictures', $pictureName, 'public');
@@ -65,7 +66,7 @@ class LateController extends Controller
             'notifications' => $request->notifications,
             'contact' => $request->contact,
             'picture' => $pictureName,
-            'status' => 'Active',
+            'status' => 'Inactive',
             'done_by' => Auth::user()->id
         ]);
         return $this->responseOut($newLate);

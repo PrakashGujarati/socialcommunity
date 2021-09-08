@@ -28,6 +28,7 @@ class CreateUsersTable extends Migration
             $table->string('city')->nullable();
             $table->bigInteger('pincode')->nullable();
             $table->string('picture')->nullable();
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }
