@@ -31,7 +31,7 @@
                         </div>
                     </div>
                     <div class="d-flex justify-content-between">
-                        <button type="submit" class="btn btn-primary my-5 mx-3">Update Business</button>
+                        <button type="submit" class="btn btn-primary my-5 mx-3">Update Name</button>
                         <a href="{{route('name.index')}}" class="btn btn-secondary my-5 mx-3">Cancel</a>
                     </div>
                 </form>

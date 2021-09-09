@@ -24,7 +24,7 @@ class NewsController extends Controller
      */
     public function list()
     {
-        $data = News::all();
+        $data = News::where('status','=','Active')->get();
         return $this->responseOut($data);
     }
 
@@ -70,7 +70,7 @@ class NewsController extends Controller
             'news_image' => $news_image,
             'reported_datetime' => $request->reported_datetime,
             'reference' => $request->reference,
-            'status' => 'Active',
+            'status' => 'Inactive',
             'done_by' => Auth::user()->id
         ]);
         return $this->responseOut($newNews);

@@ -24,7 +24,7 @@ class RecruitmentController extends Controller
      */
     public function list()
     {
-        $data = Recruitment::all();
+        $data = Recruitment::where('status','=','Active')->get();
         return $this->responseOut($data);
     }
 
@@ -64,7 +64,7 @@ class RecruitmentController extends Controller
             'thumbnail' => $thumbnailName,
             'reference_url' => $request->reference_url,
             'reported_datetime' => $request->reported_datetime,
-            'status' => 'Active',
+            'status' => 'Inactive',
             'done_by' => Auth::user()->id
         ]);
         return $this->responseOut($newRecruitment);

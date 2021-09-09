@@ -12,7 +12,11 @@ class GalleryImage extends Model
     protected $fillable = [
         'gallery_id',
         'path'
+<<<<<<< HEAD
 
+=======
+               
+>>>>>>> 108a772e84dbc581f25c6e38faaed58d89eb67b5
     ];
     public function getGalleryId()
     {
