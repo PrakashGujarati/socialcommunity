@@ -41,7 +41,6 @@ class GalleryController extends Controller
      */
     public function store(Request $request)
     {
-
         $request->validate($this->rules);
 
         $newGallery = Gallery::create([
@@ -54,22 +53,24 @@ class GalleryController extends Controller
         ]);
 
         if ($request->video_url) {
-            $newGallery->galleryImages()->create([                
-                'path' => $request->video_url
-            ]);
+            foreach ($request->video_url as $link) {
+                $newGallery->galleryImages()->create([
+                    'path' => $link
+                ]);
+            }
         } else {
             foreach($request->file('gallery_media') as $file){
                 $name = time().'.'.$file->getClientOriginalName();
                 $file->storeAs('Gallery Media', $name, 'public');
-    
-                $newGallery->galleryImages()->create([                    
+
+                $newGallery->galleryImages()->create([
                     'path' => $name
                 ]);
             }
         }
-        
+
         return redirect()->route('gallery.index');
-        
+
     }
 
 
@@ -105,7 +106,7 @@ class GalleryController extends Controller
     public function update(Request $request, Gallery $gallery)
     {
         $request->validate($this->rules);
-        
+
         $gallery->update([
             'category' => $request->category,
             'event_title' => $request->event_title,
@@ -114,9 +115,34 @@ class GalleryController extends Controller
             'date' => $request->date,
             'status' => $request->status
         ]);
-        
+
+        if ($request->file('gallery_media')) {
+            $gallery_images = GalleryImage::where('gallery_id',$gallery->id)->get();
+            foreach($gallery_images as $image){
+                Storage::delete('public/Gallery Media/'.$image->path);
+            }
+            $gallery->galleryImages()->delete();
+            foreach($request->file('gallery_media') as $file){
+                $name = time().'.'.$file->getClientOriginalName();
+                $file->storeAs('Gallery Media', $name, 'public');
+
+                $gallery->galleryImages()->create([
+                    'path' => $name
+                ]);
+            }
+        }
+
+        if ($request->video_url) {
+            $gallery->galleryImages()->delete();
+            foreach ($request->video_url as $link) {
+                $gallery->galleryImages()->create([
+                    'path' => $link
+                ]);
+            }
+        }
+
         return redirect()->route('gallery.index');
-        
+
     }
 
     /**
@@ -135,5 +161,13 @@ class GalleryController extends Controller
         }
         $gallery->delete();
         return redirect()->route('gallery.index');
+    }
+
+    public function removeMediaImage(Request $request)
+    {
+        $mediaId = $request->id;
+        $gallery_image = GalleryImage::where('id',$mediaId)->first();
+        Storage::delete('public/Gallery Media/'.$gallery_image->path);
+        $gallery_image->delete();
     }
 }

@@ -45,6 +45,8 @@ Route::group(['middleware'=>'auth'], function () {
 
     Route::view('profile','forms.profile')->name('user.profile');
 
+    Route::get('removeMediaImage',[GalleryController::class,'removeMediaImage'])->name('removeMediaImage');
+
 });
 
 Auth::routes();

@@ -8,6 +8,7 @@
 @endsection
 
 @section('css_after')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/css/alertify.min.css ">
 <style>
     .media-image{
         height:150px;
@@ -20,6 +21,7 @@
 
 @section('js_after')
     <!-- Page JS Plugins -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/alertify.min.js"></script>
     <script src="{{ asset('js/plugins/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('js/plugins/datatables/dataTables.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('js/plugins/datatables/buttons/dataTables.buttons.min.js') }}"></script>
@@ -30,6 +32,23 @@
 
     <!-- Page JS Code -->
     <script src="{{ asset('js/pages/tables_datatables.js') }}"></script>
+    <script>
+        function removeMediaImage(id,divId){
+            var mediaId = id;
+            $.ajax({
+                data : {
+                    'id' : mediaId
+                },
+                url: "{{route('removeMediaImage')}}",
+                type: "GET",
+                success: function() {
+                    $("#"+divId).remove();
+                    alertify.set('notifier','position', 'top-center');
+                    alertify.error("Image Removed..!");
+                }
+            });
+        }
+    </script>
 @endsection
 
 @section('content')

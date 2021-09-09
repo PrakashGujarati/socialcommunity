@@ -37,16 +37,21 @@
                     <label>Gallery Images : </label>
                     <div class="d-flex row justify-content-center">
                         @foreach($gallery->galleryImages as $image)
-                        <div class="border border-1 border-dark m-2 p-2 rounded col-md-3 d-flex justify-content-center"> 
-                            <img class="media-image" src="{{asset('gallery_image/'.$image->path)}}" alt="" srcset="">
+                        <div class="border border-1 border-dark m-2 p-2 rounded col-md-3 d-flex justify-content-center" id="img-{{$image->id}}">
+                        <img class="media-image" src="{{asset('gallery_image/'.$image->path)}}" alt="" srcset="">
+                        <a href="#" onclick="removeMediaImage({{$image->id}},'img-{{$image->id}}')" class="text-danger h3">
+                            <span aria-hidden="true">&times;</span>
+                        </a>
                         </div>
                         @endforeach
                     </div>
                     @else
                     <label>Gallery Videos : </label>
-                            <p>
-                                => <a href="{{$gallery->galleryImages[0]->path}}" target="_blank">{{$gallery->galleryImages[0]->path}}</a>
-                            </p>
+                    @foreach($gallery->galleryImages as $image)
+                    <p class="text-info">
+                        <i class="fab fa-youtube"></i> <a href="{{$image->path}}" target="_blank">{{$image->path}}</a> <br>
+                    </p>
+                    @endforeach
                     @endif
                 </div>
             </div>
