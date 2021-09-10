@@ -64,18 +64,31 @@
                             <td>{{$late->done_by}}</td>
                             <td>
                                 <div class="d-flex">
-                                    <button type="button" class="btn btn-info mx-2" data-toggle="modal" data-target="#Modal-{{$late->id}}">
+                                    <button type="button" class="btn btn-default mx-2" data-toggle="modal" data-target="#Modal-{{$late->id}}">
                                         <i class="bi bi-aspect-ratio"></i>
                                     </button>
-                                    <a href="{{route('late.edit',$late)}}" class="btn btn-primary mx-2">
-                                        <i class="bi bi-pencil"></i>
+                                    <a href="{{route('late.edit',$late)}}" class="btn btn-default mx-2">
+                                        <i class="bi bi-pencil text-info"></i>
                                     </a>
                                     <form action="{{route('late.destroy',$late)}}" method="post">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-danger mx-2">
-                                            <i class="bi bi-archive-fill"></i>
+                                        <button type="submit" class="btn btn-default mx-2">
+                                            <i class="far fa-trash-alt text-danger"></i>
                                         </button>
+                                    </form>
+                                    <form action="{{route('changeStatus','late')}}" method="post">
+                                        @csrf
+                                        <input type="hidden" name="id" value="{{$late->id}}">
+                                        @if($late->status == "Active")
+                                        <button type="submit" class="btn btn-default mx-2" data-toggle="tooltip" title="click to Deactive">
+                                            <i class="fas fa-eye-slash text-danger"></i>
+                                        </button>
+                                        @else
+                                        <button type="submit" class="btn btn-default mx-2" data-toggle="tooltip" title="click to Active">
+                                            <i class="fas fa-eye text-success"></i>
+                                        </button>
+                                        @endif
                                     </form>
                                 </div>
                             </td>

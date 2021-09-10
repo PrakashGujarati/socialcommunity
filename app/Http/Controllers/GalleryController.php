@@ -132,6 +132,7 @@ class GalleryController extends Controller
             }
         }
 
+
         if ($request->video_url) {
             $gallery->galleryImages()->delete();
             foreach ($request->video_url as $link) {

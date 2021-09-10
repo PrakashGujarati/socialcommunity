@@ -140,4 +140,21 @@ class NewsController extends Controller
         $news->delete();
         return redirect()->route('news.index');
     }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\News  $news
+     * @return \Illuminate\Http\Response
+     */
+
+
+    public function changeStatus($id)
+    {
+        $news = News::where('id',$id)->first();
+        $news->update([
+            'status' => $news->status == "Active" ? "Deactive" : "Active"
+        ]);
+        return redirect()->route('news.index');
+    }
 }

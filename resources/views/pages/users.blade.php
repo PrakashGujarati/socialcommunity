@@ -65,14 +65,14 @@
                             </td>
                             <td>
                                 <div class="d-flex">
-                                    <a href="{{route('user.edit',$user)}}" class="btn btn-primary mx-1">
-                                        <i class="bi bi-pencil"></i>
+                                    <a href="{{route('user.edit',$user)}}" class="btn btn-default mx-1">
+                                        <i class="bi bi-pencil text-info"></i>
                                     </a>
                                     <form action="{{route('user.destroy',$user)}}" method="post">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-danger mx-1">
-                                            <i class="fas fa-user-minus"></i>
+                                        <button type="submit" class="btn btn-default mx-1">
+                                            <i class="fas fa-user-minus text-danger"></i>
                                         </button>
                                     </form>
                                 </div>

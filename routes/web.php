@@ -8,6 +8,7 @@ use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\LateController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\RecruitmentController;
+use App\Http\Controllers\statusController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -46,6 +47,7 @@ Route::group(['middleware'=>'auth'], function () {
     Route::view('profile','forms.profile')->name('user.profile');
 
     Route::get('removeMediaImage',[GalleryController::class,'removeMediaImage'])->name('removeMediaImage');
+    Route::post('changeStatus/{model}',[statusController::class,'statusUpdate'])->name('changeStatus');
 
 });
 
