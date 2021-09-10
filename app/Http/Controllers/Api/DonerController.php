@@ -5,13 +5,15 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Validator;
-use App\Models\Surname;
+use App\Models\Doner;
 
-class SurnameController extends Controller
+class DonerController extends Controller
 {
     public $rules = [
-        'name' => 'required'
-       
+        'title' => 'required',
+        'description' => 'required',
+        'type' => 'required'
+        
     ];
     /**
      * Display a listing of the resource.
@@ -21,7 +23,7 @@ class SurnameController extends Controller
     public function list()
     {
         //
-        $data = Surname::all();
+        $data = Doner::where('status','=','Active')->get();
         return $this->responseOut($data);
     }
 
@@ -33,7 +35,6 @@ class SurnameController extends Controller
     public function create()
     {
         //
-       
     }
 
     /**
@@ -46,15 +47,19 @@ class SurnameController extends Controller
     {
         //
         $validator = Validator::make($request->all(), $this->rules);
+
         if ($validator->fails()) {
             return ['status' => "false",'msg' => $validator->messages()];
         }
-       
         
-        $newSurname = Surname::create([
-            'name' => $request->name
+        $newDoner = Doner::create([           
+            'title' => $request->title,
+            'description' => $request->description,
+            'type' => $request->type,            
+            'status' => 'Inactive'
+            
         ]);
-        return $this->responseOut($newSurname);
+        return $this->responseOut($newDoner);
     }
 
     /**
@@ -63,9 +68,11 @@ class SurnameController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show( Request $request)
     {
         //
+        $data = Doner::where(['id' => $request->doner_id])->first();
+        return $this->responseOut($data);
     }
 
     /**
@@ -89,21 +96,22 @@ class SurnameController extends Controller
     public function update(Request $request)
     {
         //
-        $surname = Surname::where(['id'=>$request->surname_id])->first();
-
-        if (!empty($surname)) {
+        $doner = Doner::where(['id'=>$request->doner_id])->first();
+        if (!empty($doner)) {
             $validator = Validator::make($request->all(), $this->rules);
-
-        if ($validator->fails()) {
-            return ['status' => "false",'msg' => $validator->messages()];
-        }   
-        
-        $surname->update([
-            'name' => $request->name
-        ]);
-        return $this->responseOut($surname);
+            if ($validator->fails()) {
+                return ['status' => "false",'msg' => $validator->messages()];
+            }
+           
+            $doner->update([                      
+                'title' => $request->title,
+                'description' => $request->description,
+                'type' => $request->type
+            
+            ]);
+            return $this->responseOut($doner);
         } else {
-            return $this->responseOut($surname);
+            return $this->responseOut($doner);
         }
     }
 
@@ -128,8 +136,8 @@ class SurnameController extends Controller
             ]);
         } else {
             return response()->json([
-                'code' => 404,
-                'message' => 'No Surname Found !',
+                'code' => 400,
+                'message' => 'No Doner Found !',
                 'data' => []
             ]);
         }
