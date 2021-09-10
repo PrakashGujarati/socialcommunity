@@ -383,20 +383,32 @@
                             </li>
                             <li class="nav-main-item">
                                 <a class="nav-main-link{{ request()->is('gallery'.'*') ? ' active' : '' }}" href="{{route('gallery.index')}}">
-                                    <i class="nav-main-link-icon fas fa-list"></i>
+                                    <i class="nav-main-link-icon fas fa-image"></i>
                                     <span class="nav-main-link-name">Gallery</span>
                                 </a>
                             </li>
                             <li class="nav-main-item">
                                 <a class="nav-main-link{{ request()->is('name'.'*') ? ' active' : '' }}" href="{{route('name.index')}}">
-                                    <i class="nav-main-link-icon fas fa-list"></i>
+                                    <i class="nav-main-link-icon fab fa-unsplash"></i>
                                     <span class="nav-main-link-name">Name</span>
                                 </a>
                             </li>
                             <li class="nav-main-item">
                                 <a class="nav-main-link{{ request()->is('megazine'.'*') ? ' active' : '' }}" href="{{route('megazine.index')}}">
-                                    <i class="nav-main-link-icon fas fa-list"></i>
+                                    <i class="nav-main-link-icon fas fa-dice-five"></i>
                                     <span class="nav-main-link-name">Megazines</span>
+                                </a>
+                            </li>
+                            <li class="nav-main-item">
+                                <a class="nav-main-link{{ request()->is('contact'.'*') ? ' active' : '' }}" href="{{route('contact.index')}}">
+                                    <i class="nav-main-link-icon fas fa-id-card"></i>
+                                    <span class="nav-main-link-name">Contacts</span>
+                                </a>
+                            </li>
+                            <li class="nav-main-item">
+                                <a class="nav-main-link{{ request()->is('employment'.'*') ? ' active' : '' }}" href="{{route('employment.index')}}">
+                                    <i class="nav-main-link-icon fas fa-drafting-compass"></i>
+                                    <span class="nav-main-link-name">Employments</span>
                                 </a>
                             </li>
                             <!-- <li class="nav-main-heading">More</li>

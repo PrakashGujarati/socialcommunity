@@ -11,6 +11,8 @@ use App\Http\Controllers\RecruitmentController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\NameController;
 use App\Http\Controllers\MegazineController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\EmploymentController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -59,6 +61,15 @@ Route::group(['middleware'=>'auth'], function () {
     Route::get('megazine/edit/{id}',[MegazineController::class,'edit'])->name('megazine.edit');
     Route::put('megazine/update/{id}',[MegazineController::class,'update'])->name('megazine.update');
     Route::get('megazine/delete/{id}',[MegazineController::class,'delete'])->name('megazine.delete');
+
+    Route::get('contact/index',[ContactController::class,'index'])->name('contact.index');
+    Route::get('contact/create',[ContactController::class,'create'])->name('contact.create');
+    Route::post('contact/store',[ContactController::class,'store'])->name('contact.store');
+    Route::get('contact/edit/{id}',[ContactController::class,'edit'])->name('contact.edit');
+    Route::put('contact/update/{id}',[ContactController::class,'update'])->name('contact.update');
+    Route::get('contact/delete/{id}',[ContactController::class,'delete'])->name('contact.delete');
+
+    Route::resource('employment', EmploymentController::class);
     
 
    
