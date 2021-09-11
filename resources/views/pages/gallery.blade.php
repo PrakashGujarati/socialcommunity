@@ -33,7 +33,7 @@
     <!-- Page JS Code -->
     <script src="{{ asset('js/pages/tables_datatables.js') }}"></script>
     <script>
-        function removeMediaImage(id,divId){
+        function removeMedia(id,divId){
             var mediaId = id;
             $.ajax({
                 data : {
@@ -44,7 +44,7 @@
                 success: function() {
                     $("#"+divId).remove();
                     alertify.set('notifier','position', 'top-center');
-                    alertify.error("Image Removed..!");
+                    alertify.error("Media Removed..!");
                 }
             });
         }

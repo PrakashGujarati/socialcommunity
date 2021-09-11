@@ -39,7 +39,7 @@
                         @foreach($gallery->galleryImages as $image)
                         <div class="border border-1 border-dark m-2 p-2 rounded col-md-3 d-flex justify-content-center" id="img-{{$image->id}}">
                         <img class="media-image" src="{{asset('gallery_image/'.$image->path)}}" alt="" srcset="">
-                        <a href="#" onclick="removeMediaImage({{$image->id}},'img-{{$image->id}}')" class="text-danger h3">
+                        <a href="#" onclick="removeMedia({{$image->id}},'img-{{$image->id}}')" class="text-danger h3">
                             <span aria-hidden="true">&times;</span>
                         </a>
                         </div>
@@ -48,8 +48,12 @@
                     @else
                     <label>Gallery Videos : </label>
                     @foreach($gallery->galleryImages as $image)
-                    <p class="text-info">
-                        <i class="fab fa-youtube"></i> <a href="{{$image->path}}" target="_blank">{{$image->path}}</a> <br>
+                    <p class="text-info" id="img-{{$image->id}}">
+                        => <a href="{{$image->path}}" target="_blank">{{$image->path}}</a>
+                        <a href="#" onclick="removeMedia({{$image->id}},'img-{{$image->id}}')" class="text-danger h3">
+                            <i class="bi bi-x text-danger"></i>
+                        </a>
+                        <br>
                     </p>
                     @endforeach
                     @endif
