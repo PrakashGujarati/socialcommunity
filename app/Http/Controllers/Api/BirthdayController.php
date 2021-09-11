@@ -5,13 +5,17 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Validator;
-use App\Models\Surname;
+use App\Models\Birthday;
 
-class SurnameController extends Controller
+
+class BirthdayController extends Controller
 {
     public $rules = [
-        'name' => 'required'
-       
+        'name' => 'required',
+        'birthdate' => 'required',
+        'time' => 'required',
+        'place' => 'required',
+        'wishes' => 'required'
     ];
     /**
      * Display a listing of the resource.
@@ -21,7 +25,7 @@ class SurnameController extends Controller
     public function list()
     {
         //
-        $data = Surname::all();
+        $data = Birthday::where('status','=','Active')->get();
         return $this->responseOut($data);
     }
 
@@ -33,7 +37,6 @@ class SurnameController extends Controller
     public function create()
     {
         //
-       
     }
 
     /**
@@ -46,15 +49,21 @@ class SurnameController extends Controller
     {
         //
         $validator = Validator::make($request->all(), $this->rules);
+
         if ($validator->fails()) {
             return ['status' => "false",'msg' => $validator->messages()];
         }
-       
         
-        $newSurname = Surname::create([
-            'name' => $request->name
+        $newBirthday = Birthday::create([           
+            'name' => $request->name,
+            'birthdate' => $request->birthdate,
+            'time' => $request->time,
+            'place' => $request->place,
+            'wishes' => $request->wishes,
+            'status' => 'Inactive'
+            
         ]);
-        return $this->responseOut($newSurname);
+        return $this->responseOut($newBirthday);
     }
 
     /**
@@ -63,9 +72,11 @@ class SurnameController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request)
     {
         //
+        $data = Birthday::where(['id' => $request->birthday_id])->first();
+        return $this->responseOut($data);
     }
 
     /**
@@ -89,21 +100,24 @@ class SurnameController extends Controller
     public function update(Request $request)
     {
         //
-        $surname = Surname::where(['id'=>$request->surname_id])->first();
-
-        if (!empty($surname)) {
+        $birthdays = Birthday::where(['id'=>$request->birthday_id])->first();
+        if (!empty($birthdays)) {
             $validator = Validator::make($request->all(), $this->rules);
-
-        if ($validator->fails()) {
-            return ['status' => "false",'msg' => $validator->messages()];
-        }   
-        
-        $surname->update([
-            'name' => $request->name
-        ]);
-        return $this->responseOut($surname);
+            if ($validator->fails()) {
+                return ['status' => "false",'msg' => $validator->messages()];
+            }
+           
+            $birthdays->update([
+                'name' => $request->name,
+                'birthdate' => $request->birthdate,
+                'time' => $request->time,
+                'place' => $request->place,
+                'wishes' => $request->wishes
+            
+            ]);
+            return $this->responseOut($birthdays);
         } else {
-            return $this->responseOut($surname);
+            return $this->responseOut($birthdays);
         }
     }
 
@@ -128,8 +142,8 @@ class SurnameController extends Controller
             ]);
         } else {
             return response()->json([
-                'code' => 404,
-                'message' => 'No Surname Found !',
+                'code' => 400,
+                'message' => 'No Birthday Found !',
                 'data' => []
             ]);
         }

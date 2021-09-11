@@ -5,16 +5,17 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Validator;
-use App\Models\Contact;
+use App\Models\Education;
 
-class ContactController extends Controller
+class EducationController extends Controller
 {
     public $rules = [
         'name' => 'required',
-        'designation' => 'required',
-        'mobile' => 'required',
-        'email' => 'required|email',
-        'picture' => 'image|mimes:jpg,png,jpeg'
+        'qualification' => 'required',
+        'picture' => 'mimes:jpeg,jpg,png',
+        'note' => 'required',
+        'gender' => 'required'
+        
     ];
     /**
      * Display a listing of the resource.
@@ -24,7 +25,7 @@ class ContactController extends Controller
     public function list()
     {
         //
-        $data = Contact::where('status','=','Active')->get();
+        $data = Education::where('status','=','Active')->get();
         return $this->responseOut($data);
     }
 
@@ -36,7 +37,6 @@ class ContactController extends Controller
     public function create()
     {
         //
-        
     }
 
     /**
@@ -57,22 +57,21 @@ class ContactController extends Controller
             $file = $request->file('picture');
             $extension = $file->getClientOriginalExtension();
             $pictureName = time().'.'.$extension;
-            $path = public_path().'/contact_picture';
+            $path = public_path().'/education_picture';
             $uplaod = $file->move($path,$pictureName);   
         }    
 
-       
-
-        $newContact = Contact::create([
+        
+        $newEducation = Education::create([
             'name' => $request->name,
-            'designation' => $request->designation,
-            'mobile' => $request->mobile,
-            'email' => $request->email,
-            'picture' => $pictureName,            
+            'qualification' => $request->qualification,            
+            'picture' => $pictureName,
+            'note' => $request->note,
+            'gender' => $request->gender,
             'status' => 'Inactive'
             
         ]);
-        return $this->responseOut($newContact);
+        return $this->responseOut($newEducation);
     }
 
     /**
@@ -84,7 +83,7 @@ class ContactController extends Controller
     public function show(Request $request)
     {
         //
-        $data = Contact::where(['id' => $request->contact_id])->first();
+        $data = Education::where(['id' => $request->education_id])->first();
         return $this->responseOut($data);
     }
 
@@ -109,37 +108,30 @@ class ContactController extends Controller
     public function update(Request $request)
     {
         //
-        $contact = Contact::where(['id'=>$request->contact_id])->first();
-
-        if (!empty($contact)) {
+        $education = Education::where(['id'=>$request->education_id])->first();
+        if (!empty($education)) {
             $validator = Validator::make($request->all(), $this->rules);
-
-        if ($validator->fails()) {
-            return ['status' => "false",'msg' => $validator->messages()];
-        }
-       
-        if ($request->hasFile('picture')){
-            $file = $request->file('picture');
-            $extension = $file->getClientOriginalExtension();
-            $pictureName = time().'.'.$extension;
-            $path = public_path().'/contact_picture';
-            $uplaod = $file->move($path,$pictureName);   
-        }    
-
-       
-
-        $contact->update([
-            'name' => $request->name,
-            'designation' => $request->designation,
-            'mobile' => $request->mobile,
-            'email' => $request->email,
-            'picture' => $pictureName           
+            if ($validator->fails()) {
+                return ['status' => "false",'msg' => $validator->messages()];
+            }
+            if ($request->hasFile('picture')){
+                $file = $request->file('picture');
+                $extension = $file->getClientOriginalExtension();
+                $pictureName = time().'.'.$extension;
+                $path = public_path().'/education_picture';
+                $uplaod = $file->move($path,$pictureName);   
+            }  
            
-            
-        ]);
-        return $this->responseOut($contact);
+            $education->update([
+                'name' => $request->name,
+                'qualification' => $request->qualification,            
+                'picture' => $pictureName,
+                'note' => $request->note,
+                'gender' => $request->gender
+            ]);
+            return $this->responseOut($education);
         } else {
-            return $this->responseOut($contact);
+            return $this->responseOut($education);
         }
     }
 
@@ -164,8 +156,8 @@ class ContactController extends Controller
             ]);
         } else {
             return response()->json([
-                'code' => 404,
-                'message' => 'No Contact Found !',
+                'code' => 400,
+                'message' => 'No Education Found !',
                 'data' => []
             ]);
         }

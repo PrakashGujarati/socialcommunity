@@ -5,17 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class GalleryImage extends Model
+class Anniversary extends Model
 {
     use HasFactory;
-
+    protected $table = 'anniversarys';
     protected $fillable = [
-        'gallery_id',
-        'path'
-               
+        'name',
+        'marriagedate',
+        'time', 
+        'place', 
+        'wishes', 
+        'status'
     ];
-    public function gallery()
-    {
-        return $this->belongsTo(Gallery::class);
-    }
 }
