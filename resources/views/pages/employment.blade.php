@@ -37,7 +37,7 @@
         <div class="block block-rounded">
             <div class="block-header block-header-default">
                 <h3 class="block-title">Dynamic Table <small>Persons</small></h3>
-                <a href="" class="btn btn-outline-primary m-2">
+                <a href="{{route('employment.create')}}" class="btn btn-outline-primary m-2">
                     <i class="bi bi-plus-lg"></i> Create Employment
                 </a>
             </div>
@@ -53,11 +53,52 @@
                             <th scope="col">News_image</th>
                             <th scope="col">Reported_datetime</th>
                             <th scope="col">Reference</th>
-                            <th scope="col">status</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">done_by</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
+                    @foreach ($employments as $employment)
+                        <tr class="text-center">
+                            <td>{{$employment->headline}}</td>
+                            <td>{{$employment->title}}</td>
+                            <td>{{$employment->category}}</td>
+                            <td>{{$employment->detail_report}}</td>
+                            <td>
+                                @if($employment->thumbnail)
+                                    <img class="border rounded" src="{{asset('image/'.$employment->thumbnail)}}" height="60">
+                                @else
+                                    <img class="border rounded" src="https://donatepoints.aircanada.com/img/no_image_available.jpg" height="60">
+                                @endif
+                            </td>
+                            <td>
+                                @if($employment->news_image)
+                                    <img class="border rounded" src="{{asset('news_images/'.$employment->news_image)}}" height="60">
+                                @else
+                                    <img class="border rounded" src="https://donatepoints.aircanada.com/img/no_image_available.jpg" height="60">
+                                @endif
+                            </td>
+                            <td>{{$employment->reported_datetime}}</td>
+                            <td>{{$employment->reference}}</td>
+                            <td>{{$employment->status}}</td>
+                            <td>{{$employment->done_by}}</td>
+                            <td>
+                            <div class="d-flex">
+                            <a href="{{route('employment.edit',$employment)}}" class="btn btn-primary mx-2">
+                                        <i class="bi bi-pencil"></i>
+                            </a>
+                            <form action="{{route('employment.destroy',$employment)}}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger mx-2">
+                                            <i class="bi bi-archive-fill"></i>
+                                        </button>
+                                    </form>
+                            </td>  
+                            <div>     
+                        </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
