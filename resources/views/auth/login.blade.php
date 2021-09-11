@@ -8,6 +8,8 @@
                 padding: 0;
                 background: rgb(1,0,8);
                 background: linear-gradient(90deg, rgba(1,0,8,1) 0%, rgba(9,9,121,1) 0%, rgba(0,212,255,1) 100%);
+                background: rgb(1,0,8);
+                background: linear-gradient(90deg, rgba(1,0,8,1) 0%, rgba(181,199,203,1) 63%, rgba(182,200,204,1) 100%, rgba(237,238,235,1) 100%);
                 height: 100vh;
             }
             #login .container #login-row #login-column #login-box {
@@ -33,9 +35,9 @@
                         <div id="login-box" class="col-md-12">
                             <form id="login-form" class="form" action="{{ route('login') }}" method="post">
                                 @csrf
-                                <h3 class="text-center text-info">Login</h3>
+                                <h3 class="text-center text-dark">Login</h3>
                                 <div class="form-group">
-                                    <label for="email" class="text-info">Email:</label><br>
+                                    <label for="email" class="text-dark">Email:</label><br>
                                     <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
                                     @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -44,7 +46,7 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label for="password" class="text-info">Password:</label><br>
+                                    <label for="password" class="text-dark">Password:</label><br>
                                     <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
                                     @error('password')
                                         <span class="invalid-feedback" role="alert">
@@ -53,11 +55,11 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label for="remember-me" class="text-info"><span>Remember me</span> <span><input id="remember-me" name="remember-me" type="checkbox"></span></label><br>
-                                    <input type="submit" name="submit" class="btn btn-info btn-md" value="submit">
+                                    <label for="remember-me" class="text-dark"><span>Remember me</span> <span><input id="remember-me" name="remember-me" type="checkbox"></span></label><br>
+                                    <input type="submit" name="submit" class="btn btn-block btn-outline-dark" value="Sign In">
                                 </div>
                                 <div id="register-link" class="text-right">
-                                    <a href="#" class="text-info">Register here</a>
+                                    <a href="#" class="text-dark">Register here</a>
                                 </div>
                             </form>
                         </div>
