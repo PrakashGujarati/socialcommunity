@@ -114,7 +114,7 @@ class UserController extends Controller
 
         $user->update([
             'role_id' => $request->role_id,
-            'fist_name' => $request->first_name,
+            'first_name' => $request->first_name,
             'middle_name' => $request->middle_name,
             'last_name' => $request->last_name,
             'email' => $request->email,
