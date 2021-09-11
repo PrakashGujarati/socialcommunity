@@ -1,0 +1,29 @@
+<?php
+
+namespace App\Http\Controllers\Api;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Validator;
+use App\Models\Megazine;
+
+
+class MegazineController extends Controller
+{
+    public $rules = [
+        'title' => 'required',
+        'category' => 'required',
+        
+
+    ];
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function list()
+    {
+        //
+        $data = Megazine::where('status','=','Active')->get();                
+        return $this->responseOut($data);
+    }

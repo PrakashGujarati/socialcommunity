@@ -381,19 +381,13 @@
                                     <span class="nav-main-link-name">Late</span>
                                 </a>
                             </li>
+                            <!-- <li class="nav-main-heading">More</li> -->
                             <li class="nav-main-item">
-                                <a class="nav-main-link{{ request()->is('gallery'.'*') ? ' active' : '' }}" href="{{route('gallery.index')}}">
-                                    <i class="nav-main-link-icon fas fa-list"></i>
-                                    <span class="nav-main-link-name">Gallery</span>
+                                <a class="nav-main-link" href="{{route('notification.index')}}">
+                                    <i class="nav-main-link-icon fa fa-globe"></i>
+                                    <span class="nav-main-link-name">Notification</span>
                                 </a>
                             </li>
-                            <!-- <li class="nav-main-heading">More</li>
-                            <li class="nav-main-item">
-                                <a class="nav-main-link" href="/">
-                                    <i class="nav-main-link-icon fa fa-globe"></i>
-                                    <span class="nav-main-link-name">Landing</span>
-                                </a>
-                            </li> -->
                         </ul>
                     </div>
                     <!-- END Side Navigation -->

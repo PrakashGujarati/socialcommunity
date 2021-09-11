@@ -25,7 +25,7 @@ class EmployeeController extends Controller
      */
     public function list()
     {
-        $data = Employee::all();
+        $data = Employee::where('status','=','Active')->get();
         return $this->responseOut($data);
     }
 
@@ -69,7 +69,7 @@ class EmployeeController extends Controller
             'email' => $request->email,
             'address' => $request->address,
             'logo' => $logo,
-            'status' => 'Active',
+            'status' => 'Inactive',
             'done_by' => Auth::user()->id
         ]);
         return $this->responseOut($newEmployee);
