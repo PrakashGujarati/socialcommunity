@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AnniversaryController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\BirthdayController;
 use App\Http\Controllers\BusinessController;
@@ -47,6 +48,7 @@ Route::group(['middleware'=>'auth'], function () {
     Route::resource('late', LateController::class);
     Route::resource('gallery',GalleryController::class);
     Route::resource('birthday',BirthdayController::class);
+    Route::resource('anniversary',AnniversaryController::class);
 
     Route::view('/notification', 'notification.create_notification');
     Route::get('/notification', [NotificationsController::class,'index'])->name('notification.index');

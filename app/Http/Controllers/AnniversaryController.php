@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Birthday;
+use App\Models\Anniversary;
 use Illuminate\Http\Request;
 
-class BirthdayController extends Controller
+class AnniversaryController extends Controller
 {
     public $rules = [
         'name' => 'required',
-        'birth_date' => 'required',
+        'marriage_date' => 'required',
     ];
     /**
      * Display a listing of the resource.
@@ -18,7 +18,7 @@ class BirthdayController extends Controller
      */
     public function index()
     {
-        return view('pages.birthdays',['birthdays'=>Birthday::all()]);
+        return view('pages.anniversaries',['anniversaries' => Anniversary::all()]);
     }
 
     /**
@@ -28,7 +28,7 @@ class BirthdayController extends Controller
      */
     public function create()
     {
-        return view('forms.create_birthday');
+        return view('forms.create_anniversary');
     }
 
     /**
@@ -41,26 +41,25 @@ class BirthdayController extends Controller
     {
         $request->validate($this->rules);
 
-        Birthday::create([
+        Anniversary::create([
             'name' => $request->name,
-            'birthdate' => $request->birth_date,
+            'marriagedate' => $request->marriage_date,
             'time' => $request->time,
             'place' => $request->place,
             'wishes' => $request->wishes,
             'status' => $request->status
         ]);
 
-        return redirect()->route('birthday.index');
+        return redirect()->route('anniversary.index');
     }
-
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Birthday  $birthday
+     * @param  \App\Models\Anniversary  $anniversary
      * @return \Illuminate\Http\Response
      */
-    public function show(Birthday $birthday)
+    public function show(Anniversary $anniversary)
     {
         //
     }
@@ -68,46 +67,46 @@ class BirthdayController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Birthday  $birthday
+     * @param  \App\Models\Anniversary  $anniversary
      * @return \Illuminate\Http\Response
      */
-    public function edit(Birthday $birthday)
+    public function edit(Anniversary $anniversary)
     {
-        return view('forms.edit_birthday',['birthday' => $birthday]);
+        return view('forms.edit_anniversary',['anniversary' => $anniversary]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Birthday  $birthday
+     * @param  \App\Models\Anniversary  $anniversary
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Birthday $birthday)
+    public function update(Request $request, Anniversary $anniversary)
     {
         $request->validate($this->rules);
 
-        $birthday->update([
+        $anniversary->update([
             'name' => $request->name,
-            'birthdate' => $request->birth_date,
+            'marriagedate' => $request->marriage_date,
             'time' => $request->time,
             'place' => $request->place,
             'wishes' => $request->wishes,
             'status' => $request->status
         ]);
 
-        return redirect()->route('birthday.index');
+        return redirect()->route('anniversary.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Birthday  $birthday
+     * @param  \App\Models\Anniversary  $anniversary
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Birthday $birthday)
+    public function destroy(Anniversary $anniversary)
     {
-        $birthday->delete();
-        return redirect()->route('birthday.index');
+        $anniversary->delete();
+        return redirect()->route('anniversary.index');
     }
 }
