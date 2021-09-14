@@ -411,6 +411,18 @@
                                     <span class="nav-main-link-name">Employments</span>
                                 </a>
                             </li>
+                            <li class="nav-main-item">
+                                <a class="nav-main-link{{ request()->is('event'.'*') ? ' active' : '' }}" href="{{route('event.index')}}">
+                                    <i class="nav-main-link-icon fa fa-calendar"></i>
+                                    <span class="nav-main-link-name">Events</span>
+                                </a>
+                            </li>
+                            <li class="nav-main-item">
+                                <a class="nav-main-link{{ request()->is('sport'.'*') ? ' active' : '' }}" href="{{route('sport.index')}}">
+                                    <i class="nav-main-link-icon fa fa-calendar"></i>
+                                    <span class="nav-main-link-name">Sports</span>
+                                </a>
+                            </li>
                             <!-- <li class="nav-main-heading">More</li>
                             <li class="nav-main-item">
                                 <a class="nav-main-link" href="/">

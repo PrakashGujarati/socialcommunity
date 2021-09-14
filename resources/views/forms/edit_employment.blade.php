@@ -11,7 +11,7 @@
         <div class="block block-rounded">
             <div class="block-header block-header-default">
                 <h3 class="block-title">Create <small>News</small></h3>
-                <a href="{{route('news.index')}}" class="btn btn-primary m-2">
+                <a href="{{route('employment.index')}}" class="btn btn-primary m-2">
                     <i class="bi bi-x-lg"></i>
                 </a>
             </div>
@@ -97,7 +97,7 @@
                         </div>
                     </div>
                     <div class="d-flex justify-content-between">
-                        <button type="submit" class="btn btn-primary my-5 mx-3">Update News</button>
+                        <button type="submit" class="btn btn-primary my-5 mx-3">Update Event</button>
                         <a href="{{route('employment.index')}}" class="btn btn-secondary my-5 mx-3">Cancel</a>
                     </div>
                 </form>

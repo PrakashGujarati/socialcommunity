@@ -13,6 +13,8 @@ use App\Http\Controllers\NameController;
 use App\Http\Controllers\MegazineController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\EmploymentController;
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\SportController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -70,6 +72,10 @@ Route::group(['middleware'=>'auth'], function () {
     Route::get('contact/delete/{id}',[ContactController::class,'delete'])->name('contact.delete');
 
     Route::resource('employment', EmploymentController::class);
+
+    Route::resource('event', EventController::class);
+
+    Route::resource('sport', SportController::class);
     
 
    
