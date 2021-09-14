@@ -399,6 +399,12 @@
                                     <span class="nav-main-link-name">Anniversaries</span>
                                 </a>
                             </li>
+                            <li class="nav-main-item">
+                                <a class="nav-main-link{{ request()->is('doner'.'*') ? ' active' : '' }}" href="{{route('doner.index')}}">
+                                    <i class="nav-main-link-icon fas fa-ring"></i>
+                                    <span class="nav-main-link-name">Doners</span>
+                                </a>
+                            </li>
                             <!-- <li class="nav-main-heading">More</li> -->
                             <li class="nav-main-item">
                                 <a class="nav-main-link" href="{{route('notification.index')}}">

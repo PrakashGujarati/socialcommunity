@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\BirthdayController;
 use App\Http\Controllers\BusinessController;
 use App\Http\Controllers\CandidateController;
+use App\Http\Controllers\DonerController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\LateController;
@@ -49,6 +50,7 @@ Route::group(['middleware'=>'auth'], function () {
     Route::resource('gallery',GalleryController::class);
     Route::resource('birthday',BirthdayController::class);
     Route::resource('anniversary',AnniversaryController::class);
+    Route::resource('doner',DonerController::class);
 
     Route::view('/notification', 'notification.create_notification');
     Route::get('/notification', [NotificationsController::class,'index'])->name('notification.index');

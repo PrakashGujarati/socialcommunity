@@ -15,6 +15,7 @@ class NewsController extends Controller
         'thumbnail' => 'mimes:jpeg,jpg,png',
         'news_image' => 'mimes:jpeg,jpg,png'
     ];
+
     /**
      * Display a listing of the resource.
      *
