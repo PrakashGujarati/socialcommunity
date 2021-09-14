@@ -11,9 +11,9 @@ class Birthday extends Model
     protected $fillable = [
         'name',
         'birthdate',
-        'time', 
-        'place', 
-        'wishes', 
+        'time',
+        'place',
+        'wishes',
         'status'
     ];
 }
