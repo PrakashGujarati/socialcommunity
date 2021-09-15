@@ -378,14 +378,38 @@
                             <li class="nav-main-item">
                                 <a class="nav-main-link{{ request()->is('late'.'*') ? ' active' : '' }}" href="{{route('late.index')}}">
                                     <i class="nav-main-link-icon fas fa-cross"></i>
-                                    <span class="nav-main-link-name">Late</span>
+                                    <span class="nav-main-link-name">Lates</span>
+                                </a>
+                            </li>
+                            <li class="nav-main-item">
+                                <a class="nav-main-link{{ request()->is('gallery'.'*') ? ' active' : '' }}" href="{{route('gallery.index')}}">
+                                    <i class="nav-main-link-icon fas fa-list"></i>
+                                    <span class="nav-main-link-name">Galleries</span>
+                                </a>
+                            </li>
+                            <li class="nav-main-item">
+                                <a class="nav-main-link{{ request()->is('birthday'.'*') ? ' active' : '' }}" href="{{route('birthday.index')}}">
+                                    <i class="nav-main-link-icon fas fa-birthday-cake"></i>
+                                    <span class="nav-main-link-name">Birthdays</span>
+                                </a>
+                            </li>
+                            <li class="nav-main-item">
+                                <a class="nav-main-link{{ request()->is('anniversary'.'*') ? ' active' : '' }}" href="{{route('anniversary.index')}}">
+                                    <i class="nav-main-link-icon fas fa-ring"></i>
+                                    <span class="nav-main-link-name">Anniversaries</span>
+                                </a>
+                            </li>
+                            <li class="nav-main-item">
+                                <a class="nav-main-link{{ request()->is('doner'.'*') ? ' active' : '' }}" href="{{route('doner.index')}}">
+                                    <i class="nav-main-link-icon fas fa-ring"></i>
+                                    <span class="nav-main-link-name">Doners</span>
                                 </a>
                             </li>
                             <!-- <li class="nav-main-heading">More</li> -->
                             <li class="nav-main-item">
                                 <a class="nav-main-link" href="{{route('notification.index')}}">
                                     <i class="nav-main-link-icon fa fa-globe"></i>
-                                    <span class="nav-main-link-name">Notification</span>
+                                    <span class="nav-main-link-name">Notifications</span>
                                 </a>
                             </li>
                         </ul>
