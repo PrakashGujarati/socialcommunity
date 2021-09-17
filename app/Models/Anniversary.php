@@ -8,13 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Anniversary extends Model
 {
     use HasFactory;
-    protected $table = 'anniversarys';
     protected $fillable = [
         'name',
         'marriagedate',
-        'time', 
-        'place', 
-        'wishes', 
+        'time',
+        'place',
+        'wishes',
         'status'
     ];
 }

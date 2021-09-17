@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAnniversarysTable extends Migration
+class CreateGalleriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreateAnniversarysTable extends Migration
      */
     public function up()
     {
-        Schema::create('anniversarys', function (Blueprint $table) {
+        Schema::create('galleries', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->date('marriagedate')->nullable();
-            $table->time('time')->nullable();
-            $table->string('place')->nullable();
-            $table->string('wishes')->nullable();
+            $table->string('category')->nullable();
+            $table->string('event_title')->nullable();
+            $table->string('location')->nullable();
+            $table->string('description')->nullable();
+            $table->date('date')->nullable();
             $table->string('status')->nullable();
             $table->timestamps();
         });
@@ -32,6 +32,6 @@ class CreateAnniversarysTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('anniversarys');
+        Schema::dropIfExists('galleries');
     }
 }

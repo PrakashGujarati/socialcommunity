@@ -71,18 +71,31 @@
                             <td>{{$business->done_by}}</td>
                             <td>
                                 <div class="d-flex">
-                                    <button type="button" class="btn btn-info mx-1" data-toggle="modal" data-target="#Modal-{{$business->id}}">
+                                    <button type="button" class="btn btn-default mx-1" data-toggle="modal" data-target="#Modal-{{$business->id}}">
                                         <i class="bi bi-aspect-ratio"></i>
                                     </button>
-                                    <a href="{{route('business.edit',$business)}}" class="btn btn-primary mx-1">
-                                        <i class="bi bi-pencil"></i>
+                                    <a href="{{route('business.edit',$business)}}" class="btn btn-default mx-1">
+                                        <i class="bi bi-pencil text-info"></i>
                                     </a>
                                     <form action="{{route('business.destroy',$business)}}" method="post">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-danger mx-1">
-                                            <i class="fas fa-trash-alt"></i>
+                                        <button type="submit" class="btn btn-default mx-1">
+                                            <i class="fas fa-trash-alt text-danger"></i>
                                         </button>
+                                    </form>
+                                    <form action="{{route('changeStatus','business')}}" method="post">
+                                        @csrf
+                                        <input type="hidden" name="id" value="{{$business->id}}">
+                                        @if($business->status == "Active")
+                                        <button type="submit" class="btn btn-default mx-2" data-toggle="tooltip" title="click to Deactive">
+                                            <i class="fas fa-eye-slash text-danger"></i>
+                                        </button>
+                                        @else
+                                        <button type="submit" class="btn btn-default mx-2" data-toggle="tooltip" title="click to Active">
+                                            <i class="fas fa-eye text-success"></i>
+                                        </button>
+                                        @endif
                                     </form>
                                 </div>
                             </td>
