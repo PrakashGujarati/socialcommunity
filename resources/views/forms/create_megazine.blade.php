@@ -29,6 +29,7 @@
                             </small>
                         </div>
                     </div>
+                    
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label class="form-label">Category</label>
