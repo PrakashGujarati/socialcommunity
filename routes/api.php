@@ -19,6 +19,7 @@ use App\Http\Controllers\Api\BirthdayController;
 use App\Http\Controllers\Api\AnniversaryController;
 use App\Http\Controllers\Api\DonerController;
 use App\Http\Controllers\Api\EducationController;
+use App\Http\Controllers\Api\NotificationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -131,4 +132,6 @@ Route::group(['middleware'=>'auth:api'], function () {
     Route::post('/education_view' , [EducationController::class , 'show']);
     Route::post('/education_update' , [EducationController::class , 'update']);
 
+    Route::post('/notification_list' , [NotificationController::class , 'list']);
+    Route::post('/notification_view' , [NotificationController::class , 'show']);
 });

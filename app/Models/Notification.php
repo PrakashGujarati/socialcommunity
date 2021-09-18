@@ -16,7 +16,7 @@ class Notification extends Model
         'message'
     ];
 
-    public function getUserId(){
-        return $this->belongsTo(User::class , 'user_id');
-    }
+    // public function getUserId(){
+    //     return $this->belongsTo(User::class , 'user_id');
+    // }
 }

@@ -12,9 +12,9 @@ use Illuminate\Support\Facades\Storage;
 class CandidateController extends Controller
 {
     
-   public $rules = [
-       'candidate_id' => 'required'
-    ];
+//    public $rules = [
+//        'candidate_id' => 'required'
+//     ];
     
     /**
      * Display a listing of the resource.
@@ -45,10 +45,10 @@ class CandidateController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), $this->rules);
-        if ($validator->fails()) {
-            return ['status' => "false",'msg' => $validator->messages()];
-        }
+        // $validator = Validator::make($request->all(), $this->rules);
+        // if ($validator->fails()) {
+        //     return ['status' => "false",'msg' => $validator->messages()];
+        // }
         $pictureName = '';
         if ($request->file('picture')) {
             $pictureName = time().$request->file('picture')->getClientOriginalName();
@@ -127,10 +127,10 @@ class CandidateController extends Controller
         $candidate = Candidate::where(['id'=>$request->candidate_id,'user_id'=>Auth::user()->id])->first();
 
         if (!empty($candidate)) {
-            $validator = Validator::make($request->all(), $this->rules);
-            if ($validator->fails()) {
-                return ['status' => "false",'msg' => $validator->messages()];
-            }
+            // $validator = Validator::make($request->all(), $this->rules);
+            // if ($validator->fails()) {
+            //     return ['status' => "false",'msg' => $validator->messages()];
+            // }
             if ($request->file('picture')) {
                 Storage::delete('public/candidate_pictures/'.$candidate->picture);
                 $pictureName = time().$request->file('picture')->getClientOriginalName();
