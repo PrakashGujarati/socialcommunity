@@ -352,6 +352,12 @@
                                 </a>
                             </li>
                             <li class="nav-main-item">
+                                <a class="nav-main-link{{ request()->is('birthday'.'*') ? ' active' : '' }}" href="{{route('birthday.index')}}">
+                                    <i class="nav-main-link-icon fas fa-birthday-cake"></i>
+                                    <span class="nav-main-link-name">Birthdays</span>
+                                </a>
+                            </li>
+                            <li class="nav-main-item">
                                 <a class="nav-main-link{{ request()->is('employee'.'*') ? ' active' : '' }}" href="{{route('employee.index')}}">
                                     <i class="nav-main-link-icon bi-person-badge-fill"></i>
                                     <span class="nav-main-link-name">Employees</span>
