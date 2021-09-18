@@ -442,10 +442,26 @@
                                     <span class="nav-main-link-name">Doners</span>
                                 </a>
                             </li>
-                            <!-- <li class="nav-main-heading">More</li> -->
+                            <li class="nav-main-heading">More</li> -->
+                            
+                            <li class="nav-main-item">
+                                <a class="nav-main-link" href="">
+                                    <i class="nav-main-link-icon fa fa-cog"></i>
+                                    <span class="nav-main-link-name">Settings</span>
+                                </a>
+                            </li>   
+                            <ul>
+                                
+                                <li class="nav-main-item">
+                                    <a class="nav-main-link" href="{{route('import.index')}}">
+                                        <i class="nav-main-link-icon fas fa-file-import"></i>
+                                        <span class="nav-main-link-name">Import</span>
+                                    </a>
+                                </li>
+                            </ul>
                             <li class="nav-main-item">
                                 <a class="nav-main-link" href="{{route('notification.index')}}">
-                                    <i class="nav-main-link-icon fa fa-globe"></i>
+                                    <i class="nav-main-link-icon far fa-bell"></i>
                                     <span class="nav-main-link-name">Notifications</span>
                                 </a>
                             </li>
