@@ -58,6 +58,7 @@ Route::group(['middleware'=>'auth'], function () {
     Route::resource('birthday',BirthdayController::class);
     Route::resource('anniversary',AnniversaryController::class);
     Route::resource('doner',DonerController::class);
+    Route::resource('megazine',MegazineController::class);
 
     Route::view('/notification', 'notification.create_notification');
     Route::get('/notification', [NotificationsController::class,'index'])->name('notification.index');
@@ -70,13 +71,6 @@ Route::group(['middleware'=>'auth'], function () {
     Route::get('name/edit/{id}',[NameController::class,'edit'])->name('name.edit');
     Route::put('name/update/{id}',[NameController::class,'update'])->name('name.update');
     Route::get('name/delete/{id}',[NameController::class,'delete'])->name('name.delete');
-
-    Route::get('megazine/index',[MegazineController::class,'index'])->name('megazine.index');
-    Route::get('megazine/create',[MegazineController::class,'create'])->name('megazine.create');
-    Route::post('megazine/store',[MegazineController::class,'store'])->name('megazine.store');
-    Route::get('megazine/edit/{id}',[MegazineController::class,'edit'])->name('megazine.edit');
-    Route::put('megazine/update/{id}',[MegazineController::class,'update'])->name('megazine.update');
-    Route::get('megazine/delete/{id}',[MegazineController::class,'delete'])->name('megazine.delete');
 
     Route::get('contact/index',[ContactController::class,'index'])->name('contact.index');
     Route::get('contact/create',[ContactController::class,'create'])->name('contact.create');

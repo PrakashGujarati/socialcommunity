@@ -41,6 +41,7 @@
                     <i class="bi bi-plus-lg"></i> Create Megazines
                 </a>
             </div>
+            @include('modals.megazine_modal')
             <div class="block-content block-content-full">
                 <table class="table table-responsive table-bordered table-striped table-vcenter js-dataTable-full">
                     <thead>
@@ -63,12 +64,32 @@
                             <td>{{$megazine->status}}</td>
                             <td>
                                 <div class="d-flex">
-                                    <a href="{{route('megazine.edit',$megazine)}}" class="btn btn-primary mx-1">
-                                        <i class="bi bi-pencil"></i>
+                                    <button type="button" class="btn btn-default mx-2" data-toggle="modal" data-target="#Modal-{{$megazine->id}}">
+                                        <i class="bi bi-aspect-ratio"></i>
+                                    </button>
+                                    <a href="{{route('megazine.edit',$megazine)}}" class="btn btn-default mx-2">
+                                        <i class="bi bi-pencil text-info"></i>
                                     </a>
-                                    <a href="{{route('megazine.delete',$megazine)}}" class="btn btn-danger mx-1">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </a>
+                                    <form action="{{route('megazine.destroy',$megazine)}}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-default mx-2">
+                                            <i class="far fa-trash-alt text-danger"></i>
+                                        </button>
+                                    </form>
+                                    <form action="{{route('changeStatus','Megazine')}}" method="post">
+                                        @csrf
+                                        <input type="hidden" name="id" value="{{$megazine->id}}">
+                                        @if($megazine->status == "Active")
+                                        <button type="submit" class="btn btn-default mx-2" data-toggle="tooltip" title="click to Deactive">
+                                            <i class="fas fa-eye-slash text-danger"></i>
+                                        </button>
+                                        @else
+                                        <button type="submit" class="btn btn-default mx-2" data-toggle="tooltip" title="click to Active">
+                                            <i class="fas fa-eye text-success"></i>
+                                        </button>
+                                        @endif
+                                    </form>
                                 </div>
                             </td>
                         </tr>

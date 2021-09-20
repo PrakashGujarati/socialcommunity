@@ -19,7 +19,7 @@
                 <form action="{{route('megazine.store')}}" method="POST" enctype="multipart/form-data" class="shadow rounded p-5">
                     @csrf
                     <div class="form-row">
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-6">
                             <label class="form-label">Title</label>
                             <input name="title" type="text" class="form-control" placeholder="Title">
                             <small class="text-danger">
@@ -28,12 +28,13 @@
                                 @enderror
                             </small>
                         </div>
-                    </div>
-                    
-                    <div class="form-row">
                         <div class="form-group col-md-6">
                             <label class="form-label">Category</label>
-                            <input name="category" type="text" class="form-control" placeholder="Category">
+                            <select class="form-select form-control" name="category">
+                                <option value="" selected>select</option>
+                                <option value="Ramnath">Ramnath</option>
+                                <option value="Dharamvani">Dharamvani</option>
+                            </select>
                             <small class="text-danger">
                                 @error('category')
                                     <span class="text-red-500 text-xs"><i class="fa fa-bug"></i> {{ $message }}</span>
@@ -46,16 +47,19 @@
                             <label class="form-label">Date</label>
                             <input name="date" type="date" class="form-control">
                         </div>
-                    </div>
-                    <div class="form-row">
-                    <div class="form-group col-md-6">
-                            <label class="form-label">Magazine Image</label>
-                            <div class="custom-file">
-                                <input type="file" name="megazine" class="custom-file-input" id="cardInput">
-                                <label class="custom-file-label" for="cardInput">Choose magazine</label>
+                        <div class="form-group col-md-6">
+                                <label class="form-label">Magazine File</label>
+                                <div class="custom-file">
+                                    <input type="file" name="megazine" class="custom-file-input" id="cardInput" accept=".pdf">
+                                    <label class="custom-file-label" for="cardInput">Choose magazine</label>
+                                </div>
+                                <small class="text-danger">
+                                    @error('megazine')
+                                        <span class="text-red-500 text-xs"><i class="fa fa-bug"></i> {{ $message }}</span>
+                                    @enderror
+                                </small>
                             </div>
                         </div>
-                    </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label class="form-label">Status</label>
