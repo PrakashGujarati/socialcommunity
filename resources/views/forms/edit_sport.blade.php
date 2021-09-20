@@ -10,7 +10,7 @@
     <div class="content">
         <div class="block block-rounded">
             <div class="block-header block-header-default">
-                <h3 class="block-title">Create <small>News</small></h3>
+                <h3 class="block-title">Create <small>Sports</small></h3>
                 <a href="{{route('sport.index')}}" class="btn btn-primary m-2">
                     <i class="bi bi-x-lg"></i>
                 </a>

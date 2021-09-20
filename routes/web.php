@@ -15,6 +15,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\EmploymentController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\SportController;
+use App\Http\Controllers\EducationController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -76,6 +77,8 @@ Route::group(['middleware'=>'auth'], function () {
     Route::resource('event', EventController::class);
 
     Route::resource('sport', SportController::class);
+
+    Route::resource('education', EducationController::class);
     
 
    

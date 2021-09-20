@@ -423,6 +423,12 @@
                                     <span class="nav-main-link-name">Sports</span>
                                 </a>
                             </li>
+                            <li class="nav-main-item">
+                                <a class="nav-main-link{{ request()->is('education'.'*') ? ' active' : '' }}" href="{{route('education.index')}}">
+                                    <i class="nav-main-link-icon fa fa-calendar"></i>
+                                    <span class="nav-main-link-name">Education</span>
+                                </a>
+                            </li>
                             <!-- <li class="nav-main-heading">More</li>
                             <li class="nav-main-item">
                                 <a class="nav-main-link" href="/">
