@@ -14,6 +14,7 @@ class NewsController extends Controller
         'title' => 'required',
         
     ];
+
     /**
      * Display a listing of the resource.
      *
@@ -171,6 +172,23 @@ class NewsController extends Controller
         Storage::delete('public/thumbnails/'.$news->thumbnail);
         Storage::delete('public/news_images/'.$news->news_image);
         $news->delete();
+        return redirect()->route('news.index');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\News  $news
+     * @return \Illuminate\Http\Response
+     */
+
+
+    public function changeStatus($id)
+    {
+        $news = News::where('id',$id)->first();
+        $news->update([
+            'status' => $news->status == "Active" ? "Deactive" : "Active"
+        ]);
         return redirect()->route('news.index');
     }
 }

@@ -15,6 +15,11 @@ use App\Http\Controllers\Api\EmploymentController;
 use App\Http\Controllers\Api\SportController;
 use App\Http\Controllers\Api\SurnameController;
 use App\Http\Controllers\Api\ContactController;
+use App\Http\Controllers\Api\BirthdayController;
+use App\Http\Controllers\Api\AnniversaryController;
+use App\Http\Controllers\Api\DonerController;
+use App\Http\Controllers\Api\EducationController;
+use App\Http\Controllers\Api\NotificationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -80,6 +85,8 @@ Route::group(['middleware'=>'auth:api'], function () {
 
     Route::post('/gallery_list' , [GalleryController::class , 'list']);
     Route::post('/gallery_view', [GalleryController::class , 'show']);
+    Route::post('/gallery_create' , [GalleryController::class , 'store']);
+    Route::post('/gallery_update' , [GalleryController::class , 'update']);
 
     Route::post('/event_list',[EventController::class , 'list']);
     Route::post('/event_view', [EventController::class , 'show']);
@@ -97,8 +104,34 @@ Route::group(['middleware'=>'auth:api'], function () {
     Route::post('/sport_update' , [SportController::class , 'update']);
 
     Route::post('/surname_list' , [SurnameController::class , 'list']);
+    Route::post('/surname_create' , [SurnameController::class , 'store']);
+    Route::post('/surname_update' , [SurnameController::class , 'update']);
 
     Route::post('/contact_list' , [ContactController::class , 'list']);
     Route::post('/contact_view' , [ContactController::class , 'show']);
+    Route::post('/contact_create' , [ContactController::class , 'store']);
+    Route::post('/contact_update' , [ContactController::class , 'update']);
 
+    Route::post('/birthday_list' , [BirthdayController::class , 'list']);
+    Route::post('/birthday_create' , [BirthdayController::class , 'store']);
+    Route::post('/birthday_view' , [BirthdayController::class , 'show']);
+    Route::post('/birthday_update' , [BirthdayController::class , 'update']);
+
+    Route::post('/anniversary_list' , [AnniversaryController::class , 'list']);
+    Route::post('/anniversary_create' , [AnniversaryController::class , 'store']);
+    Route::post('/anniversary_view' , [AnniversaryController::class , 'show']);
+    Route::post('/anniversary_update' , [AnniversaryController::class , 'update']);
+
+    Route::post('/doner_list' , [DonerController::class ,'list']);
+    Route::post('/doner_create' , [DonerController::class , 'store']);
+    Route::post('/doner_view' , [DonerController::class ,'show']);
+    Route::post('/doner_update', [DonerController::class , 'update']);
+
+    Route::post('/education_list' , [EducationController::class , 'list']);
+    Route::post('/education_create', [EducationController::class , 'store']);
+    Route::post('/education_view' , [EducationController::class , 'show']);
+    Route::post('/education_update' , [EducationController::class , 'update']);
+
+    Route::post('/notification_list' , [NotificationController::class , 'list']);
+    Route::post('/notification_view' , [NotificationController::class , 'show']);
 });

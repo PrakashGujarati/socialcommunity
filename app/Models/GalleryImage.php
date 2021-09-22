@@ -12,14 +12,14 @@ class GalleryImage extends Model
     protected $fillable = [
         'gallery_id',
         'path'
-<<<<<<< HEAD
-
-=======
-               
->>>>>>> 108a772e84dbc581f25c6e38faaed58d89eb67b5
     ];
+
     public function getGalleryId()
     {
-        return $this->belongsTo(Gallery::class,'gallery_id');
+        return $this->belongsTo(Gallery::class, 'gallery_id');
+    }
+    public function gallery()
+    {
+        return $this->belongsTo(Gallery::class);
     }
 }

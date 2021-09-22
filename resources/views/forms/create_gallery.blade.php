@@ -15,7 +15,14 @@
                     <i class="bi bi-x-lg"></i>
                 </a>
             </div>
-            <div class="block-content block-content-full p-5">
+            <div class="copy d-none">
+                <div class="control-group input-group" style="margin-top:10px">
+                    <input type="text" name="video_url[]" class="form-control" placeholder="https://www...">
+                    <div class="input-group-btn mx-2">
+                        <button class="btn btn-default remove" type="button"><i class="glyphicon glyphicon-remove"></i> <i class="fas text-danger fa-times"></i></button>
+                    </div>
+                </div>
+            </div>
                 <form action="{{route('gallery.store')}}" method="POST" enctype="multipart/form-data" class="shadow rounded p-5">
                     @csrf
                     <div class="form-row">
@@ -46,40 +53,16 @@
                         <div class="form-group col-md-6">
                             <label class="form-label">Location</label>
                             <input name="location" type="text" class="form-control" placeholder="Location">
-                            <small class="text-danger">
-                                @error('location')
-                                    <span class="text-red-500 text-xs"><i class="fa fa-bug"></i> {{ $message }}</span>
-                                @enderror
-                            </small>
                         </div>
                         <div class="form-group col-md-6">
                             <label class="form-label">Date</label>
                             <input name="date" type="date" class="form-control">
-                            <small class="text-danger">
-                                @error('date')
-                                    <span class="text-red-500 text-xs"><i class="fa fa-bug"></i> {{ $message }}</span>
-                                @enderror
-                            </small>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-12">
-                            <label class="form-label">Description</label>
-                            <textarea class="form-control" rows="2" name="description" placeholder="Description..."></textarea>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label class="form-label">Gallery Media</label>
-                            <div class="custom-file">
-                                <input type="file" name="gallery_media" class="custom-file-input" id="imageInput">
-                                <label class="custom-file-label" for="imageInput">Choose Image</label>
-                            </div>
-                            <small class="text-danger">
-                                @error('gallery_media')
-                                    <span class="text-red-500 text-xs"><i class="fa fa-bug"></i> {{ $message }}</span>
-                                @enderror
-                            </small>
+                            <label class="form-label">Description</label>
+                            <textarea class="form-control" rows="1" name="description" placeholder="Description..."></textarea>
                         </div>
                         <div class="form-group col-md-6">
                             <label class="form-label">Status</label>
@@ -89,12 +72,22 @@
                             </select>
                         </div>
                     </div>
+                    <div class="media">
+                        {{-- <div class="justify-content-between col-12">
+                            <label class="form-label">Video Links</label>
+                            <div class="input-group control-group after-add-more">
+                                <input type="text" name="video_url[]" class="form-control" placeholder="https://www...">
+                                <div class="input-group-btn mx-2">
+                                    <button type="button" class="btn btn-success add-btn" type="button"><i class="glyphicon glyphicon-plus"></i> <i class="fas fa-plus-square"></i></button>
+                                </div>
+                            </div>
+                        </div> --}}
+                    </div>
                     <div class="d-flex justify-content-between">
                         <button type="submit" class="btn btn-primary my-5 mx-3">Create Gallery</button>
                         <a href="{{route('gallery.index')}}" class="btn btn-secondary my-5 mx-3">Cancel</a>
                     </div>
                 </form>
-            </div>
         </div>
     </div>
     <!-- END Page Content -->
@@ -105,11 +98,31 @@
         $("#category").change(function(){
             var categoryType = $("#category").val();
             if(categoryType == "Images"){
-                $("#imageInput").attr('accept','image/*');
+                $(".media").html('<div class="custom-file"><input type="file" name="gallery_media[]" class="custom-file-input" id="imageInput" multiple><label class="custom-file-label" id="inputLabel" for="imageInput">Choose Image</label</div>');
             }else{
-                $("#imageInput").attr('accept','video/*');
+                var html = '<div class="justify-content-between col-12">';
+                html += '<label class="form-label">Video Links</label>';
+                html += '<div class="input-group control-group after-add-more">';
+                html += '<input type="text" name="video_url[]" class="form-control" placeholder="https://www...">';
+                html += '<div class="input-group-btn mx-2">';
+                html += '<button type="button" class="btn btn-success add-btn"  type="button"><i class="glyphicon glyphicon-plus"></i> <i class="fas fa-plus-square"></i></button>';
+                html += '</div>';
+                html += '</div>';
+                html += '</div>';
+                $(".media").html(html);
             }
         });
+
+
+        $("body").on("click",".add-btn",function(){
+            var newHtml = $(".copy").html();
+            $(".after-add-more").after(newHtml);
+        });
+
+        $("body").on("click",".remove",function(){
+            $(this).parents(".control-group").remove();
+        });
+
     });
 </script>
 @endsection

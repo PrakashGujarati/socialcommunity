@@ -378,7 +378,7 @@
                             <li class="nav-main-item">
                                 <a class="nav-main-link{{ request()->is('late'.'*') ? ' active' : '' }}" href="{{route('late.index')}}">
                                     <i class="nav-main-link-icon fas fa-cross"></i>
-                                    <span class="nav-main-link-name">Late</span>
+                                    <span class="nav-main-link-name">Lates</span>
                                 </a>
                             </li>
                             <li class="nav-main-item">
@@ -429,13 +429,48 @@
                                     <span class="nav-main-link-name">Education</span>
                                 </a>
                             </li>
-                            <!-- <li class="nav-main-heading">More</li>
+                             <li class="nav-main-heading">More</li>
                             <li class="nav-main-item">
-                                <a class="nav-main-link" href="/">
-                                    <i class="nav-main-link-icon fa fa-globe"></i>
-                                    <span class="nav-main-link-name">Landing</span>
+                                <a class="nav-main-link{{ request()->is('birthday'.'*') ? ' active' : '' }}" href="{{route('birthday.index')}}">
+                                    <i class="nav-main-link-icon fas fa-birthday-cake"></i>
+                                    <span class="nav-main-link-name">Birthdays</span>
                                 </a>
-                            </li> -->
+                            </li>
+                            <li class="nav-main-item">
+                                <a class="nav-main-link{{ request()->is('anniversary'.'*') ? ' active' : '' }}" href="{{route('anniversary.index')}}">
+                                    <i class="nav-main-link-icon fas fa-ring"></i>
+                                    <span class="nav-main-link-name">Anniversaries</span>
+                                </a>
+                            </li>
+                            <li class="nav-main-item">
+                                <a class="nav-main-link{{ request()->is('doner'.'*') ? ' active' : '' }}" href="{{route('doner.index')}}">
+                                    <i class="nav-main-link-icon fas fa-ring"></i>
+                                    <span class="nav-main-link-name">Doners</span>
+                                </a>
+                            </li>
+                            <li class="nav-main-heading">More</li> 
+                            
+                            <li class="nav-main-item">
+                                <a class="nav-main-link" href="">
+                                    <i class="nav-main-link-icon fa fa-cog"></i>
+                                    <span class="nav-main-link-name">Settings</span>
+                                </a>
+                            </li>   
+                            <ul>
+                                
+                                <li class="nav-main-item">
+                                    <a class="nav-main-link" href="{{route('import.index')}}">
+                                        <i class="nav-main-link-icon fas fa-file-import"></i>
+                                        <span class="nav-main-link-name">Import</span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <li class="nav-main-item">
+                                <a class="nav-main-link" href="{{route('notification.index')}}">
+                                    <i class="nav-main-link-icon far fa-bell"></i>
+                                    <span class="nav-main-link-name">Notifications</span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                     <!-- END Side Navigation -->
@@ -644,6 +679,7 @@
         <!-- <script src="{{ mix('/js/laravel.app.js') }}"></script> -->
 
         @yield('js_after')
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
     </body>
 </html>

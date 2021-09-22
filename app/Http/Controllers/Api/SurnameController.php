@@ -4,10 +4,15 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Validator;
 use App\Models\Surname;
 
 class SurnameController extends Controller
 {
+    public $rules = [
+        'name' => 'required'
+       
+    ];
     /**
      * Display a listing of the resource.
      *
@@ -28,6 +33,7 @@ class SurnameController extends Controller
     public function create()
     {
         //
+       
     }
 
     /**
@@ -39,6 +45,16 @@ class SurnameController extends Controller
     public function store(Request $request)
     {
         //
+        $validator = Validator::make($request->all(), $this->rules);
+        if ($validator->fails()) {
+            return ['status' => "false",'msg' => $validator->messages()];
+        }
+       
+        
+        $newSurname = Surname::create([
+            'name' => $request->name
+        ]);
+        return $this->responseOut($newSurname);
     }
 
     /**
@@ -70,9 +86,25 @@ class SurnameController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
+        $surname = Surname::where(['id'=>$request->surname_id])->first();
+
+        if (!empty($surname)) {
+            $validator = Validator::make($request->all(), $this->rules);
+
+        if ($validator->fails()) {
+            return ['status' => "false",'msg' => $validator->messages()];
+        }   
+        
+        $surname->update([
+            'name' => $request->name
+        ]);
+        return $this->responseOut($surname);
+        } else {
+            return $this->responseOut($surname);
+        }
     }
 
     /**

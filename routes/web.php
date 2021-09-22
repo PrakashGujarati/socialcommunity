@@ -1,13 +1,17 @@
 <?php
 
+use App\Http\Controllers\AnniversaryController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\BirthdayController;
 use App\Http\Controllers\BusinessController;
 use App\Http\Controllers\CandidateController;
+use App\Http\Controllers\DonerController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\LateController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\RecruitmentController;
+use App\Http\Controllers\statusController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\NameController;
 use App\Http\Controllers\MegazineController;
@@ -17,7 +21,10 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\SportController;
 use App\Http\Controllers\EducationController;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\NotificationsController;
+use App\http\Controllers\ImportController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 
 
 /*
@@ -50,6 +57,14 @@ Route::group(['middleware'=>'auth'], function () {
     Route::resource('recruitment', RecruitmentController::class);
     Route::resource('late', LateController::class);
     Route::resource('gallery',GalleryController::class);
+    Route::resource('birthday',BirthdayController::class);
+    Route::resource('anniversary',AnniversaryController::class);
+    Route::resource('doner',DonerController::class);
+
+    Route::view('/notification', 'notification.create_notification');
+    Route::get('/notification', [NotificationsController::class,'index'])->name('notification.index');
+    Route::post('/notification_store', [NotificationsController::class,'store'])->name('notification.store');
+    Route::get('/notification/create', [NotificationsController::class,'create']);
 
     Route::get('name/index',[NameController::class,'index'])->name('name.index');
     Route::get('name/create',[NameController::class,'create'])->name('name.create');
@@ -72,6 +87,8 @@ Route::group(['middleware'=>'auth'], function () {
     Route::put('contact/update/{id}',[ContactController::class,'update'])->name('contact.update');
     Route::get('contact/delete/{id}',[ContactController::class,'delete'])->name('contact.delete');
 
+    
+
     Route::resource('employment', EmploymentController::class);
 
     Route::resource('event', EventController::class);
@@ -85,7 +102,20 @@ Route::group(['middleware'=>'auth'], function () {
 
     Route::view('profile','forms.profile')->name('user.profile');
 
+    Route::get('removeMediaImage',[GalleryController::class,'removeMediaImage'])->name('removeMediaImage');
+    Route::post('changeStatus/{model}',function($model, Request $request){
+        return statusUpdate($model,$request->id);
+    })->name('changeStatus');
+
+    Route::get('import_create',[ImportController::class,'index'])->name('import.index');
+    Route::post('import', [ImportController::class, 'import'])->name('import');
+
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
 
 Auth::routes();
 
