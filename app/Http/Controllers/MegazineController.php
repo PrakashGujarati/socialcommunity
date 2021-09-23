@@ -46,14 +46,17 @@ class MegazineController extends Controller
     {
         $request->validate($this->rules);
         $megazineName = "";
+        $imagesData = "";
         if ($request->file('megazine')){
-            $megazineName = $this->storeMedia($request->file('megazine'),$request->category,$request->title);
+            $megazineName = $request->file('megazine')->getClientOriginalName();
+            $imagesData = $this->storeMedia($request->file('megazine'),$request->category,$request->title);
         }
         Megazine::create([
             'title' => $request->title,
             'category' => $request->category,
             'date' => $request->date,
             'path' => $megazineName,
+            'resized_images' => $imagesData,
             'status' => $request->status
         ]);
         return redirect()->route('megazine.index');
@@ -96,19 +99,25 @@ class MegazineController extends Controller
 
         if ($request->title != $megazine->title && !$request->file('megazine')) {
             rename(public_path()."/megazines/".$megazine->category."/".$megazine->title,public_path()."/megazines/".$megazine->category."/".$request->title);
+            $megazine->update(['title' => $request->title]);
+        } 
+
+        if ($request->category != $megazine->category && !$request->file('megazine')) {
+            rename(public_path()."/megazines/".$megazine->category."/".$megazine->title,public_path()."/megazines/".$request->category."/".$megazine->title);
+            $megazine->update(['category' => $request->category]);
         } 
 
         if ($request->file('megazine')) {
             $file = new File;
             $file->deleteDirectory(public_path()."/megazines/".$megazine->category."/".$megazine->title);
-            $megazineName = $this->storeMedia($request->file('megazine'),$request->category,$request->title);
+            $megazineName = $request->file('megazine')->getClientOriginalName();
+            $imagesData = $this->storeMedia($request->file('megazine'),$request->category,$request->title);
+            $megazine->update(['resized_images' => $imagesData]);
+            $megazine->update(['path' => $megazineName]);
         }
 
         $megazine->update([
-            'title' => $request->title,
-            'category' => $request->category,
             'date' => $request->date,
-            'path' => $megazineName,
             'status' => $request->status
         ]);
         return redirect()->route('megazine.index');
@@ -137,31 +146,38 @@ class MegazineController extends Controller
         $mediaFile->move($mediaPath,$megazineNameWithExtension);
         $megazinePdfPath = $mediaPath."/".$megazineNameWithExtension;
 
-        if(!file_exists($mediaPath."/images//".$megazineNameWithoutExtension)){
-            mkdir($mediaPath."/images//".$megazineNameWithoutExtension, 0777, true);
+        if(!file_exists($mediaPath."/images")){
+            mkdir($mediaPath."/images", 0777, true);
         }
 
-        $originalImagesPath = $mediaPath."/images/".$megazineNameWithoutExtension;
+        $originalImagesPath = $mediaPath."/images";
         $pdf = new Pdf($megazinePdfPath);
 
         $pdf->setOutputFormat('jpeg')->saveImage($originalImagesPath."/".$megazineNameWithoutExtension."(%d)");   
 
-        if(!file_exists($mediaPath."/resized//".$megazineNameWithoutExtension)){
-            mkdir($mediaPath."/resized//".$megazineNameWithoutExtension, 0777, true);
+        if(!file_exists($mediaPath."/resized")){
+            mkdir($mediaPath."/resized", 0777, true);
         }
 
-        $resizedImagesPath = $mediaPath."/resized/".$megazineNameWithoutExtension;
+        $resizedImagesPath = $mediaPath."/resized";
 
         $originalImages = array_diff(scandir($originalImagesPath), array('..', '.'));
-        
+
+        $imagesData = array();
+
         foreach ($originalImages as $key => $image) {
             $imgFile = Image::make($originalImagesPath."/".$image);  
             $imgFile->resize(1080, 1920)->save($resizedImagesPath.'/'.$key."_image_1080*1920");
             $imgFile->resize(480, 854)->save($resizedImagesPath.'/'.$key."_image_480*854");
             $imgFile->resize(720, 1280)->save($resizedImagesPath.'/'.$key."_image_720*1280");
+            array_push($imagesData,json_encode(
+                [
+                    'image1' => $key."_image_1080*1920.jpeg",
+                    'image2' => $key."_image_480*854.jpeg",
+                    'image3' => $key."_image_720*1280.jpeg"
+                ])
+            );
         }
-
-        return $megazineNameWithExtension;
-
+        return var_export($imagesData,true);
     }
 }
