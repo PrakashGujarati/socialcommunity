@@ -58,6 +58,7 @@ class MegazineController extends Controller
         }
 
         $megazineName = "";
+        $imagesData = "";
 
         if ($request->file('path')){
             $megazineName = $request->file('path')->getClientOriginalName();
