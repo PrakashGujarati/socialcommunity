@@ -171,11 +171,11 @@ class MegazineController extends Controller
             $imgFile->resize(480, 854)->save($resizedImagesPath.'/'.$key."_image_480*854");
             $imgFile->resize(720, 1280)->save($resizedImagesPath.'/'.$key."_image_720*1280");
             array_push($imagesData,[
-                '1080*1920' => $key."_image_1080*1920.jpeg",
-                '480*854' => $key."_image_480*854.jpeg",
-                '720*1280' => $key."_image_720*1280.jpeg"
+                '1080x1920' => $key."_image_1080x1920.jpeg",
+                '480x854' => $key."_image_480x854.jpeg",
+                '720x1280' => $key."_image_720x1280.jpeg"
             ]);
         }
-        return var_export($imagesData,true);
+        return json_encode($imagesData,true);
     }
 }
