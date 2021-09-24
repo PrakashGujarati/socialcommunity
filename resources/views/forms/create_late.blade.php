@@ -83,7 +83,7 @@
                         <div class="form-group col-md-6">
                             <label class="form-label">Picture</label>
                             <div class="custom-file">
-                                <input type="file" name="picture" class="custom-file-input" id="pictureInput">
+                                <input type="file" name="picture" class="custom-file-input" id="pictureInput" accept="image/*" />
                                 <label class="custom-file-label" for="pictureInput">Choose file</label>
                             </div>
                             <small class="text-danger">
