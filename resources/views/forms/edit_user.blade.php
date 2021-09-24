@@ -114,7 +114,7 @@
                         <div class="form-group col-md-12">
                             <label class="form-label">Picture</label>
                             <div class="custom-file">
-                                <input type="file" name="file" class="custom-file-input" id="pictureInput">
+                                <input type="file" name="file" class="custom-file-input" id="pictureInput" accept="image/*" />
                                 <label class="custom-file-label" for="pictureInput">Choose file</label>
                                 <small class="text-danger">
                                     @error('file')

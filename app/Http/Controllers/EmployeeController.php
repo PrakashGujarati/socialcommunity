@@ -45,9 +45,10 @@ class EmployeeController extends Controller
     {
         $request->validate($this->rules);
         $logo = '';
-        if ($request->file()) {
-            $logo = time().$request->file('logo')->getClientOriginalName();
-            $request->file('logo')->storeAs('employee_logos', $logo, 'public');
+        if ($mediaFile = $request->file('logo')) {
+            $mediaPath = public_path()."/employee_logoes";
+            $logo = time().".".$mediaFile->getClientOriginalExtension();
+            $mediaFile->move($mediaPath,$logo);
         }
         Employee::create([
             'user_id' => 1,
@@ -99,12 +100,15 @@ class EmployeeController extends Controller
     public function update(Request $request, Employee $employee)
     {
         $request->validate($this->rules);
-        if ($request->file('logo')) {
-            Storage::delete('public/employee_logos/'.$employee->logo);
-            $logo = $request->file('logo')->getClientOriginalName();
-            $request->file('logo')->storeAs('employee_logos', $request->logo->getClientOriginalName(), 'public');
+        
+        if ($mediaFile = $request->file('logo')) {
+            $mediaPath = public_path()."/employee_logoes";
+            ($employee->logo && file_exists($mediaPath."/".$employee->logo)) ? unlink($mediaPath."/".$employee->logo) : "";
+            $logo = time().".".$mediaFile->getClientOriginalExtension();
+            $mediaFile->move($mediaPath,$logo);
             $employee->update(['logo' => $logo]);
         }
+
         $employee->update([
             'first_name' => $request->first_name,
             'middle_name' => $request->middle_name,
@@ -128,7 +132,8 @@ class EmployeeController extends Controller
      */
     public function destroy(Employee $employee)
     {
-        Storage::delete('public/employee_logos/'.$employee->logo);
+        $mediaPath = public_path()."/employee_logoes";
+        ($employee->logo && file_exists($mediaPath."/".$employee->logo)) ? unlink($mediaPath."/".$employee->logo) : "";
         $employee->delete();
         return redirect()->route('employee.index');
     }

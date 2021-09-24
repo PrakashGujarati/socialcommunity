@@ -12,7 +12,6 @@ class UserController extends Controller
     public $rules = [
         'first_name' => 'required',
         'email' => 'required|email'
-       
     ];
     /**
      * Display a listing of the resource.
@@ -91,11 +90,9 @@ class UserController extends Controller
                 $file = $request->file('picture');
                $extension = $file->getClientOriginalExtension();
                $fileName = time().'.'.$extension;
-               $path = public_path().'/upload/user_picture';
+               $path = public_path().'/user_profiles';
                $uplaod = $file->move($path,$fileName);
                $user->update(['picture' => $fileName]);
-            //    return $fileName;
-            //    dd($fileName);
             }            
 
             $user->update([

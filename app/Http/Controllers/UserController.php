@@ -45,11 +45,15 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $profileName = '';
+
         $request->validate($this->rules);
-        if ($request->file()) {
-            $profileName = time().$request->file->getClientOriginalName();
-            $request->file('file')->storeAs('user_profiles', $profileName, 'public');
+        
+        if ($mediaFile = $request->file('file')) {
+            $mediaPath = public_path()."/user_profiles";
+            $profileName = time().".".$mediaFile->getClientOriginalExtension();
+            $mediaFile->move($mediaPath,$profileName);
         }
+        
         User::create([
             'role_id' => $request->role_id,
             'email' => $request->email,
@@ -105,10 +109,11 @@ class UserController extends Controller
 
         $request->password ? $user->update(['password' => $request->password]) : '';
 
-        if ($request->file()) {
-            Storage::delete('public/user_profiles/'.$user->picture);
-            $profileName = time().$request->file->getClientOriginalName();
-            $request->file('file')->storeAs('user_profiles', $profileName, 'public');
+        if ($mediaFile = $request->file('file')) {
+            $mediaPath = public_path()."/user_profiles";
+            ($user->picture && file_exists($mediaPath."/".$user->picture)) ? unlink($mediaPath."/".$user->picture) : "";
+            $profileName = time().".".$mediaFile->getClientOriginalExtension();
+            $mediaFile->move($mediaPath,$profileName);
             $user->update(['picture' => $profileName]);
         }
 
@@ -136,7 +141,8 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        Storage::delete('public/user_profiles/'.$user->picture);
+        $mediaPath = public_path()."/user_profiles";
+        ($user->picture && file_exists($mediaPath."/".$user->picture)) ? unlink($mediaPath."/".$user->picture) : "";
         $user->delete();
         return redirect()->route('user.index');
     }

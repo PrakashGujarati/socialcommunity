@@ -42,11 +42,15 @@ class CandidateController extends Controller
     public function store(Request $request)
     {
         $request->validate($this->rules);
+
         $pictureName = '';
-        if ($request->file('picture')) {
-            $pictureName = time().$request->file('picture')->getClientOriginalName();
-            $request->file('picture')->storeAs('candidate_pictures', $pictureName, 'public');
+
+        if ($mediaFile = $request->file('picture')) {
+            $mediaPath = public_path()."/candidate_pictures";
+            $pictureName = time().".".$mediaFile->getClientOriginalExtension();
+            $mediaFile->move($mediaPath,$pictureName);
         }
+
         Candidate::create([
             'user_id' => 1,
             'first_name' => $request->first_name,
@@ -114,12 +118,15 @@ class CandidateController extends Controller
     public function update(Request $request, Candidate $candidate)
     {
         $request->validate($this->rules);
-        if ($request->file('picture')) {
-            Storage::delete('public/candidate_pictures/'.$candidate->picture);
-            $pictureName = time().$request->file('picture')->getClientOriginalName();
-            $request->file('picture')->storeAs('candidate_pictures', $pictureName, 'public');
+
+        if ($mediaFile = $request->file('picture')) {
+            $mediaPath = public_path()."/candidate_pictures";
+            ($candidate->picture && file_exists($mediaPath."/".$candidate->picture)) ? unlink($mediaPath."/".$candidate->picture) : "";
+            $pictureName = time().".".$mediaFile->getClientOriginalExtension();
+            $mediaFile->move($mediaPath,$pictureName);
             $candidate->update(['picture' => $pictureName]);
         }
+
         $candidate->update([
             'first_name' => $request->first_name,
             'middle_name' => $request->middle_name,
@@ -160,7 +167,8 @@ class CandidateController extends Controller
      */
     public function destroy(Candidate $candidate)
     {
-        Storage::delete('public/candidate_pictures/'.$candidate->picture);
+        $mediaPath = public_path()."/candidate_pictures";
+        ($candidate->picture && file_exists($mediaPath."/".$candidate->picture)) ? unlink($mediaPath."/".$candidate->picture) : "";
         $candidate->delete();
         return redirect()->route('candidate.index');
     }

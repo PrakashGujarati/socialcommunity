@@ -58,7 +58,7 @@
                             <td>{{$employee->contact}}</td>
                             <td>
                             @if($employee->logo)
-                                <img class="border rounded" src="{{asset('employee_logo/'.$employee->logo)}}" height="60">
+                                <img class="border rounded" src="{{asset('employee_logoes/'.$employee->logo)}}" height="60">
                             @else
                                 <img class="border rounded" src="https://donatepoints.aircanada.com/img/no_image_available.jpg" height="60">
                             @endif

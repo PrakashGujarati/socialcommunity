@@ -43,11 +43,15 @@ class RecruitmentController extends Controller
     public function store(Request $request)
     {
         $request->validate($this->rules);
+
         $thumbnailName = '';
-        if ($request->file('thumbnail')) {
-            $thumbnailName = time().$request->file('thumbnail')->getClientOriginalName();
-            $request->file('thumbnail')->storeAs('thumbnails', $thumbnailName, 'public');
+
+        if ($mediaFile = $request->file('thumbnail')) {
+            $mediaPath = public_path()."/recruitment_thumbnails";
+            $thumbnailName = time().".".$mediaFile->getClientOriginalExtension();
+            $mediaFile->move($mediaPath,$thumbnailName);
         }
+
         Recruitment::create([
             'headline' => $request->headline,
             'title' => $request->title,
@@ -96,12 +100,15 @@ class RecruitmentController extends Controller
     public function update(Request $request, Recruitment $recruitment)
     {
         $request->validate($this->rules);
-        if ($request->file('thumbnail')) {
-            Storage::delete('public/thumbnails/'.$recruitment->thumbnail);
-            $thumbnailName = time().$request->file('thumbnail')->getClientOriginalName();
-            $request->file('thumbnail')->storeAs('thumbnails', $thumbnailName, 'public');
+
+        if ($mediaFile = $request->file('thumbnail')) {
+            $mediaPath = public_path()."/recruitment_thumbnails";
+            ($recruitment->thumbnail && file_exists($mediaPath."/".$recruitment->thumbnail)) ? unlink($mediaPath."/".$recruitment->thumbnail) : "";
+            $thumbnailName = time().".".$mediaFile->getClientOriginalExtension();
+            $mediaFile->move($mediaPath,$thumbnailName);
             $recruitment->update(['thumbnail' => $thumbnailName]);
         }
+
         $recruitment->update([
             'headline' => $request->headline,
             'title' => $request->title,
@@ -113,6 +120,7 @@ class RecruitmentController extends Controller
             'reported_datetime' => $request->reported_datetime,
             'status' => $request->status,
         ]);
+
         return redirect()->route('recruitment.index');
     }
 
@@ -124,7 +132,8 @@ class RecruitmentController extends Controller
      */
     public function destroy(Recruitment $recruitment)
     {
-        Storage::delete('public/thumbnails/'.$recruitment->thumbnail);
+        $mediaPath = public_path()."/user_recruitment_thumbnailsprofiles";
+        ($recruitment->thumbnail && file_exists($mediaPath."/".$recruitment->thumbnail)) ? unlink($mediaPath."/".$recruitment->thumbnail) : "";
         $recruitment->delete();
         return redirect()->route('recruitment.index');
     }

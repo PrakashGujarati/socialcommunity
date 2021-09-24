@@ -73,7 +73,7 @@
                         <div class="form-group col-md-6">
                             <label class="form-label">Thumbnail</label>
                             <div class="custom-file">
-                                <input type="file" name="thumbnail" class="custom-file-input" id="thumbnailInput">
+                                <input type="file" name="thumbnail" class="custom-file-input" id="thumbnailInput" accept="image/*" />
                                 <label class="custom-file-label" for="thumbnailInput">Choose Thumbnail</label>
                             </div>
                             <small class="text-danger">
