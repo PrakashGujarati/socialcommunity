@@ -21,9 +21,10 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\SportController;
 use App\Http\Controllers\EducationController;
 use Illuminate\Support\Facades\Auth;
+
 use App\Http\Controllers\NotificationsController;
-use App\http\Controllers\ImportController;
-use App\http\Controllers\DashboardController;
+use App\Http\Controllers\ImportController;
+use App\Http\Controllers\DashboardController;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
