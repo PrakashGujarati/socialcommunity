@@ -29,6 +29,7 @@ class CreateUsersTable extends Migration
             $table->bigInteger('pincode')->nullable();
             $table->string('picture')->nullable();
             $table->string('status')->nullable();
+            $table->string('device_token')->nullable();
             $table->timestamps();
         });
     }
