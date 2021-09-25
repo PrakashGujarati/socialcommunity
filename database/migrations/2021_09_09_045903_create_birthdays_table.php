@@ -20,6 +20,7 @@ class CreateBirthdaysTable extends Migration
             $table->time('time')->nullable();
             $table->string('place')->nullable();
             $table->text('wishes')->nullable();
+            $table->string('picture')->nullable();
             $table->string('status')->nullable();
             $table->timestamps();
         });

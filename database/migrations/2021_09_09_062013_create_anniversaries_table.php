@@ -20,6 +20,7 @@ class CreateAnniversariesTable extends Migration
             $table->time('time')->nullable();
             $table->string('place')->nullable();
             $table->string('wishes')->nullable();
+            $table->string('picture')->nullable();
             $table->string('status')->nullable();
             $table->timestamps();
         });

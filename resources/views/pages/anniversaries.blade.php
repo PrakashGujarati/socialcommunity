@@ -42,6 +42,7 @@
                             <th scope="col">Place</th>
                             <th scope="col">Wishes</th>
                             <th scope="col">Status</th>
+                            <th scope="col">Picture</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
@@ -53,6 +54,13 @@
                             <td>{{$anniversary->time}}</td>
                             <td>{{$anniversary->place}}</td>
                             <td>{{$anniversary->wishes}}</td>
+                            <td>
+                                @if($anniversary->picture)
+                                    <img class="border rounded" src="{{ asset('/anniversary_pictures/'.$anniversary->picture) }}" height="60">
+                                @else
+                                    <img class="border rounded" src="https://e7.pngegg.com/pngimages/456/700/png-clipart-computer-icons-avatar-user-profile-avatar-heroes-logo.png" height="60">
+                                @endif
+                            </td>
                             <td>{{$anniversary->status}}</td>
                             <td>
                                 <div class="d-flex">
@@ -69,7 +77,7 @@
                                             <i class="fas fa-trash-alt text-danger"></i>
                                         </button>
                                     </form>
-                                    <form action="{{route('changeStatus','anniversary')}}" method="post">
+                                    <form action="{{route('changeStatus','Anniversary')}}" method="post">
                                         @csrf
                                         <input type="hidden" name="id" value="{{$anniversary->id}}">
                                         @if($anniversary->status == "Active")

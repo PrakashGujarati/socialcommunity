@@ -30,9 +30,9 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label class="form-label">Birth Date</label>
-                            <input name="birth_date" type="date" class="form-control" value="{{$birthday->birthdate}}">
+                            <input name="birthdate" type="date" class="form-control" value="{{$birthday->birthdate}}">
                             <small class="text-danger">
-                                @error('birth_date')
+                                @error('birthdate')
                                     <span class="text-red-500 text-xs"><i class="fa fa-bug"></i> {{ $message }}</span>
                                 @enderror
                             </small>
@@ -55,6 +55,18 @@
                         </div>
                     </div>
                     <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label class="form-label">Picture</label>
+                            <div class="custom-file">
+                                <input type="file" name="picture" class="custom-file-input" id="pictureInput" accept="image/*" />
+                                <label class="custom-file-label" for="pictureInput">Choose file</label>
+                            </div>
+                            <small class="text-danger">
+                                @error('picture')
+                                    <span class="text-red-500 text-xs"><i class="fa fa-bug"></i> {{ $message }}</span>
+                                @enderror
+                            </small>
+                        </div>
                         <div class="form-group col-md-6">
                             <label class="form-label">Status</label>
                             <select class="form-select form-control" name="status" aria-label="Default select example">

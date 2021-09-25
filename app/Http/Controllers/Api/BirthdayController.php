@@ -13,9 +13,7 @@ class BirthdayController extends Controller
     public $rules = [
         'name' => 'required',
         'birthdate' => 'required',
-        'time' => 'required',
-        'place' => 'required',
-        'wishes' => 'required'
+        'picture' => 'mimes:jpeg,jpg,png',
     ];
     /**
      * Display a listing of the resource.
@@ -53,6 +51,12 @@ class BirthdayController extends Controller
         if ($validator->fails()) {
             return ['status' => "false",'msg' => $validator->messages()];
         }
+
+        $pictureName = "";
+
+        if ($mediaFile = $request->file('picture')) {
+            $pictureName = globallyStoreMedia($mediaFile,"/birthday_pictures");
+        }
         
         $newBirthday = Birthday::create([           
             'name' => $request->name,
@@ -60,9 +64,11 @@ class BirthdayController extends Controller
             'time' => $request->time,
             'place' => $request->place,
             'wishes' => $request->wishes,
+            'picture' => $pictureName,
             'status' => 'Inactive'
             
         ]);
+
         return $this->responseOut($newBirthday);
     }
 
@@ -102,9 +108,15 @@ class BirthdayController extends Controller
         //
         $birthdays = Birthday::where(['id'=>$request->birthday_id])->first();
         if (!empty($birthdays)) {
+
             $validator = Validator::make($request->all(), $this->rules);
+
             if ($validator->fails()) {
                 return ['status' => "false",'msg' => $validator->messages()];
+            }
+
+            if ($mediaFile = $request->file('picture')) {
+                globallyUpdateMedia($birthday,$mediaFile,'/birthday_pictures','picture');
             }
            
             $birthdays->update([

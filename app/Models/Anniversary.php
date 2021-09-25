@@ -14,6 +14,7 @@ class Anniversary extends Model
         'time',
         'place',
         'wishes',
+        'picture',
         'status'
     ];
 }

@@ -40,6 +40,7 @@
                             <th scope="col">Birth Date</th>
                             <th scope="col">Time</th>
                             <th scope="col">Place</th>
+                            <th scope="col">Picture</th>
                             <th scope="col">Wishes</th>
                             <th scope="col">Status</th>
                             <th scope="col">Action</th>
@@ -52,6 +53,13 @@
                             <td>{{$birthday->birthdate}}</td>
                             <td>{{$birthday->time}}</td>
                             <td>{{$birthday->place}}</td>
+                            <td>
+                                @if($birthday->picture)
+                                    <img class="border rounded" src="{{ asset('/birthday_pictures/'.$birthday->picture) }}" height="60">
+                                @else
+                                    <img class="border rounded" src="https://e7.pngegg.com/pngimages/456/700/png-clipart-computer-icons-avatar-user-profile-avatar-heroes-logo.png" height="60">
+                                @endif
+                            </td>
                             <td>{{$birthday->wishes}}</td>
                             <td>{{$birthday->status}}</td>
                             <td>
@@ -69,7 +77,7 @@
                                             <i class="fas fa-trash-alt text-danger"></i>
                                         </button>
                                     </form>
-                                    <form action="{{route('changeStatus','birthday')}}" method="post">
+                                    <form action="{{route('changeStatus','Birthday')}}" method="post">
                                         @csrf
                                         <input type="hidden" name="id" value="{{$birthday->id}}">
                                         @if($birthday->status == "Active")
