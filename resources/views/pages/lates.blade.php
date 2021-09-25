@@ -55,7 +55,7 @@
                             <td>{{$late->notifications}}</td>
                             <td>
                                 @if($late->picture)
-                                    <img class="border rounded" src="{{ asset('/late_picture/'.$late->picture) }}" height="60">
+                                    <img class="border rounded" src="{{ asset('/late_pictures/'.$late->picture) }}" height="60">
                                 @else
                                     <img class="border rounded" src="https://donatepoints.aircanada.com/img/no_image_available.jpg" height="60">
                                 @endif

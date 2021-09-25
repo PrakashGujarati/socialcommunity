@@ -16,11 +16,11 @@
                 </a>
             </div>
             <div class="block-content block-content-full p-5">
-                <form action="{{route('megazine.update',$megazine->id)}}" method="POST" enctype="multipart/form-data" class="shadow rounder p-5">
+                <form action="{{route('megazine.update',$megazine)}}" method="POST" enctype="multipart/form-data" class="shadow rounder p-5">
                     @csrf
                     @method('PUT')
                     <div class="form-row">
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-6">
                             <label class="form-label">Title</label>
                             <input name="title" type="text" class="form-control" placeholder="title" value="{{$megazine->title}}">
                             <small class="text-danger">
@@ -29,11 +29,12 @@
                                 @enderror
                             </small>
                         </div>
-                    </div>
-                    <div class="form-row">
                         <div class="form-group col-md-6">
                             <label class="form-label">Category</label>
-                            <input name="category" type="text" class="form-control" placeholder="Category" value="{{$megazine->category}}">
+                            <select class="form-select form-control" name="category" aria-label="Default select example">
+                                <option value="Ramnath" {{$megazine->category == "Ramnath" ?  'selected' : ''}} > Ramnath</option>
+                                <option value="Dharamvani" {{$megazine->category == "Dharamvani" ?  'selected' : ''}} > Dharamvani</option>
+                            </select>
                             <small class="text-danger">
                                 @error('category')
                                     <span class="text-red-500 text-xs"><i class="fa fa-bug"></i> {{ $message }}</span>
@@ -42,23 +43,16 @@
                         </div>
                     </div>
                     <div class="form-row">
-                    <div class="form-group col-md-6">
+                        <div class="form-group col-md-6">
                             <label class="form-label">Date</label>
                             <input name="date" type="date" class="form-control" value="{{$megazine->date}}">
                         </div>
-                    </div>
-                    <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label class="form-label">Magazine Image</label>
+                            <label class="form-label">Magazine File</label>
                             <div class="custom-file">
-                                <input type="file" name="megazine" class="custom-file-input" id="logoInput">
-                                <label class="custom-file-label" for="logoInput">Choose Logo</label>
+                                <input type="file" name="megazine" class="custom-file-input" id="cardInput" accept=".pdf">
+                                <label class="custom-file-label" for="cardInput">Choose magazine</label>
                             </div>
-                            <small class="text-danger">
-                                @error('path')
-                                    <span class="text-red-500 text-xs"><i class="fa fa-bug"></i> {{ $message }}</span>
-                                @enderror
-                            </small>
                         </div>
                     </div>
                     <div class="form-row">
@@ -75,7 +69,6 @@
                         <a href="{{route('megazine.index')}}" class="btn btn-secondary my-5 mx-3">Cancel</a>
                     </div>
                 </form>
-            </div>
         </div>
     </div>
     <!-- END Page Content -->

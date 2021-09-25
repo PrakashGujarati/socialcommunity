@@ -15,7 +15,6 @@
                     <i class="bi bi-x-lg"></i>
                 </a>
             </div>
-            <div class="block-content block-content-full p-5">
                 <form action="{{route('user.update',$user)}}" method="POST" enctype="multipart/form-data" class="shadow rounded p-5">
                     @csrf
                     @method('PUT')
@@ -114,7 +113,7 @@
                         <div class="form-group col-md-12">
                             <label class="form-label">Picture</label>
                             <div class="custom-file">
-                                <input type="file" name="file" class="custom-file-input" id="pictureInput">
+                                <input type="file" name="file" class="custom-file-input" id="pictureInput" accept="image/*" />
                                 <label class="custom-file-label" for="pictureInput">Choose file</label>
                                 <small class="text-danger">
                                     @error('file')
@@ -129,7 +128,6 @@
                         <a href="{{route('user.index')}}" class="btn btn-secondary my-5 mx-3">Cancel</a>
                     </div>
                 </form>
-            </div>
         </div>
     </div>
     <!-- END Page Content -->

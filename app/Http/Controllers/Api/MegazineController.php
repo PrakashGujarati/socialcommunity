@@ -6,13 +6,18 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Validator;
 use App\Models\Megazine;
+use Spatie\PdfToImage\Pdf;
+use Illuminate\Filesystem\Filesystem as File;
+
+use Image;
 
 
 class MegazineController extends Controller
 {
     public $rules = [
         'title' => 'required',
-        'category' => 'required'
+        'category' => 'required',
+        'megazine' => 'mimes:pdf'
     ];
     /**
      * Display a listing of the resource.
@@ -51,33 +56,24 @@ class MegazineController extends Controller
             return ['status' => "false",'msg' => $validator->messages()];
             
         }
-        
-        if ($files = $request->file('path')) {
-            $destinationPath = 'file/'; 
-            $profilefile = time().".". $files->getClientOriginalExtension();
-      
-                if ($files->getClientMimeType() !== 'application/pdf')
-                {   
-                    return ['status' => "false",'msg' => 'The path must be a file of type: pdf'];
-                }
-               
-                if($files->getSize() > 3145728 ){
 
-                    return ['status' => "false",'msg' => 'The pdf must be a file of size less than 10 mb'];
-                }
-            $files->move($destinationPath, $profilefile);
-                
-            $insert['file'] = "$profilefile";
-                
-            }
+        $megazineName = "";
+        $imagesData = "";
+
+        if ($request->file('path')){
+            $megazineName = $request->file('path')->getClientOriginalName();
+            $imagesData = $this->storeMedia($request->file('path'),$request->category,$request->title);
+        }
 
         $magazines = Megazine::create([
             'title' =>$request->title,
             'category' => $request->category,
             'date' => $request->date,
-            'path' => $profilefile,
+            'path' => $megazineName,
+            'resized_images' => $imagesData,
             'status' => 'Inactive'            
         ]);
+        $magazines->resized_images = json_decode($magazines->resized_images,true);
         return $this->responseOut($magazines);
     }
 
@@ -91,6 +87,7 @@ class MegazineController extends Controller
     {
         //
         $data = Megazine::where(['id' => $request->megazine_id])->first();
+        $data->resized_images = json_decode($data->resized_images,true);
         return $this->responseOut($data);
     }
 
@@ -142,5 +139,45 @@ class MegazineController extends Controller
                 'data' => []
             ]);
         }
+    }
+
+    public function storeMedia($mediaFile,$category,$title)
+    {
+        $mediaPath = public_path()."/megazines/".$category."/".$title;
+        
+        $megazineNameWithExtension = $mediaFile->getClientOriginalName();
+        $megazineNameWithoutExtension = pathinfo($mediaFile->getClientOriginalName(),PATHINFO_FILENAME);
+        $mediaFile->move($mediaPath,$megazineNameWithExtension);
+        $megazinePdfPath = $mediaPath."/".$megazineNameWithExtension;
+
+        if(!file_exists($mediaPath."/images")){
+            mkdir($mediaPath."/images", 0777, true);
+        }
+
+        $originalImagesPath = $mediaPath."/images";
+        $pdf = new Pdf($megazinePdfPath);
+
+        $pdf->setOutputFormat('jpeg')->saveImage($originalImagesPath."/".$megazineNameWithoutExtension."(%d)");   
+
+        if(!file_exists($mediaPath."/resized")){
+            mkdir($mediaPath."/resized", 0777, true);
+        }
+
+        $resizedImagesPath = $mediaPath."/resized";
+
+        $originalImages = array_diff(scandir($originalImagesPath), array('..', '.'));
+        $imagesData = [];
+        foreach ($originalImages as $key => $image) {
+            $imgFile = Image::make($originalImagesPath."/".$image);  
+            $imgFile->resize(1080, 1920)->save($resizedImagesPath.'/'.$key."_image_1080*1920");
+            $imgFile->resize(480, 854)->save($resizedImagesPath.'/'.$key."_image_480*854");
+            $imgFile->resize(720, 1280)->save($resizedImagesPath.'/'.$key."_image_720*1280");
+            array_push($imagesData,[
+                '1080x1920' => $key."_image_1080x1920.jpeg",
+                '480x854' => $key."_image_480x854.jpeg",
+                '720x1280' => $key."_image_720x1280.jpeg"
+            ]);
+        }
+        return json_encode($imagesData,true);
     }
 }

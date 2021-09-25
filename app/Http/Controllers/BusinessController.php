@@ -143,7 +143,7 @@ class BusinessController extends Controller
             'contact' => $request->contact,
             'email' => $request->email,
             'address' => $request->address,
-            'status' => $request->status,
+            'status' => $request->status
         ]);
 
         return redirect()->route('business.index');

@@ -14,6 +14,7 @@ class Birthday extends Model
         'time',
         'place',
         'wishes',
+        'picture',
         'status'
     ];
 }

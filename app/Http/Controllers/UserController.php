@@ -45,11 +45,13 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $profileName = '';
+
         $request->validate($this->rules);
-        if ($request->file()) {
-            $profileName = time().$request->file->getClientOriginalName();
-            $request->file('file')->storeAs('user_profiles', $profileName, 'public');
+        
+        if ($mediaFile = $request->file('file')) {
+            $profileName = globallyStoreMedia($mediaFile,"/user_profiles");
         }
+        
         User::create([
             'role_id' => $request->role_id,
             'email' => $request->email,
@@ -101,15 +103,13 @@ class UserController extends Controller
     {
         $this->rules['email'] = '';
         $this->rules['password'] = '';
+        
         $request->validate($this->rules);
 
         $request->password ? $user->update(['password' => $request->password]) : '';
 
-        if ($request->file()) {
-            Storage::delete('public/user_profiles/'.$user->picture);
-            $profileName = time().$request->file->getClientOriginalName();
-            $request->file('file')->storeAs('user_profiles', $profileName, 'public');
-            $user->update(['picture' => $profileName]);
+        if ($mediaFile = $request->file('file')) {
+            globallyUpdateMedia($user,$mediaFile,'/user_profiles','picture');
         }
 
         $user->update([
@@ -136,7 +136,7 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        Storage::delete('public/user_profiles/'.$user->picture);
+        globallyDeleteMedia($user,'/user_profiles','picture');
         $user->delete();
         return redirect()->route('user.index');
     }

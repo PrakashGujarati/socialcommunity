@@ -15,7 +15,6 @@
                     <i class="bi bi-x-lg"></i>
                 </a>
             </div>
-            <div class="block-content block-content-full p-5">
                 <form action="{{route('late.store')}}" method="POST" enctype="multipart/form-data" class="shadow rounded p-5">
                     @csrf
                     <div class="form-row">
@@ -83,7 +82,7 @@
                         <div class="form-group col-md-6">
                             <label class="form-label">Picture</label>
                             <div class="custom-file">
-                                <input type="file" name="picture" class="custom-file-input" id="pictureInput">
+                                <input type="file" name="picture" class="custom-file-input" id="pictureInput" accept="image/*" />
                                 <label class="custom-file-label" for="pictureInput">Choose file</label>
                             </div>
                             <small class="text-danger">
@@ -105,7 +104,6 @@
                         <a href="{{route('late.index')}}" class="btn btn-secondary my-5 mx-3">Cancel</a>
                     </div>
                 </form>
-            </div>
         </div>
     </div>
     <script src="//cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>

@@ -2,51 +2,104 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Contact;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
 
 class ContactController extends Controller
 {
+    public $rules = [
+        'name' => 'required',
+        'designation' => 'required',
+        'mobile' => 'required',
+        'email' => 'required|email',
+        'picture' => 'image|mimes:jpg,png,jpeg'
+    ];
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
         return view('pages.contact',['contacts' => Contact::all()]);
     }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function create()
     {
         return view('forms.create_contact');
+    
     }
-    public function store(request $request)
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
     {
-        $picture = '';
-        if ($request->file('picture')) {
-            $picture = time().$request->file('picture')->getClientOriginalName();
-            $request->file('picture')->storeAs('contacts', $picture, 'public');
+        $request->validate($this->rules);
+
+        $pictureName = '';
+
+        if ($mediaFile = $request->file('picture')) {
+            $pictureName = globallyStoreMedia($mediaFile,"/contact_pictures");
         }
+
         Contact::create([
             'name' => $request->name,
             'designation' => $request->designation,
             'mobile' => $request->mobile,
             'email' => $request->email,
-            'picture' => $picture,
+            'picture' => $pictureName,
             'status' => $request->status
         ]);
         return redirect()->route('contact.index');
     }
-    public function edit($id)
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Contact  $contact
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Contact $contact)
     {
-       $contact=Contact::where('id',$id)->first();
-       return view('forms.edit_contact',compact('contact'));
+        //
     }
-    public function update(request $request)
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Contact  $contact
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Contact $contact)
     {
-        $contact = Contact::where('id',$request->id)->first();
-        if ($request->file('picture')) {
-            Storage::delete('public/contacts/'.$contact->path);
-            $logo = time().$request->file('picture')->getClientOriginalName();
-            $request->file('picture')->storeAs('contacts', $logo, 'public');
-            $contact->update(['picture' => $logo]);
+        return view('forms.edit_contact',['contact' => $contact]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Contact  $contact
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Contact $contact)
+    {
+
+        $request->validate($this->rules);
+
+        if ($mediaFile = $request->file('picture')) {
+            globallyUpdateMedia($contact,$mediaFile,'/contact_pictures','picture');
         }
+
         Contact::where('id',$request->id)->update([
             'name' => $request->name,
             'designation' => $request->designation,
@@ -56,9 +109,17 @@ class ContactController extends Controller
         ]);
         return redirect()->route('contact.index');
     }
-    public function delete($id)
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Contact  $contact
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Contact $contact)
     {
-        $contact=Contact::where('id',$id)->delete();
+        globallyDeleteMedia($contact,'/contact_pictures','picture');
+        $contact->delete();
         return redirect()->route('contact.index');
     }
 }

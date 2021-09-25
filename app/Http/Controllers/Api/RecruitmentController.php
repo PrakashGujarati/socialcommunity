@@ -47,13 +47,17 @@ class RecruitmentController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), $this->rules);
+
+        $thumbnailName = "";
+
         if ($validator->fails()) {
             return ['status' => "false",'msg' => $validator->messages()];
         }
-        if ($request->file('thumbnail')) {
-            $thumbnailName = time().$request->file('thumbnail')->getClientOriginalName();
-            $request->file('thumbnail')->storeAs('thumbnails', $thumbnailName, 'public');
+
+        if ($mediaFile = $request->file('thumbnail')) {
+            $thumbnailName = globallyStoreMedia($mediaFile,"/recruitment_thumbnails");
         }
+
         $newRecruitment = Recruitment::create([
             'headline' => $request->headline,
             'title' => $request->title,
@@ -67,6 +71,7 @@ class RecruitmentController extends Controller
             'status' => 'Inactive',
             'done_by' => Auth::user()->id
         ]);
+
         return $this->responseOut($newRecruitment);
     }
 
@@ -103,17 +108,18 @@ class RecruitmentController extends Controller
     public function update(Request $request)
     {
         $recruitment = Recruitment::where(['id'=>$request->recruitment_id,'done_by'=>Auth::user()->id])->first();
+
         if (!empty($recruitment)) {
             $validator = Validator::make($request->all(), $this->rules);
+
             if ($validator->fails()) {
                 return ['status' => "false",'msg' => $validator->messages()];
             }
-            if ($request->file('thumbnail')) {
-                Storage::delete('public/thumbnails/'.$recruitment->thumbnail);
-                $thumbnailName = time().$request->file('thumbnail')->getClientOriginalName();
-                $request->file('thumbnail')->storeAs('thumbnails', $thumbnailName, 'public');
-                $recruitment->update(['thumbnail' => $thumbnailName]);
+
+            if ($mediaFile = $request->file('thumbnail')) {
+                globallyUpdateMedia($recruitment,$mediaFile,'/recruitment_thumbnails','thumbnail');
             }
+
             $recruitment->update([
                 'headline' => $request->headline,
                 'title' => $request->title,
@@ -124,7 +130,9 @@ class RecruitmentController extends Controller
                 'reference_url' => $request->reference_url,
                 'reported_datetime' => $request->reported_datetime,
             ]);
+
             return $this->responseOut($recruitment);
+
         } else {
             return $this->responseOut($recruitment);
         }

@@ -49,19 +49,16 @@ class ContactController extends Controller
     {
         //
         $validator = Validator::make($request->all(), $this->rules);
+
+        $pictureName = "";
+
         if ($validator->fails()) {
             return ['status' => "false",'msg' => $validator->messages()];
         }
-       
-        if ($request->hasFile('picture')){
-            $file = $request->file('picture');
-            $extension = $file->getClientOriginalExtension();
-            $pictureName = time().'.'.$extension;
-            $path = public_path().'/contact_picture';
-            $uplaod = $file->move($path,$pictureName);   
-        }    
 
-       
+        if ($mediaFile = $request->file('picture')) {
+            $pictureName = globallyStoreMedia($mediaFile,"/contact_pictures");
+        }   
 
         $newContact = Contact::create([
             'name' => $request->name,
@@ -112,21 +109,16 @@ class ContactController extends Controller
         $contact = Contact::where(['id'=>$request->contact_id])->first();
 
         if (!empty($contact)) {
+
             $validator = Validator::make($request->all(), $this->rules);
 
         if ($validator->fails()) {
             return ['status' => "false",'msg' => $validator->messages()];
         }
-       
-        if ($request->hasFile('picture')){
-            $file = $request->file('picture');
-            $extension = $file->getClientOriginalExtension();
-            $pictureName = time().'.'.$extension;
-            $path = public_path().'/contact_picture';
-            $uplaod = $file->move($path,$pictureName);   
-        }    
 
-       
+        if ($mediaFile = $request->file('picture')) {
+            globallyUpdateMedia($contact,$mediaFile,'/contact_pictures','picture');
+        }
 
         $contact->update([
             'name' => $request->name,

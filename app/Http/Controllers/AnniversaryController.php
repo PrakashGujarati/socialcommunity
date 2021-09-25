@@ -10,6 +10,7 @@ class AnniversaryController extends Controller
     public $rules = [
         'name' => 'required',
         'marriage_date' => 'required',
+        'picture' => 'mimes:jpeg,jpg,png'
     ];
     /**
      * Display a listing of the resource.
@@ -41,12 +42,19 @@ class AnniversaryController extends Controller
     {
         $request->validate($this->rules);
 
+        $pictureName = "";
+
+        if ($mediaFile = $request->file('picture')) {
+            $pictureName = globallyStoreMedia($mediaFile,"/anniversary_pictures");
+        }
+
         Anniversary::create([
             'name' => $request->name,
             'marriagedate' => $request->marriage_date,
             'time' => $request->time,
             'place' => $request->place,
             'wishes' => $request->wishes,
+            'picture' => $pictureName,
             'status' => $request->status
         ]);
 
@@ -86,6 +94,10 @@ class AnniversaryController extends Controller
     {
         $request->validate($this->rules);
 
+        if ($mediaFile = $request->file('picture')) {
+            globallyUpdateMedia($anniversary,$mediaFile,'/anniversary_pictures','picture');
+        }
+
         $anniversary->update([
             'name' => $request->name,
             'marriagedate' => $request->marriage_date,
@@ -106,6 +118,7 @@ class AnniversaryController extends Controller
      */
     public function destroy(Anniversary $anniversary)
     {
+        globallyDeleteMedia($anniversary,'/anniversary_pictures','picture');
         $anniversary->delete();
         return redirect()->route('anniversary.index');
     }

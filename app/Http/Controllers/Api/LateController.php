@@ -46,14 +46,17 @@ class LateController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), $this->rules);
+
+        $pictureName = "";
+
         if ($validator->fails()) {
             return ['status' => "false",'msg' => $validator->messages()];
         }
-    
-        if ($request->file('picture')) {
-            $pictureName = time().$request->file('picture')->getClientOriginalName();
-            $request->file('picture')->storeAs('late_pictures', $pictureName, 'public');
+
+        if ($mediaFile = $request->file('picture')) {
+            $pictureName = globallyStoreMedia($mediaFile,"/late_pictures");
         }
+
         $newLate = Late::create([
             'first_name' => $request->first_name,
             'middle_name' => $request->middle_name,
@@ -69,6 +72,7 @@ class LateController extends Controller
             'status' => 'Inactive',
             'done_by' => Auth::user()->id
         ]);
+
         return $this->responseOut($newLate);
     }
 
@@ -105,17 +109,19 @@ class LateController extends Controller
     public function update(Request $request)
     {
         $late = Late::where(['id'=>$request->late_id,'done_by'=>Auth::user()->id])->first();
+
         if (!empty($late)) {
+
             $validator = Validator::make($request->all(), $this->rules);
+
             if ($validator->fails()) {
                 return ['status' => "false",'msg' => $validator->messages()];
             }
-            if ($request->file('picture')) {
-                Storage::delete('public/late_pictures/'.$late->picture);
-                $pictureName = time().$request->file('picture')->getClientOriginalName();
-                $request->file('picture')->storeAs('late_pictures', $pictureName, 'public');
-                $late->update(['picture' => $pictureName]);
+
+            if ($mediaFile = $request->file('picture')) {
+                globallyUpdateMedia($late,$mediaFile,'/late_pictures','picture');
             }
+
             $late->update([
                 'first_name' => $request->first_name,
                 'middle_name' => $request->middle_name,
@@ -128,9 +134,13 @@ class LateController extends Controller
                 'notifications' => $request->notifications,
                 'contact' => $request->contact,
             ]);
+
             return $this->responseOut($late);
+
         } else {
+
             return $this->responseOut($late);
+
         }
     }
 

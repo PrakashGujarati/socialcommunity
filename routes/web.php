@@ -19,9 +19,13 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\EmploymentController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\SportController;
+use App\Http\Controllers\EducationController;
 use Illuminate\Support\Facades\Auth;
+
 use App\Http\Controllers\NotificationsController;
-use App\http\Controllers\ImportController;
+use App\Http\Controllers\ImportController;
+use App\Http\Controllers\DashboardController;
+
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 
@@ -37,8 +41,20 @@ use Illuminate\Http\Request;
 |
 */
 
+
+
+
 // Example Routes
-Route::view('/', 'landing');
+Route::get('/', [DashboardController::class,'index'])->name('dashboard');
+Route::get('history', [DashboardController::class,'history'])->name('history');
+Route::get('contact', [DashboardController::class,'contact'])->name('contct');
+// Route::get('gallery', [DashboardController::class,'getGallery'])->name('gallery');
+// Route::get('blog', [DashboardController::class,'blog'])->name('blog');
+Route::get('employees', [DashboardController::class,'employee_records'])->name('employee');
+Route::get('OurEmployees', [DashboardController::class, 'index'])->name('OurEmployees.index');
+Route::get('employess_data' , [DashboardController::class,'getdata'])->name('employee_data.index');
+Route::get('committe', [DashboardController::class,'committe'])->name('commite');
+// Route::get('event', [DashboardController::class,'event'])->name('event');
 Route::view('/pages/slick', 'pages.slick');
 Route::view('/pages/datatables', 'pages.datatables')->name('pages.datatables');
 Route::view('/pages/blank', 'pages.blank');
@@ -59,6 +75,12 @@ Route::group(['middleware'=>'auth'], function () {
     Route::resource('birthday',BirthdayController::class);
     Route::resource('anniversary',AnniversaryController::class);
     Route::resource('doner',DonerController::class);
+    Route::resource('megazine',MegazineController::class);
+    Route::resource('employment', EmploymentController::class);
+    Route::resource('event', EventController::class);
+    Route::resource('sport', SportController::class);
+    Route::resource('contact', ContactController::class);
+    Route::resource('education', EducationController::class);
 
     Route::view('/notification', 'notification.create_notification');
     Route::get('/notification', [NotificationsController::class,'index'])->name('notification.index');
@@ -72,34 +94,10 @@ Route::group(['middleware'=>'auth'], function () {
     Route::put('name/update/{id}',[NameController::class,'update'])->name('name.update');
     Route::get('name/delete/{id}',[NameController::class,'delete'])->name('name.delete');
 
-    Route::get('megazine/index',[MegazineController::class,'index'])->name('megazine.index');
-    Route::get('megazine/create',[MegazineController::class,'create'])->name('megazine.create');
-    Route::post('megazine/store',[MegazineController::class,'store'])->name('megazine.store');
-    Route::get('megazine/edit/{id}',[MegazineController::class,'edit'])->name('megazine.edit');
-    Route::put('megazine/update/{id}',[MegazineController::class,'update'])->name('megazine.update');
-    Route::get('megazine/delete/{id}',[MegazineController::class,'delete'])->name('megazine.delete');
-
-    Route::get('contact/index',[ContactController::class,'index'])->name('contact.index');
-    Route::get('contact/create',[ContactController::class,'create'])->name('contact.create');
-    Route::post('contact/store',[ContactController::class,'store'])->name('contact.store');
-    Route::get('contact/edit/{id}',[ContactController::class,'edit'])->name('contact.edit');
-    Route::put('contact/update/{id}',[ContactController::class,'update'])->name('contact.update');
-    Route::get('contact/delete/{id}',[ContactController::class,'delete'])->name('contact.delete');
-
-    
-
-    Route::resource('employment', EmploymentController::class);
-
-    Route::resource('event', EventController::class);
-
-    Route::resource('sport', SportController::class);
-    
-
-   
-
     Route::view('profile','forms.profile')->name('user.profile');
 
     Route::get('removeMediaImage',[GalleryController::class,'removeMediaImage'])->name('removeMediaImage');
+    
     Route::post('changeStatus/{model}',function($model, Request $request){
         return statusUpdate($model,$request->id);
     })->name('changeStatus');

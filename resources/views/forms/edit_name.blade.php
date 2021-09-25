@@ -15,7 +15,6 @@
                     <i class="bi bi-x-lg"></i>
                 </a>
             </div>
-            <div class="block-content block-content-full p-5">
                 <form action="{{route('name.update',$names->id)}}" method="post" enctype="multipart/form-data" class="shadow rounder p-5">
                     @csrf
                     @method('PUT')
@@ -35,7 +34,6 @@
                         <a href="{{route('name.index')}}" class="btn btn-secondary my-5 mx-3">Cancel</a>
                     </div>
                 </form>
-            </div>
         </div>
     </div>
     <!-- END Page Content -->

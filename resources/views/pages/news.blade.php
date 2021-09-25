@@ -84,7 +84,7 @@
                                             <i class="far fa-trash-alt text-danger"></i>
                                         </button>
                                     </form>
-                                    <form action="{{route('changeStatus','news')}}" method="post">
+                                    <form action="{{route('changeStatus','News')}}" method="post">
                                         @csrf
                                         <input type="hidden" name="id" value="{{$news->id}}">
                                         @if($news->status == "Active")

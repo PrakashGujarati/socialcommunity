@@ -16,11 +16,11 @@
                 </a>
             </div>
             <div class="block-content block-content-full p-5">
-                <form action="{{route('contact.update',$contact->id)}}" method="POST" enctype="multipart/form-data" class="shadow rounder p-5">
+                <form action="{{route('contact.update',$contact)}}" method="POST" enctype="multipart/form-data" class="shadow rounder p-5">
                     @csrf
                     @method('PUT')
                     <div class="form-row">
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-6">
                             <label class="form-label">Name</label>
                             <input name="name" type="text" class="form-control" placeholder="name" value="{{$contact->name}}">
                             <small class="text-danger">
@@ -29,8 +29,6 @@
                                 @enderror
                             </small>
                         </div>
-                    </div>
-                    <div class="form-row">
                         <div class="form-group col-md-6">
                             <label class="form-label">Designation</label>
                             <input name="designation" type="text" class="form-control" placeholder="designation" value="{{$contact->designation}}">
@@ -44,15 +42,13 @@
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label class="form-label">Mobile</label>
-                            <input name="mobile" type="text" class="form-control" placeholder="mobile" value="{{$contact->mobile}}">
+                            <input name="mobile" type="tel" class="form-control" placeholder="mobile" value="{{$contact->mobile}}">
                             <small class="text-danger">
                                 @error('mobile')
                                     <span class="text-red-500 text-xs"><i class="fa fa-bug"></i> {{ $message }}</span>
                                 @enderror
                             </small>
                         </div>
-                    </div>
-                    <div class="form-row">
                         <div class="form-group col-md-6">
                             <label class="form-label">Email </label>
                             <input type="email" name="email"  class="form-control" placeholder="email" value="{{$contact->email }}">
@@ -67,8 +63,8 @@
                         <div class="form-group col-md-6">
                             <label class="form-label">Picture</label>
                             <div class="custom-file">
-                                <input type="file" name="picture" class="custom-file-input" id="logoInput">
-                                <label class="custom-file-label" for="logoInput">Choose Logo</label>
+                                <input type="file" name="picture" class="custom-file-input" id="logoInput" accept="image/*" /> 
+                                <label class="custom-file-label" for="logoInput">Choose Picture</label>
                             </div>
                             <small class="text-danger">
                                 @error('picture')
@@ -76,8 +72,6 @@
                                 @enderror
                             </small>
                         </div>
-                    </div>
-                    <div class="form-row">
                         <div class="form-group col-md-6">
                             <label class="form-label">Status</label>
                             <select class="form-select form-control" name="status" aria-label="Default select example">
@@ -91,7 +85,6 @@
                         <a href="{{route('contact.index')}}" class="btn btn-secondary my-5 mx-3">Cancel</a>
                     </div>
                 </form>
-            </div>
         </div>
     </div>
     <!-- END Page Content -->

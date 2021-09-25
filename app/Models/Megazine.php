@@ -13,6 +13,7 @@ class Megazine extends Model
         'category',
         'date',
         'path',
+        'resized_images',
         'status'        
     ];
 }

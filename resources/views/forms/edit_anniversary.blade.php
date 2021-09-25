@@ -15,8 +15,7 @@
                     <i class="bi bi-x-lg"></i>
                 </a>
             </div>
-            <div class="block-content block-content-full p-5">
-                <form action="{{route('anniversary.update', $anniversary)}}" method="POST" class="shadow rounded p-5">
+                <form action="{{route('anniversary.update', $anniversary)}}" method="POST" class="shadow rounded p-5" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="form-row">
@@ -57,6 +56,18 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
+                            <label class="form-label">Picture</label>
+                            <div class="custom-file">
+                                <input type="file" name="picture" class="custom-file-input" id="pictureInput" accept="image/*" />
+                                <label class="custom-file-label" for="pictureInput">Choose file</label>
+                            </div>
+                            <small class="text-danger">
+                                @error('picture')
+                                    <span class="text-red-500 text-xs"><i class="fa fa-bug"></i> {{ $message }}</span>
+                                @enderror
+                            </small>
+                        </div>
+                        <div class="form-group col-md-6">
                             <label class="form-label">Status</label>
                             <select class="form-select form-control" name="status" aria-label="Default select example">
                                 <option value="Active" {{$anniversary->status == "Active" ?  'selected' : ''}} > Active</option>
@@ -69,7 +80,6 @@
                         <a href="{{route('anniversary.index')}}" class="btn btn-secondary my-5 mx-3">Cancel</a>
                     </div>
                 </form>
-            </div>
         </div>
     </div>
     <!-- END Page Content -->

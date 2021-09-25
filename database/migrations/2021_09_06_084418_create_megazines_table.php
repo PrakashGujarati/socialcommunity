@@ -19,6 +19,7 @@ class CreateMegazinesTable extends Migration
             $table->string('category')->nullable();
             $table->date('date')->nullable(); 
             $table->string('path')->nullable();
+            $table->text('resized_images')->nullable();
             $table->string('status')->nullable();
             $table->timestamps();
         });

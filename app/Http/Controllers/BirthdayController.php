@@ -9,7 +9,8 @@ class BirthdayController extends Controller
 {
     public $rules = [
         'name' => 'required',
-        'birth_date' => 'required',
+        'birthdate' => 'required',
+        'picture' => 'mimes:jpeg,jpg,png'
     ];
     /**
      * Display a listing of the resource.
@@ -41,12 +42,19 @@ class BirthdayController extends Controller
     {
         $request->validate($this->rules);
 
+        $pictureName = "";
+
+        if ($mediaFile = $request->file('picture')) {
+            $pictureName = globallyStoreMedia($mediaFile,"/birthday_pictures");
+        }
+
         Birthday::create([
             'name' => $request->name,
-            'birthdate' => $request->birth_date,
+            'birthdate' => $request->birthdate,
             'time' => $request->time,
             'place' => $request->place,
             'wishes' => $request->wishes,
+            'picture' => $pictureName,
             'status' => $request->status
         ]);
 
@@ -87,9 +95,13 @@ class BirthdayController extends Controller
     {
         $request->validate($this->rules);
 
+        if ($mediaFile = $request->file('picture')) {
+            globallyUpdateMedia($birthday,$mediaFile,'/birthday_pictures','picture');
+        }
+
         $birthday->update([
             'name' => $request->name,
-            'birthdate' => $request->birth_date,
+            'birthdate' => $request->birthdate,
             'time' => $request->time,
             'place' => $request->place,
             'wishes' => $request->wishes,
@@ -107,6 +119,7 @@ class BirthdayController extends Controller
      */
     public function destroy(Birthday $birthday)
     {
+        globallyDeleteMedia($birthday,'/birthday_pictures','picture');
         $birthday->delete();
         return redirect()->route('birthday.index');
     }
