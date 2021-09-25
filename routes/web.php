@@ -22,6 +22,8 @@ use App\Http\Controllers\SportController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\NotificationsController;
 use App\http\Controllers\ImportController;
+use App\http\Controllers\DashboardController;
+
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 
@@ -37,8 +39,20 @@ use Illuminate\Http\Request;
 |
 */
 
+
+
+
 // Example Routes
-Route::view('/', 'landing');
+Route::get('/', [DashboardController::class,'index'])->name('dashboard');
+Route::get('history', [DashboardController::class,'history'])->name('history');
+Route::get('contact', [DashboardController::class,'contact'])->name('contct');
+// Route::get('gallery', [DashboardController::class,'getGallery'])->name('gallery');
+// Route::get('blog', [DashboardController::class,'blog'])->name('blog');
+Route::get('employees', [DashboardController::class,'employee_records'])->name('employee');
+Route::get('OurEmployees', [DashboardController::class, 'index'])->name('OurEmployees.index');
+Route::get('employess_data' , [DashboardController::class,'getdata'])->name('employee_data.index');
+Route::get('committe', [DashboardController::class,'committe'])->name('commite');
+// Route::get('event', [DashboardController::class,'event'])->name('event');
 Route::view('/pages/slick', 'pages.slick');
 Route::view('/pages/datatables', 'pages.datatables')->name('pages.datatables');
 Route::view('/pages/blank', 'pages.blank');
