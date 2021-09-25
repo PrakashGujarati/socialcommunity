@@ -48,6 +48,9 @@ class UserController extends Controller
 
         $request->validate($this->rules);
         
+        if ($mediaFile = $request->file('file')) {
+            $profileName = globallyStoreMedia($mediaFile,"/user_profiles");
+        }
         
         User::create([
             'role_id' => $request->role_id,
@@ -100,7 +103,7 @@ class UserController extends Controller
     {
         $this->rules['email'] = '';
         $this->rules['password'] = '';
-
+        
         $request->validate($this->rules);
 
         $request->password ? $user->update(['password' => $request->password]) : '';

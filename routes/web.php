@@ -62,6 +62,7 @@ Route::group(['middleware'=>'auth'], function () {
     Route::resource('employment', EmploymentController::class);
     Route::resource('event', EventController::class);
     Route::resource('sport', SportController::class);
+    Route::resource('contact', ContactController::class);
 
     Route::view('/notification', 'notification.create_notification');
     Route::get('/notification', [NotificationsController::class,'index'])->name('notification.index');
@@ -74,13 +75,6 @@ Route::group(['middleware'=>'auth'], function () {
     Route::get('name/edit/{id}',[NameController::class,'edit'])->name('name.edit');
     Route::put('name/update/{id}',[NameController::class,'update'])->name('name.update');
     Route::get('name/delete/{id}',[NameController::class,'delete'])->name('name.delete');
-
-    Route::get('contact/index',[ContactController::class,'index'])->name('contact.index');
-    Route::get('contact/create',[ContactController::class,'create'])->name('contact.create');
-    Route::post('contact/store',[ContactController::class,'store'])->name('contact.store');
-    Route::get('contact/edit/{id}',[ContactController::class,'edit'])->name('contact.edit');
-    Route::put('contact/update/{id}',[ContactController::class,'update'])->name('contact.update');
-    Route::get('contact/delete/{id}',[ContactController::class,'delete'])->name('contact.delete');
 
     Route::view('profile','forms.profile')->name('user.profile');
 

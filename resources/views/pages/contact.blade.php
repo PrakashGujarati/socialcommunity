@@ -41,6 +41,7 @@
                     <i class="bi bi-plus-lg"></i> Create Contact
                 </a>
             </div>
+            @include('modals.contacts_modal')
             <div class="block-content block-content-full">
                 <table class="table table-responsive table-bordered table-striped table-vcenter js-dataTable-full">
                     <thead>
@@ -61,16 +62,42 @@
                             <td>{{$contact->designation}}</td>
                             <td>{{$contact->mobile}}</td>
                             <td>{{$contact->email}}</td>
-                            <td>{{$contact->picture}}</td>
+                            <td>
+                                @if($contact->picture)
+                                    <img class="border rounded" src="{{ asset('/contact_pictures/'.$contact->picture) }}" height="60">
+                                @else
+                                    <img class="border rounded" src="https://e7.pngegg.com/pngimages/456/700/png-clipart-computer-icons-avatar-user-profile-avatar-heroes-logo.png" height="60">
+                                @endif
+                            </td>
                             <td>{{$contact->status}}</td>
                             <td>
                                 <div class="d-flex">
-                                    <a href="{{route('contact.edit',$contact)}}" class="btn btn-primary mx-1">
-                                        <i class="bi bi-pencil"></i>
+                                    <button type="button" class="btn btn-default mx-1" data-toggle="modal" data-target="#Modal-{{$contact->id}}">
+                                        <i class="bi bi-aspect-ratio"></i>
+                                    </button>
+                                    <a href="{{route('contact.edit',$contact)}}" class="btn btn-default mx-1">
+                                        <i class="bi bi-pencil text-info"></i>
                                     </a>
-                                    <a href="{{route('contact.delete',$contact)}}" class="btn btn-danger mx-1">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </a>
+                                    <form action="{{route('contact.destroy',$contact)}}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-default mx-1">
+                                            <i class="fas fa-trash-alt text-danger"></i>
+                                        </button>
+                                    </form>
+                                    <form action="{{route('changeStatus','Contact')}}" method="post">
+                                        @csrf
+                                        <input type="hidden" name="id" value="{{$contact->id}}">
+                                        @if($contact->status == "Active")
+                                        <button type="submit" class="btn btn-default mx-2" data-toggle="tooltip" title="click to Deactive">
+                                            <i class="fas fa-eye-slash text-danger"></i>
+                                        </button>
+                                        @else
+                                        <button type="submit" class="btn btn-default mx-2" data-toggle="tooltip" title="click to Active">
+                                            <i class="fas fa-eye text-success"></i>
+                                        </button>
+                                        @endif
+                                    </form>
                                 </div>
                             </td>
                         </tr>
