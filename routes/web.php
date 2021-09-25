@@ -19,8 +19,10 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\EmploymentController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\SportController;
+use App\Http\Controllers\EducationController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\NotificationsController;
+use App\http\Controllers\ImportController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 
@@ -63,6 +65,7 @@ Route::group(['middleware'=>'auth'], function () {
     Route::resource('event', EventController::class);
     Route::resource('sport', SportController::class);
     Route::resource('contact', ContactController::class);
+    Route::resource('education', EducationController::class);
 
     Route::view('/notification', 'notification.create_notification');
     Route::get('/notification', [NotificationsController::class,'index'])->name('notification.index');
@@ -84,9 +87,16 @@ Route::group(['middleware'=>'auth'], function () {
         return statusUpdate($model,$request->id);
     })->name('changeStatus');
 
+    Route::get('import_create',[ImportController::class,'index'])->name('import.index');
+    Route::post('import', [ImportController::class, 'import'])->name('import');
+
 });
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

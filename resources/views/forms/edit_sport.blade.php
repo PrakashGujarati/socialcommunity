@@ -10,12 +10,11 @@
     <div class="content">
         <div class="block block-rounded">
             <div class="block-header block-header-default">
-                <h3 class="block-title">Create <small>News</small></h3>
+                <h3 class="block-title">Create <small>Sports</small></h3>
                 <a href="{{route('sport.index')}}" class="btn btn-primary m-2">
                     <i class="bi bi-x-lg"></i>
                 </a>
             </div>
-            <div class="block-content block-content-full p-5">
                 <form action="{{route('sport.update',$sport->id)}}" method="POST" enctype="multipart/form-data" class="shadow rounded p-5">
                     @csrf
                     @method('PUT')
@@ -102,7 +101,6 @@
                         <a href="{{route('sport.index')}}" class="btn btn-secondary my-5 mx-3">Cancel</a>
                     </div>
                 </form>
-            </div>
         </div>
     </div>
     <!-- END Page Content -->

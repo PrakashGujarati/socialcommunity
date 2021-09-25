@@ -15,7 +15,6 @@
                     <i class="bi bi-x-lg"></i>
                 </a>
             </div>
-            <div class="block-content block-content-full p-5">
                 <form action="{{route('birthday.store')}}" method="POST" class="shadow rounded p-5">
                     @csrf
                     <div class="form-row">
@@ -68,7 +67,6 @@
                         <a href="{{route('birthday.index')}}" class="btn btn-secondary my-5 mx-3">Cancel</a>
                     </div>
                 </form>
-            </div>
         </div>
     </div>
     <!-- END Page Content -->

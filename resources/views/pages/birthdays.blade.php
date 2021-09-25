@@ -28,7 +28,7 @@
             <div class="block-header block-header-default">
                 <h3 class="block-title">Dynamic Table <small>Birthdays</small></h3>
                 <a href="{{route('birthday.create')}}" class="btn btn-outline-primary m-2">
-                    <i class="bi bi-plus-lg"></i> Create User
+                    <i class="bi bi-plus-lg"></i> Create Birthdays
                 </a>
             </div>
             @include('modals.birthdays_modal')

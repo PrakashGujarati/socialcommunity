@@ -69,7 +69,6 @@
                         <a href="{{route('megazine.index')}}" class="btn btn-secondary my-5 mx-3">Cancel</a>
                     </div>
                 </form>
-            </div>
         </div>
     </div>
     <!-- END Page Content -->

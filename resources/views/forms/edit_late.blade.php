@@ -15,7 +15,6 @@
                     <i class="bi bi-x-lg"></i>
                 </a>
             </div>
-            <div class="block-content block-content-full p-5">
                 <form action="{{route('late.update',$late)}}" method="POST" enctype="multipart/form-data" class="shadow rounded p-5">
                     @csrf
                     @method('PUT')
@@ -105,7 +104,6 @@
                         <a href="{{route('late.index')}}" class="btn btn-secondary my-5 mx-3">Cancel</a>
                     </div>
                 </form>
-            </div>
         </div>
     </div>
     <script src="//cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
