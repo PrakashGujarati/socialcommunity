@@ -56,9 +56,7 @@ class CandidateController extends Controller
         $pictureName = '';
 
         if ($mediaFile = $request->file('picture')) {
-            $mediaPath = public_path()."/candidate_pictures";
-            $pictureName = time().".".$mediaFile->getClientOriginalExtension();
-            $mediaFile->move($mediaPath,$pictureName);
+            $pictureName = globallyStoreMedia($mediaFile,"/candidate_pictures");
         }
 
         $newCandidate = Candidate::create([
@@ -142,11 +140,7 @@ class CandidateController extends Controller
             }
 
             if ($mediaFile = $request->file('picture')) {
-                $mediaPath = public_path()."/candidate_pictures";
-                ($candidate->picture && file_exists($mediaPath."/".$candidate->picture)) ? unlink($mediaPath."/".$candidate->picture) : "";
-                $pictureName = time().".".$mediaFile->getClientOriginalExtension();
-                $mediaFile->move($mediaPath,$pictureName);
-                $candidate->update(['picture' => $pictureName]);
+                globallyUpdateMedia($candidate,$mediaFile,'/candidate_pictures','picture');
             }
 
             $candidate->update([

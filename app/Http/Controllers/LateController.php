@@ -46,9 +46,7 @@ class LateController extends Controller
         $request->validate($this->rules);
 
         if ($mediaFile = $request->file('picture')) {
-            $mediaPath = public_path()."/late_pictures";
-            $pictureName = time().".".$mediaFile->getClientOriginalExtension();
-            $mediaFile->move($mediaPath,$pictureName);
+            $pictureName = globallyStoreMedia($mediaFile,"/late_pictures");
         }
         
         Late::create([
@@ -104,11 +102,7 @@ class LateController extends Controller
         $request->validate($this->rules);
 
         if ($mediaFile = $request->file('picture')) {
-            $mediaPath = public_path()."/late_pictures";
-            ($late->picture && file_exists($mediaPath."/".$late->picture)) ? unlink($mediaPath."/".$late->picture) : "";
-            $pictureName = time().".".$mediaFile->getClientOriginalExtension();
-            $mediaFile->move($mediaPath,$pictureName);
-            $late->update(['picture' => $pictureName]);
+            globallyUpdateMedia($late,$mediaFile,'/late_pictures','picture');
         }
 
         $late->update([
@@ -136,8 +130,7 @@ class LateController extends Controller
      */
     public function destroy(Late $late)
     {
-        $mediaPath = public_path()."/late_pictures";
-        ($late->picture && file_exists($mediaPath."/".$late->picture)) ? unlink($mediaPath."/".$late->picture) : "";
+        globallyDeleteMedia($late,'/late_pictures','picture');
         $late->delete();
         return redirect()->route('late.index');
     }

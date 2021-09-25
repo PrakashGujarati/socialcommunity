@@ -87,7 +87,7 @@
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label class="form-label">Address</label>
-                            <textarea class="form-control" rows="2" name="address" placeholder="Address...">{{$employee->address}}"</textarea>
+                            <textarea class="form-control" rows="2" name="address" placeholder="Address...">{{$employee->address}}</textarea>
                         </div>
                     </div>
                     <div class="form-row">

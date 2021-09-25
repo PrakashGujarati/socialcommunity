@@ -47,9 +47,7 @@ class RecruitmentController extends Controller
         $thumbnailName = '';
 
         if ($mediaFile = $request->file('thumbnail')) {
-            $mediaPath = public_path()."/recruitment_thumbnails";
-            $thumbnailName = time().".".$mediaFile->getClientOriginalExtension();
-            $mediaFile->move($mediaPath,$thumbnailName);
+            $thumbnailName = globallyStoreMedia($mediaFile,"/recruitment_thumbnails");
         }
 
         Recruitment::create([
@@ -102,11 +100,7 @@ class RecruitmentController extends Controller
         $request->validate($this->rules);
 
         if ($mediaFile = $request->file('thumbnail')) {
-            $mediaPath = public_path()."/recruitment_thumbnails";
-            ($recruitment->thumbnail && file_exists($mediaPath."/".$recruitment->thumbnail)) ? unlink($mediaPath."/".$recruitment->thumbnail) : "";
-            $thumbnailName = time().".".$mediaFile->getClientOriginalExtension();
-            $mediaFile->move($mediaPath,$thumbnailName);
-            $recruitment->update(['thumbnail' => $thumbnailName]);
+            globallyUpdateMedia($recruitment,$mediaFile,'/recruitment_thumbnails','thumbnail');
         }
 
         $recruitment->update([
@@ -132,8 +126,7 @@ class RecruitmentController extends Controller
      */
     public function destroy(Recruitment $recruitment)
     {
-        $mediaPath = public_path()."/user_recruitment_thumbnailsprofiles";
-        ($recruitment->thumbnail && file_exists($mediaPath."/".$recruitment->thumbnail)) ? unlink($mediaPath."/".$recruitment->thumbnail) : "";
+        globallyDeleteMedia($recruitment,'/recruitment_thumbnails','thumbnail');
         $recruitment->delete();
         return redirect()->route('recruitment.index');
     }

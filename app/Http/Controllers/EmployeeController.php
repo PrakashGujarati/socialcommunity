@@ -44,12 +44,13 @@ class EmployeeController extends Controller
     public function store(Request $request)
     {
         $request->validate($this->rules);
+        
         $logo = '';
+
         if ($mediaFile = $request->file('logo')) {
-            $mediaPath = public_path()."/employee_logoes";
-            $logo = time().".".$mediaFile->getClientOriginalExtension();
-            $mediaFile->move($mediaPath,$logo);
+            $logo = globallyStoreMedia($mediaFile,"/employee_logos");
         }
+        
         Employee::create([
             'user_id' => 1,
             'first_name' => $request->first_name,
@@ -65,6 +66,7 @@ class EmployeeController extends Controller
             'status' => $request->status,
             'done_by' => 1
         ]);
+        
         return redirect()->route('employee.index');
     }
 
@@ -100,13 +102,9 @@ class EmployeeController extends Controller
     public function update(Request $request, Employee $employee)
     {
         $request->validate($this->rules);
-        
+
         if ($mediaFile = $request->file('logo')) {
-            $mediaPath = public_path()."/employee_logoes";
-            ($employee->logo && file_exists($mediaPath."/".$employee->logo)) ? unlink($mediaPath."/".$employee->logo) : "";
-            $logo = time().".".$mediaFile->getClientOriginalExtension();
-            $mediaFile->move($mediaPath,$logo);
-            $employee->update(['logo' => $logo]);
+            globallyUpdateMedia($employee,$mediaFile,'/employee_logos','logo');
         }
 
         $employee->update([
@@ -132,8 +130,7 @@ class EmployeeController extends Controller
      */
     public function destroy(Employee $employee)
     {
-        $mediaPath = public_path()."/employee_logoes";
-        ($employee->logo && file_exists($mediaPath."/".$employee->logo)) ? unlink($mediaPath."/".$employee->logo) : "";
+        globallyDeleteMedia($employee,'/employee_logos','logo');
         $employee->delete();
         return redirect()->route('employee.index');
     }

@@ -47,14 +47,14 @@ class LateController extends Controller
     {
         $validator = Validator::make($request->all(), $this->rules);
 
+        $pictureName = "";
+
         if ($validator->fails()) {
             return ['status' => "false",'msg' => $validator->messages()];
         }
-    
+
         if ($mediaFile = $request->file('picture')) {
-            $mediaPath = public_path()."/late_pictures";
-            $pictureName = time().".".$mediaFile->getClientOriginalExtension();
-            $mediaFile->move($mediaPath,$pictureName);
+            $pictureName = globallyStoreMedia($mediaFile,"/late_pictures");
         }
 
         $newLate = Late::create([
@@ -111,17 +111,15 @@ class LateController extends Controller
         $late = Late::where(['id'=>$request->late_id,'done_by'=>Auth::user()->id])->first();
 
         if (!empty($late)) {
+
             $validator = Validator::make($request->all(), $this->rules);
+
             if ($validator->fails()) {
                 return ['status' => "false",'msg' => $validator->messages()];
             }
 
             if ($mediaFile = $request->file('picture')) {
-                $mediaPath = public_path()."/late_pictures";
-                ($late->picture && file_exists($mediaPath."/".$late->picture)) ? unlink($mediaPath."/".$late->picture) : "";
-                $pictureName = time().".".$mediaFile->getClientOriginalExtension();
-                $mediaFile->move($mediaPath,$pictureName);
-                $late->update(['picture' => $pictureName]);
+                globallyUpdateMedia($late,$mediaFile,'/late_pictures','picture');
             }
 
             $late->update([

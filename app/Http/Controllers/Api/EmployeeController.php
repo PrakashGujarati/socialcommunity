@@ -56,9 +56,7 @@ class EmployeeController extends Controller
         $logo = '';
 
         if ($mediaFile = $request->file('logo')) {
-            $mediaPath = public_path()."/employee_logoes";
-            $logo = time().".".$mediaFile->getClientOriginalExtension();
-            $mediaFile->move($mediaPath,$logo);
+            $logo = globallyStoreMedia($mediaFile,"/employee_logos");
         }
 
         $newEmployee = Employee::create([
@@ -122,11 +120,7 @@ class EmployeeController extends Controller
             }
 
             if ($mediaFile = $request->file('logo')) {
-                $mediaPath = public_path()."/employee_logoes";
-                ($employee->logo && file_exists($mediaPath."/".$employee->logo)) ? unlink($mediaPath."/".$employee->logo) : "";
-                $logo = time().".".$mediaFile->getClientOriginalExtension();
-                $mediaFile->move($mediaPath,$logo);
-                $employee->update(['logo' => $logo]);
+                globallyUpdateMedia($employee,$mediaFile,'/employee_logos','logo');
             }
 
             $employee->update([

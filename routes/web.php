@@ -59,6 +59,9 @@ Route::group(['middleware'=>'auth'], function () {
     Route::resource('anniversary',AnniversaryController::class);
     Route::resource('doner',DonerController::class);
     Route::resource('megazine',MegazineController::class);
+    Route::resource('employment', EmploymentController::class);
+    Route::resource('event', EventController::class);
+    Route::resource('sport', SportController::class);
 
     Route::view('/notification', 'notification.create_notification');
     Route::get('/notification', [NotificationsController::class,'index'])->name('notification.index');
@@ -79,18 +82,10 @@ Route::group(['middleware'=>'auth'], function () {
     Route::put('contact/update/{id}',[ContactController::class,'update'])->name('contact.update');
     Route::get('contact/delete/{id}',[ContactController::class,'delete'])->name('contact.delete');
 
-    Route::resource('employment', EmploymentController::class);
-
-    Route::resource('event', EventController::class);
-
-    Route::resource('sport', SportController::class);
-    
-
-   
-
     Route::view('profile','forms.profile')->name('user.profile');
 
     Route::get('removeMediaImage',[GalleryController::class,'removeMediaImage'])->name('removeMediaImage');
+    
     Route::post('changeStatus/{model}',function($model, Request $request){
         return statusUpdate($model,$request->id);
     })->name('changeStatus');

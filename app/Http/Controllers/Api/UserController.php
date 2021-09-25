@@ -85,15 +85,10 @@ class UserController extends Controller
             if ($validator->fails()) {
                 return ['status' => "false",'msg' => $validator->messages()];
             }
-
-            if ($request->hasFile('picture')){
-                $file = $request->file('picture');
-               $extension = $file->getClientOriginalExtension();
-               $fileName = time().'.'.$extension;
-               $path = public_path().'/user_profiles';
-               $uplaod = $file->move($path,$fileName);
-               $user->update(['picture' => $fileName]);
-            }            
+            
+            if ($mediaFile = $request->file('picture')) {
+                globallyUpdateMedia($user,$mediaFile,'/user_profiles','picture');
+            }
 
             $user->update([
                 'first_name' => $request->first_name,

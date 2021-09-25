@@ -48,11 +48,6 @@ class UserController extends Controller
 
         $request->validate($this->rules);
         
-        if ($mediaFile = $request->file('file')) {
-            $mediaPath = public_path()."/user_profiles";
-            $profileName = time().".".$mediaFile->getClientOriginalExtension();
-            $mediaFile->move($mediaPath,$profileName);
-        }
         
         User::create([
             'role_id' => $request->role_id,
@@ -105,16 +100,13 @@ class UserController extends Controller
     {
         $this->rules['email'] = '';
         $this->rules['password'] = '';
+
         $request->validate($this->rules);
 
         $request->password ? $user->update(['password' => $request->password]) : '';
 
         if ($mediaFile = $request->file('file')) {
-            $mediaPath = public_path()."/user_profiles";
-            ($user->picture && file_exists($mediaPath."/".$user->picture)) ? unlink($mediaPath."/".$user->picture) : "";
-            $profileName = time().".".$mediaFile->getClientOriginalExtension();
-            $mediaFile->move($mediaPath,$profileName);
-            $user->update(['picture' => $profileName]);
+            globallyUpdateMedia($user,$mediaFile,'/user_profiles','picture');
         }
 
         $user->update([
@@ -141,8 +133,7 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        $mediaPath = public_path()."/user_profiles";
-        ($user->picture && file_exists($mediaPath."/".$user->picture)) ? unlink($mediaPath."/".$user->picture) : "";
+        globallyDeleteMedia($user,'/user_profiles','picture');
         $user->delete();
         return redirect()->route('user.index');
     }
