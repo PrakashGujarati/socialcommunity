@@ -47,7 +47,7 @@ use Illuminate\Http\Request;
 // Example Routes
 Route::get('/', [DashboardController::class,'index'])->name('dashboard');
 Route::get('history', [DashboardController::class,'history'])->name('history');
-Route::get('contact', [DashboardController::class,'contact'])->name('contact');
+Route::get('contactus', [DashboardController::class,'contact'])->name('contactus');
 // Route::get('gallery', [DashboardController::class,'getGallery'])->name('gallery');
 // Route::get('blog', [DashboardController::class,'blog'])->name('blog');
 Route::get('employees', [DashboardController::class,'employee_records'])->name('employee');
