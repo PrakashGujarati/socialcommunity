@@ -42,7 +42,7 @@
             <a class="nav-link" href="#">Books</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{route('contct')}}">Contact Us</a>
+            <a class="nav-link" href="{{route('contact')}}">Contact Us</a>
           </li>
         </ul>
         <form action="#" class="form-inline position-relative my-2 my-lg-0">
