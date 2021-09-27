@@ -15,7 +15,7 @@ class CreateSurnamesTable extends Migration
     {
         Schema::create('surnames', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string("name");
             $table->timestamps();
         });
     }

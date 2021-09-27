@@ -394,9 +394,9 @@
                                 </a>
                             </li>
                             <li class="nav-main-item">
-                                <a class="nav-main-link{{ request()->is('name'.'*') ? ' active' : '' }}" href="{{route('name.index')}}">
+                                <a class="nav-main-link{{ request()->is('surname'.'*') ? ' active' : '' }}" href="{{route('surname.index')}}">
                                     <i class="nav-main-link-icon fab fa-unsplash"></i>
-                                    <span class="nav-main-link-name">Name</span>
+                                    <span class="nav-main-link-name">Surname</span>
                                 </a>
                             </li>
                             <li class="nav-main-item">

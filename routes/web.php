@@ -13,7 +13,7 @@ use App\Http\Controllers\NewsController;
 use App\Http\Controllers\RecruitmentController;
 use App\Http\Controllers\statusController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\NameController;
+use App\Http\Controllers\SurnameController;
 use App\Http\Controllers\MegazineController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\EmploymentController;
@@ -81,18 +81,12 @@ Route::group(['middleware'=>'auth'], function () {
     Route::resource('sport', SportController::class);
     Route::resource('contact', ContactController::class);
     Route::resource('education', EducationController::class);
+    Route::resource('surname', SurnameController::class);
 
     Route::view('/notification', 'notification.create_notification');
     Route::get('/notification', [NotificationsController::class,'index'])->name('notification.index');
     Route::post('/notification_store', [NotificationsController::class,'store'])->name('notification.store');
     Route::get('/notification/create', [NotificationsController::class,'create']);
-
-    Route::get('name/index',[NameController::class,'index'])->name('name.index');
-    Route::get('name/create',[NameController::class,'create'])->name('name.create');
-    Route::post('name/store',[NameController::class,'store'])->name('name.store');
-    Route::get('name/edit/{id}',[NameController::class,'edit'])->name('name.edit');
-    Route::put('name/update/{id}',[NameController::class,'update'])->name('name.update');
-    Route::get('name/delete/{id}',[NameController::class,'delete'])->name('name.delete');
 
     Route::view('profile','forms.profile')->name('user.profile');
 
