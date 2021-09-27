@@ -40,6 +40,7 @@
                     <i class="bi bi-plus-lg"></i> Create Educations
                 </a>
             </div>
+            @include('modals.educations_modal')
             <div class="block-content block-content-full">
                 <table class="table table-responsive table-bordered table-striped table-vcenter js-dataTable-full">
                     <thead>
@@ -61,7 +62,7 @@
                             <td>{{$education->qualification}}</td>
                             <td>
                                 @if($education->picture)
-                                    <img class="border rounded" src="{{asset('image/'.$education->picture)}}" height="60">
+                                    <img class="border rounded" src="{{asset('education_pictures/'.$education->picture)}}" height="60">
                                 @else
                                     <img class="border rounded" src="https://donatepoints.aircanada.com/img/no_image_available.jpg" height="60">
                                 @endif
@@ -71,19 +72,35 @@
                             <td>{{$education->status}}</td>
                             <td>{{$education->done_by}}</td>
                             <td>
-                            <div class="d-flex">
-                            <a href="{{route('education.edit',$education)}}" class="btn btn-primary mx-2">
-                                        <i class="bi bi-pencil"></i>
-                            </a>
-                            <form action="{{route('education.destroy',$education)}}" method="post">
+                                <div class="d-flex">
+                                    <button type="button" class="btn btn-default mx-2" data-toggle="modal" data-target="#Modal-{{$education->id}}">
+                                        <i class="bi bi-aspect-ratio"></i>
+                                    </button>
+                                    <a href="{{route('education.edit',$education)}}" class="btn btn-default mx-2">
+                                        <i class="bi bi-pencil text-info"></i>
+                                    </a>
+                                    <form action="{{route('education.destroy',$education)}}" method="post">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-danger mx-2">
-                                            <i class="bi bi-archive-fill"></i>
+                                        <button type="submit" class="btn btn-default mx-2">
+                                            <i class="far fa-trash-alt text-danger"></i>
                                         </button>
                                     </form>
-                            </td>  
-                            <div>        
+                                    <form action="{{route('changeStatus','Education')}}" method="post">
+                                        @csrf
+                                        <input type="hidden" name="id" value="{{$education->id}}">
+                                        @if($education->status == "Active")
+                                        <button type="submit" class="btn btn-default mx-2" data-toggle="tooltip" title="click to Deactive">
+                                            <i class="fas fa-eye-slash text-danger"></i>
+                                        </button>
+                                        @else
+                                        <button type="submit" class="btn btn-default mx-2" data-toggle="tooltip" title="click to Active">
+                                            <i class="fas fa-eye text-success"></i>
+                                        </button>
+                                        @endif
+                                    </form>
+                                </div>
+                            </td>       
                         </tr>
                         @endforeach
                     </tbody>

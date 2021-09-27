@@ -12,10 +12,9 @@ class EducationController extends Controller
     public $rules = [
         'name' => 'required',
         'qualification' => 'required',
-        'picture' => 'mimes:jpeg,jpg,png',
         'note' => 'required',
-        'gender' => 'required'
-        
+        'gender' => 'required',
+        'picture' => 'mimes:jpeg,jpg,png'
     ];
     /**
      * Display a listing of the resource.
@@ -49,18 +48,16 @@ class EducationController extends Controller
     {
         //
         $validator = Validator::make($request->all(), $this->rules);
+
         if ($validator->fails()) {
             return ['status' => "false",'msg' => $validator->messages()];
         }
-       
-        if ($request->hasFile('picture')){
-            $file = $request->file('picture');
-            $extension = $file->getClientOriginalExtension();
-            $pictureName = time().'.'.$extension;
-            $path = public_path().'/education_picture';
-            $uplaod = $file->move($path,$pictureName);   
-        }    
 
+        $pictureName = "" ;
+
+        if ($mediaFile = $request->file('picture')) {
+            $pictureName = globallyStoreMedia($mediaFile,"/education_pictures");
+        }
         
         $newEducation = Education::create([
             'name' => $request->name,
@@ -71,6 +68,7 @@ class EducationController extends Controller
             'status' => 'Inactive'
             
         ]);
+
         return $this->responseOut($newEducation);
     }
 
@@ -109,17 +107,17 @@ class EducationController extends Controller
     {
         //
         $education = Education::where(['id'=>$request->education_id])->first();
+
         if (!empty($education)) {
+
             $validator = Validator::make($request->all(), $this->rules);
+
             if ($validator->fails()) {
                 return ['status' => "false",'msg' => $validator->messages()];
             }
-            if ($request->hasFile('picture')){
-                $file = $request->file('picture');
-                $extension = $file->getClientOriginalExtension();
-                $pictureName = time().'.'.$extension;
-                $path = public_path().'/education_picture';
-                $uplaod = $file->move($path,$pictureName);   
+
+            if ($mediaFile = $request->file('picture')) {
+                globallyUpdateMedia($education,$mediaFile,'/education_pictures','picture');
             }  
            
             $education->update([
@@ -129,7 +127,9 @@ class EducationController extends Controller
                 'note' => $request->note,
                 'gender' => $request->gender
             ]);
+
             return $this->responseOut($education);
+
         } else {
             return $this->responseOut($education);
         }

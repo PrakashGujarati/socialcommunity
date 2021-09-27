@@ -8,6 +8,13 @@ use Illuminate\Support\Facades\Storage;
 
 class EducationController extends Controller
 {
+    public $rules = [
+        'name' => 'required',
+        'qualification' => 'required',
+        'note' => 'required',
+        'gender' => 'required',
+        'picture' => 'mimes:jpeg,jpg,png'
+    ];
     /**
      * Display a listing of the resource.
      *
@@ -36,10 +43,13 @@ class EducationController extends Controller
      */
     public function store(Request $request)
     {
+
+        $request->validate($this->rules);
+
         $picture = '';
-        if ($request->file('picture')) {
-            $picture = time().$request->file('picture')->getClientOriginalName();
-            $request->file('picture')->storeAs('picture', $picture, 'public');
+
+        if ($mediaFile = $request->file('picture')) {
+            $picture = globallyStoreMedia($mediaFile,"/education_pictures");
         }
 
         Education::create([
@@ -73,7 +83,7 @@ class EducationController extends Controller
      */
     public function edit($id)
     {
-        $education=Education::where('id',$id)->first();
+        $education = Education::where('id',$id)->first();
         return view('forms.edit_education',compact('education'));
     }
 
@@ -86,12 +96,13 @@ class EducationController extends Controller
      */
     public function update(Request $request, Education $education)
     {
-        if ($request->file('picture')) {
-            Storage::delete('public/visiting_cards/'.$education->picture);
-            $picture = time().$request->file('picture')->getClientOriginalName();
-            $request->file('picture')->storeAs('visiting_cards', $picture, 'public');
-            $education->update(['picture' => $picture]);
+
+        $request->validate($this->rules);
+        
+        if ($mediaFile = $request->file('picture')) {
+            globallyUpdateMedia($education,$mediaFile,'/education_pictures','picture');
         }
+
         $education->update([
             'name' => $request->name,
             'qualification' => $request->qualification,
@@ -100,6 +111,7 @@ class EducationController extends Controller
             'status' => $request->status,
             'done_by' => 1
         ]);
+
         return redirect()->route('education.index');
     }
 
@@ -111,6 +123,7 @@ class EducationController extends Controller
      */
     public function destroy(Education $education)
     {
+        globallyDeleteMedia($education,'/education_pictures','picture');
         $education->delete();
         return redirect()->route('education.index');
     }
