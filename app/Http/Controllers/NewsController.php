@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\News;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -12,7 +11,6 @@ class NewsController extends Controller
     public $rules = [
         'headline' => 'required',
         'title' => 'required',
-        
     ];
 
     /**
@@ -45,28 +43,26 @@ class NewsController extends Controller
     {
         $request->validate($this->rules);
 
-        $data=[];
-        if($request->hasfile('thumbnail'))
-        {
-           foreach($request->file('thumbnail') as $image)
-           {
-               $name=$image->getClientOriginalName();
-               $image->move(public_path().'/image/',$name);
-               $data[]=$name;  
-           }
+        $thumbnailNames = [];
+
+        if($request->file('thumbnail')){
+            foreach($request->file('thumbnail') as $file) {
+                $name = globallyStoreMedia($file,"/news_thumbnails");
+                array_push($thumbnailNames,$name);
+            }
         }
-        $data1=[];
-        if($request->hasfile('news_image'))
-        {
-           foreach($request->file('news_image') as $image)
-           {
-               $name=$image->getClientOriginalName();
-               $image->move(public_path().'/image/',$name);
-               $data1[]=$name;  
-           }
+
+        $imagesNames = [];
+
+        if($request->file('news_image')){
+            foreach($request->file('news_image') as $file) {
+                $name = globallyStoreMedia($file,"/news_images");
+                array_push($imagesNames,$name);
+            }
         }
-        $thumbnailName=implode(",", $data);
-        $news_image=implode(",", $data1);
+
+        $thumbnailName = implode(",", $thumbnailNames);
+        $news_image = implode(",", $imagesNames);
 
         News::create([
             'headline' => $request->headline,
@@ -80,6 +76,7 @@ class NewsController extends Controller
             'status' => $request->status,
             'done_by' => 1
         ]);
+        
         return redirect()->route('news.index');
     }
 
@@ -172,23 +169,6 @@ class NewsController extends Controller
         Storage::delete('public/thumbnails/'.$news->thumbnail);
         Storage::delete('public/news_images/'.$news->news_image);
         $news->delete();
-        return redirect()->route('news.index');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\News  $news
-     * @return \Illuminate\Http\Response
-     */
-
-
-    public function changeStatus($id)
-    {
-        $news = News::where('id',$id)->first();
-        $news->update([
-            'status' => $news->status == "Active" ? "Deactive" : "Active"
-        ]);
         return redirect()->route('news.index');
     }
 }

@@ -55,7 +55,7 @@
                             <td>{{$news->reference}}</td>
                             <td>
                                 @if($news->thumbnail)
-                                    <img class="border rounded" src="{{asset('thumbnail/'.$news->thumbnail)}}" height="60">
+                                    <img class="border rounded" src="{{asset('news_thumbnails/'.$news->thumbnail)}}" height="60">
                                 @else
                                     <img class="border rounded" src="https://donatepoints.aircanada.com/img/no_image_available.jpg" height="60">
                                 @endif

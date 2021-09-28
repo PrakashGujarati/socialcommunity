@@ -425,23 +425,17 @@
                             </li>
                             <li class="nav-main-item">
                                 <a class="nav-main-link{{ request()->is('sport'.'*') ? ' active' : '' }}" href="{{route('sport.index')}}">
-                                    <i class="nav-main-link-icon fa fa-calendar"></i>
+                                    <i class="nav-main-link-icon fa fa-futbol"></i>
                                     <span class="nav-main-link-name">Sports</span>
                                 </a>
                             </li>
                             <li class="nav-main-item">
                                 <a class="nav-main-link{{ request()->is('education'.'*') ? ' active' : '' }}" href="{{route('education.index')}}">
-                                    <i class="nav-main-link-icon fa fa-calendar"></i>
+                                    <i class="nav-main-link-icon fa fa-graduation-cap"></i>
                                     <span class="nav-main-link-name">Education</span>
                                 </a>
                             </li>
-                             <li class="nav-main-heading">More</li>
-                            <li class="nav-main-item">
-                                <a class="nav-main-link{{ request()->is('birthday'.'*') ? ' active' : '' }}" href="{{route('birthday.index')}}">
-                                    <i class="nav-main-link-icon fas fa-birthday-cake"></i>
-                                    <span class="nav-main-link-name">Birthdays</span>
-                                </a>
-                            </li>
+                            <li class="nav-main-heading">More</li>
                             <li class="nav-main-item">
                                 <a class="nav-main-link{{ request()->is('anniversary'.'*') ? ' active' : '' }}" href="{{route('anniversary.index')}}">
                                     <i class="nav-main-link-icon fas fa-ring"></i>
@@ -450,27 +444,23 @@
                             </li>
                             <li class="nav-main-item">
                                 <a class="nav-main-link{{ request()->is('doner'.'*') ? ' active' : '' }}" href="{{route('doner.index')}}">
-                                    <i class="nav-main-link-icon fas fa-ring"></i>
+                                    <i class="nav-main-link-icon fas fa-hand-holding-usd"></i>
                                     <span class="nav-main-link-name">Doners</span>
                                 </a>
                             </li>
                             <li class="nav-main-heading">More</li> 
-                            
                             <li class="nav-main-item">
                                 <a class="nav-main-link" href="">
                                     <i class="nav-main-link-icon fa fa-cog"></i>
                                     <span class="nav-main-link-name">Settings</span>
                                 </a>
-                            </li>   
-                            <ul>
-                                
-                                <li class="nav-main-item">
-                                    <a class="nav-main-link" href="{{route('import.index')}}">
-                                        <i class="nav-main-link-icon fas fa-file-import"></i>
-                                        <span class="nav-main-link-name">Import</span>
-                                    </a>
-                                </li>
-                            </ul>
+                            </li>                              
+                            <li class="nav-main-item">
+                                <a class="nav-main-link" href="{{route('import.index')}}">
+                                    <i class="nav-main-link-icon fas fa-file-import"></i>
+                                    <span class="nav-main-link-name">Import</span>
+                                </a>
+                            </li>                            
                             <li class="nav-main-item">
                                 <a class="nav-main-link" href="{{route('notification.index')}}">
                                     <i class="nav-main-link-icon far fa-bell"></i>
