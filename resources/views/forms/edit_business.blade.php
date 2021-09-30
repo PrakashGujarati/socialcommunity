@@ -91,7 +91,7 @@
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label class="form-label">Address</label>
-                            <textarea class="form-control" rows="2" name="address" placeholder="Address...">{{$business->address}}"</textarea>
+                            <textarea class="form-control" rows="2" name="address" placeholder="Address...">{{$business->address}}</textarea>
                         </div>
                     </div>
                     <div class="form-row">
@@ -99,7 +99,7 @@
                             <label class="form-label">Logo</label>
                             <div class="custom-file">
                                 <input type="file" name="logo" class="custom-file-input" id="logoInput">
-                                <label class="custom-file-label" for="logoInput">Choose Logo</label>
+                                <label class="custom-file-label" for="logoInput">Choose Picture</label>
                             </div>
                             <small class="text-danger">
                                 @error('logo')
@@ -111,7 +111,7 @@
                             <label class="form-label">Visiting Card</label>
                             <div class="custom-file">
                                 <input type="file" name="visitingcard" class="custom-file-input" id="cardInput">
-                                <label class="custom-file-label" for="cardInput">Choose Logo</label>
+                                <label class="custom-file-label" for="cardInput">Choose Picture</label>
                             </div>
                             <small class="text-danger">
                                 @error('visitingcard')

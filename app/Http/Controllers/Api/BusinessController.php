@@ -53,17 +53,18 @@ class BusinessController extends Controller
             return ['status' => "false",'msg' => $validator->messages()];
         }
 
-        $visitingcard = '';
-        $logo = '';
+        $logo = "";
 
-        if ($request->file('logo')) {
-            $logo = time().$request->file('logo')->getClientOriginalName();
-            $request->file('logo')->storeAs('business_logos', $logo, 'public');
+        $visitingcard = "";
+
+        if ($mediaFile = $request->file('logo')) {
+            $logo = globallyStoreMedia($mediaFile,"/business_logos");
         }
-        if ($request->file('visitingcard')) {
-            $visitingcard = time().$request->file('visitingcard')->getClientOriginalName();
-            $request->file('visitingcard')->storeAs('visiting_cards', $visitingcard, 'public');
+
+        if ($mediaFile = $request->file('visitingcard')) {
+            $visitingcard = globallyStoreMedia($mediaFile,"/business_visitingcards");
         }
+
         $newBusiness = Business::create([
             'user_id' => Auth::user()->id,
             'first_name' => $request->first_name,
@@ -80,6 +81,7 @@ class BusinessController extends Controller
             'status' => 'Inactive',
             'done_by' => Auth::user()->id,
         ]);
+
         return $this->responseOut($newBusiness);
     }
 
@@ -116,25 +118,21 @@ class BusinessController extends Controller
     public function update(Request $request)
     {
         $business = Business::where(['id'=>$request->business_id,'user_id'=>Auth::user()->id])->first();
+
         if (!empty($business)) {
+
             $validator = Validator::make($request->all(), $this->rules);
 
             if ($validator->fails()) {
                 return ['status' => "false",'msg' => $validator->messages()];
             }
 
-            if ($request->file('logo')) {
-                Storage::delete('public/business_logos/'.$business->logo);
-                $logo = time().$request->file('logo')->getClientOriginalName();
-                $request->file('logo')->storeAs('business_logos', $logo, 'public');
-                $business->update(['logo' => $logo]);
+            if ($mediaFile = $request->file('logo')) {
+                globallyUpdateMedia($business,$mediaFile,'/business_logos','logo');
             }
-
-            if ($request->file('visitingcard')) {
-                Storage::delete('public/visiting_cards/'.$business->visitingcard);
-                $visitingcard = time().$request->file('visitingcard')->getClientOriginalName();
-                $request->file('visitingcard')->storeAs('visiting_cards', $visitingcard, 'public');
-                $business->update(['visitingcard' => $visitingcard]);
+    
+            if ($mediaFile = $request->file('visitingcard')) {
+                globallyUpdateMedia($business,$mediaFile,'/business_visitingcards','visitingcard');
             }
 
             $business->update([
@@ -148,6 +146,7 @@ class BusinessController extends Controller
                 'email' => $request->email,
                 'address' => $request->address,
             ]);
+
             return $this->responseOut($business);
         } else {
             return $this->responseOut($business);

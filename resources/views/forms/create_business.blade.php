@@ -77,8 +77,8 @@
                         <div class="form-group col-md-6">
                             <label class="form-label">Logo</label>
                             <div class="custom-file">
-                                <input type="file" name="filename[]" multiple class="custom-file-input" id="logoInput">
-                                <label class="custom-file-label" for="logoInput">Choose Logo</label>
+                                <input type="file" name="logo" class="custom-file-input" id="logoInput">
+                                <label class="custom-file-label" for="logoInput">Choose Picture</label>
                             </div>
                             <small class="text-danger">
                                 @error('logo')
@@ -90,7 +90,7 @@
                             <label class="form-label">Visiting Card</label>
                             <div class="custom-file">
                                 <input type="file" name="visitingcard" class="custom-file-input" id="cardInput">
-                                <label class="custom-file-label" for="cardInput">Choose Visiting</label>
+                                <label class="custom-file-label" for="cardInput">Choose Picture</label>
                             </div>
                             <small class="text-danger">
                                 @error('visitingcard')

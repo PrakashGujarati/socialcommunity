@@ -43,30 +43,20 @@ class BusinessController extends Controller
      */
     public function store(Request $request)
     {
-    //     $request->validate($this->rules);
+        $request->validate($this->rules);
 
-         $visitingcard = '';
-    //     $this->validate($request, [
-    //         'filenames' => 'required',
-    //         'filenames.*' => 'mimes:doc,pdf,docx,zip'
-    // ]);
-    $data=[];
-    if($request->hasfile('filename'))
-    {
-       foreach($request->file('filename') as $image)
-       {
-           $name=$image->getClientOriginalName();
-           $image->move(public_path().'/image/',$name);
-           $data[]=$name;  
-       }
-    }
-       
-       
-        if ($request->file('visitingcard')) {
-            $visitingcard = time().$request->file('visitingcard')->getClientOriginalName();
-            $request->file('visitingcard')->storeAs('visiting_cards', $visitingcard, 'public');
+        $logo = "";
+
+        $visitingcard = "";
+
+        if ($mediaFile = $request->file('logo')) {
+            $logo = globallyStoreMedia($mediaFile,"/business_logos");
         }
-        $logo=implode(",", $data);
+
+        if ($mediaFile = $request->file('visitingcard')) {
+            $visitingcard = globallyStoreMedia($mediaFile,"/business_visitingcards");
+        }
+
         Business::create([
             'user_id' => 1,
             'first_name' => $request->first_name,
@@ -83,6 +73,7 @@ class BusinessController extends Controller
             'status' => $request->status,
             'done_by' => 1
         ]);
+
         return redirect()->route('business.index');
     }
 
@@ -119,18 +110,12 @@ class BusinessController extends Controller
     {
         $request->validate($this->rules);
 
-        if ($request->file('logo')) {
-            Storage::delete('public/business_logos/'.$business->logo);
-            $logo = time().$request->file('logo')->getClientOriginalName();
-            $request->file('logo')->storeAs('business_logos', $logo, 'public');
-            $business->update(['logo' => $logo]);
+        if ($mediaFile = $request->file('logo')) {
+            globallyUpdateMedia($business,$mediaFile,'/business_logos','logo');
         }
 
-        if ($request->file('visitingcard')) {
-            Storage::delete('public/visiting_cards/'.$business->visitingcard);
-            $visitingcard = time().$request->file('visitingcard')->getClientOriginalName();
-            $request->file('visitingcard')->storeAs('visiting_cards', $visitingcard, 'public');
-            $business->update(['visitingcard' => $visitingcard]);
+        if ($mediaFile = $request->file('visitingcard')) {
+            globallyUpdateMedia($business,$mediaFile,'/business_visitingcards','visitingcard');
         }
 
         $business->update([
@@ -157,8 +142,9 @@ class BusinessController extends Controller
      */
     public function destroy(Business $business)
     {
-        Storage::delete('public/business_logos/'.$business->logo);
-        Storage::delete('public/visiting_cards/'.$business->visitingcard);
+        globallyDeleteMedia($business,'/business_logos','logo');
+        globallyDeleteMedia($business,'/business_visitingcards','visitingcard');
+
         $business->delete();
         return redirect()->route('business.index');
     }
