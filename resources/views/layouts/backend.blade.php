@@ -4,9 +4,9 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 
-        <title>Dashmix - Bootstrap 4 Admin Template &amp; UI Framework</title>
+        <title>Khant Rajput Samaj</title>
 
-        <meta name="description" content="Dashmix - Bootstrap 4 Admin Template &amp; UI Framework created by pixelcave and published on Themeforest">
+        <meta name="description" content="Khant Rajput Samaj">
         <meta name="author" content="pixelcave">
         <meta name="robots" content="noindex, nofollow">
 
@@ -448,19 +448,19 @@
                                     <span class="nav-main-link-name">Doners</span>
                                 </a>
                             </li>
-                            <li class="nav-main-heading">More</li> 
+                            <li class="nav-main-heading">More</li>
                             <li class="nav-main-item">
                                 <a class="nav-main-link" href="">
                                     <i class="nav-main-link-icon fa fa-cog"></i>
                                     <span class="nav-main-link-name">Settings</span>
                                 </a>
-                            </li>                              
+                            </li>
                             <li class="nav-main-item">
                                 <a class="nav-main-link" href="{{route('import.index')}}">
                                     <i class="nav-main-link-icon fas fa-file-import"></i>
                                     <span class="nav-main-link-name">Import</span>
                                 </a>
-                            </li>                            
+                            </li>
                             <li class="nav-main-item">
                                 <a class="nav-main-link" href="{{route('notification.index')}}">
                                     <i class="nav-main-link-icon far fa-bell"></i>
