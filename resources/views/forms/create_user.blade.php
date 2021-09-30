@@ -88,7 +88,12 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label class="form-label">Role Id</label>
-                            <input name="role_id" type="text" class="form-control" placeholder="Role Id">
+                              <select class="form-control" name="role_id" id="">
+                                <option value="">--select--</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                              </select>
                             <small class="text-danger">
                                 @error('role_id')
                                     <span class="text-red-500 text-xs"><i class="fa fa-bug"></i> {{ $message }}</span>
