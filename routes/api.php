@@ -83,10 +83,12 @@ Route::group(['middleware'=>'auth:api'], function () {
     Route::post('/megazine_list' , [MegazineController::class ,'list']);
     Route::post('/megazine_view', [MegazineController::class,'show']);
 
-    Route::post('/gallery_list' , [GalleryController::class , 'list']);
+    Route::post('/video_list' , [GalleryController::class , 'videolist']);
+    Route::post('/gallery_list' , [GalleryController::class , 'gallerylist']);
     Route::post('/gallery_view', [GalleryController::class , 'show']);
     Route::post('/gallery_create' , [GalleryController::class , 'store']);
     Route::post('/gallery_update' , [GalleryController::class , 'update']);
+    
 
     Route::post('/event_list',[EventController::class , 'list']);
     Route::post('/event_view', [EventController::class , 'show']);

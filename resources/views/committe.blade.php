@@ -1,6 +1,9 @@
 @extends('frontend.main')
 @section('page_head')
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/prettyphoto/3.1.5/css/prettyPhoto.css"> -->
+<link rel="stylesheet" href="assets/css/prettyphoto.css">
+
 @endsection
 @section('content')
 <div class="container pt-5 pb-5">
@@ -17,8 +20,9 @@
                 <div id="profile-carousel" class="owl-carousel pt-5 pb-5">
                     <div class="item">                            
                         <div class="post-slide">
-                            <img class="d-block w-85 " src="assets/images/profile.jpg" alt="First slide">
-                            <a  data-toggle="modal" data-target="#myModal" class="over-layer"><i class="fa fa-plus-circle"></i></a>
+                        <a class="item" href="assets/images/profile.jpg" rel="prettyPhoto" title="શ્રી વિજયભાઇ એમ. કંડોલીયા <br> <br> ટ્રસ્ટીશ્રી" class="over-layer">
+    <img src="assets/images/profile.jpg" class="d-block w-85"  />
+</a>
                         </div>    
                         <p class="member-name">શ્રી વિજયભાઇ એમ. કંડોલીયા</p>
                         <p class="member-job">ટ્રસ્ટીશ્રી</p>
@@ -27,8 +31,9 @@
                     </div>
                     <div class="item">                            
                     <div class="post-slide">
-                            <img class="d-block w-85 " src="assets/images/profile.jpg" alt="First slide">
-                            <a  data-toggle="modal" data-target="#myModal" class="over-layer"><i class="fa fa-plus-circle"></i></a>
+                    <a class="item" href="assets/images/profile.jpg" rel="prettyPhoto" title="શ્રી જીતુભાઇ એમ. લાલકીયા <br> <br> ટ્રસ્ટીશ્રી" class="over-layer">
+    <img src="assets/images/profile.jpg" class="d-block w-85"  />
+</a>
                         </div>
                         <p class="member-name">શ્રી જીતુભાઇ એમ. લાલકીયા</p>
                         <p class="member-job">ટ્રસ્ટીશ્રી</p>
@@ -37,8 +42,9 @@
                     </div>
                     <div class="item">             
                     <div class="post-slide">
-                            <img class="d-block w-85 " src="assets/images/profile.jpg" alt="First slide">
-                            <a  data-toggle="modal" data-target="#myModal" class="over-layer"><i class="fa fa-plus-circle"></i></a>
+                    <a class="item" href="assets/images/profile.jpg" rel="prettyPhoto" title="શ્રી ભરતભાઇ બી. ભેડા <br> <br> ટ્રસ્ટીશ્રી" class="over-layer">
+    <img src="assets/images/profile.jpg" class="d-block w-85"  />
+</a>
                         </div>
                         <p class="member-name">શ્રી ભરતભાઇ બી. ભેડા</p>
                         <p class="member-job">ટ્રસ્ટીશ્રી</p>
@@ -47,8 +53,9 @@
                     </div> 
                     <div class="item">                            
                     <div class="post-slide">
-                            <img class="d-block w-85 " src="assets/images/profile.jpg" alt="First slide">
-                            <a  data-toggle="modal" data-target="#myModal" class="over-layer"><i class="fa fa-plus-circle"></i></a>
+                    <a class="item" href="assets/images/profile.jpg" rel="prettyPhoto" title="શ્રી જીકુભાઇ કે. સરવૈયા <br> <br> ટ્રસ્ટીશ્રી" class="over-layer">
+    <img src="assets/images/profile.jpg" class="d-block w-85"  />
+</a>
                         </div>
                         <p class="member-name">શ્રી જીકુભાઇ કે. સરવૈયા</p>
                         <p class="member-job">ટ્રસ્ટીશ્રી</p>
@@ -57,8 +64,9 @@
                     </div>
                     <div class="item">                            
                         <div class="post-slide">
-                            <img class="d-block w-85 " src="assets/images/profile.jpg" alt="First slide">
-                            <a  data-toggle="modal" data-target="#myModal" class="over-layer"><i class="fa fa-plus-circle"></i></a>
+                        <a class="item" href="assets/images/profile.jpg" rel="prettyPhoto" title="શ્રી રણજીતભાઇ એલ. વાગડીયા <br> <br> ટ્રસ્ટીશ્રી" class="over-layer">
+    <img src="assets/images/profile.jpg" class="d-block w-85"  />
+</a>
                         </div>
                         <p class="member-name">શ્રી રણજીતભાઇ એલ. વાગડીયા</p>
                         <p class="member-job">ટ્રસ્ટીશ્રી</p>
@@ -67,8 +75,9 @@
                     </div>
                     <div class="item">                            
                         <div class="post-slide">
-                            <img class="d-block w-85 " src="assets/images/profile.jpg" alt="First slide">
-                            <a  data-toggle="modal" data-target="#myModal" class="over-layer"><i class="fa fa-plus-circle"></i></a>
+                        <a class="item" href="assets/images/profile.jpg" rel="prettyPhoto" title="શ્રી શામજીભાઇ એન. ગોહેલ <br> <br> ટ્રસ્ટીશ્રી" class="over-layer">
+    <img src="assets/images/profile.jpg" class="d-block w-85"  />
+</a>
                         </div>
                         <p class="member-name">શ્રી શામજીભાઇ એન. ગોહેલ</p>
                         <p class="member-job">ટ્રસ્ટીશ્રી</p>	
@@ -77,8 +86,9 @@
                     </div>
                     <div class="item">                            
                         <div class="post-slide">
-                            <img class="d-block w-85 " src="assets/images/profile.jpg" alt="First slide">
-                            <a  data-toggle="modal" data-target="#myModal" class="over-layer"><i class="fa fa-plus-circle"></i></a>
+                        <a class="item" href="assets/images/profile.jpg" rel="prettyPhoto" title="શ્રી કાનજીભાઇ પી. ગુજરાતી <br> <br> અધ્યક્ષ (ટ્રસ્ટીશ્રી)" class="over-layer">
+    <img src="assets/images/profile.jpg" class="d-block w-85"  />
+</a>
                         </div>
                         <p class="member-name">શ્રી કાનજીભાઇ પી. ગુજરાતી</p>
                         <p class="member-job">અધ્યક્ષ (ટ્રસ્ટીશ્રી)</p>
@@ -101,8 +111,9 @@
                 <div id="profile-carousel-2" class="owl-carousel pt-3">
                     <div class="item">                            
                     <div class="post-slide">
-                            <img class="d-block w-85 " src="assets/images/profile.jpg" alt="First slide">
-                            <a  data-toggle="modal" data-target="#myModal" class="over-layer"><i class="fa fa-plus-circle"></i></a>
+                    <a class="item" href="assets/images/profile.jpg" rel="prettyPhoto" title="શ્રી મયુર જી. ચાવડા ચાવડા <br> <br> સંગઠનમંત્રી" class="over-layer">
+    <img src="assets/images/profile.jpg" class="d-block w-85"  />
+</a>
                         </div>
                         <p class="member-name">શ્રી મયુર જી. ચાવડા ચાવડા</p>
                         <p class="member-job">સંગઠનમંત્રી</p>
@@ -111,8 +122,9 @@
                     </div>
                     <div class="item">                            
                         <div class="post-slide">
-                            <img class="d-block w-85 " src="assets/images/profile.jpg" alt="First slide">
-                            <a  data-toggle="modal" data-target="#myModal" class="over-layer"><i class="fa fa-plus-circle"></i></a>
+                        <a class="item" href="assets/images/profile.jpg" rel="prettyPhoto" title="શ્રી નિલેશભાઇ બી. વાગડીયા <br> <br> સંગઠનમંત્રી" class="over-layer">
+    <img src="assets/images/profile.jpg" class="d-block w-85"  />
+</a>
                         </div>
                         <p class="member-name">શ્રી નિલેશભાઇ બી. વાગડીયા</p>
                         <p class="member-job">સંગઠનમંત્રી</p>
@@ -121,8 +133,9 @@
                     </div>
                     <div class="item">                            
                         <div class="post-slide">
-                            <img class="d-block w-85 " src="assets/images/profile.jpg" alt="First slide">
-                            <a  data-toggle="modal" data-target="#myModal" class="over-layer"><i class="fa fa-plus-circle"></i></a>
+                        <a class="item" href="assets/images/profile.jpg" rel="prettyPhoto" title="શ્રી ભરતભાઇ એમ. ભાલીયા <br> <br> સંગઠનમંત્રી" class="over-layer">
+    <img src="assets/images/profile.jpg" class="d-block w-85"  />
+</a>
                         </div>
                         <p class="member-name">શ્રી ભરતભાઇ એમ. ભાલીયા</p>
                         <p class="member-job">સંગઠનમંત્રી</p>
@@ -131,8 +144,9 @@
                     </div> 
                     <div class="item">                            
                         <div class="post-slide">
-                            <img class="d-block w-85 " src="assets/images/profile.jpg" alt="First slide">
-                            <a  data-toggle="modal" data-target="#myModal" class="over-layer"><i class="fa fa-plus-circle"></i></a>
+                        <a class="item" href="assets/images/profile.jpg" rel="prettyPhoto" title="શ્રી વિવેકભાઇ ડી. મકવાણા <br> <br> સહખજાનચી" class="over-layer">
+    <img src="assets/images/profile.jpg" class="d-block w-85"  />
+</a>
                         </div>
                         <p class="member-name">શ્રી વિવેકભાઇ ડી. મકવાણા</p>
                         <p class="member-job">સહખજાનચી</p>
@@ -141,8 +155,9 @@
                     </div>
                     <div class="item">                            
                         <div class="post-slide">
-                            <img class="d-block w-85 " src="assets/images/profile.jpg" alt="First slide">
-                            <a  data-toggle="modal" data-target="#myModal" class="over-layer"><i class="fa fa-plus-circle"></i></a>
+                        <a class="item" href="assets/images/profile.jpg" rel="prettyPhoto" title="શ્રી પારસભાઇ એન. ભાખોતરા <br> <br> સહમંત્રી" class="over-layer">
+    <img src="assets/images/profile.jpg" class="d-block w-85"  />
+</a>
                         </div>
                         <p class="member-name">શ્રી પારસભાઇ એન. ભાખોતરા</p>
                         <p class="member-job">સહમંત્રી</p>
@@ -151,8 +166,9 @@
                     </div>
                     <div class="item">                             
                         <div class="post-slide">
-                            <img class="d-block w-85 " src="assets/images/profile.jpg" alt="First slide">
-                            <a  data-toggle="modal" data-target="#myModal" class="over-layer"><i class="fa fa-plus-circle"></i></a>
+                        <a class="item" href="assets/images/profile.jpg" rel="prettyPhoto" title="શ્રી મહેશભાઇ આર. ભીલ <br> <br> ખજાનચી" class="over-layer">
+    <img src="assets/images/profile.jpg" class="d-block w-85"  />
+</a>
                         </div>
                         <p class="member-name">શ્રી મહેશભાઇ આર. ભીલ</p>
                         <p class="member-job">ખજાનચી</p>
@@ -161,8 +177,9 @@
                     </div>
                     <div class="item">                            
                         <div class="post-slide">
-                            <img class="d-block w-85 " src="assets/images/profile.jpg" alt="First slide">
-                            <a  data-toggle="modal" data-target="#myModal" class="over-layer"><i class="fa fa-plus-circle"></i></a>
+                        <a class="item" href="assets/images/profile.jpg" rel="prettyPhoto" title="શ્રી નયનભાઇ બી. ગુજરાતી <br> <br> મંત્રી" class="over-layer">
+    <img src="assets/images/profile.jpg" class="d-block w-85"  />
+</a>
                         </div>
                         <p class="member-name">શ્રી નયનભાઇ બી. ગુજરાતી</p>
                         <p class="member-job">મંત્રી</p>
@@ -171,8 +188,9 @@
                     </div>   
                     <div class="item">                            
                         <div class="post-slide">
-                            <img class="d-block w-85 " src="assets/images/profile.jpg" alt="First slide">
-                            <a  data-toggle="modal" data-target="#myModal" class="over-layer"><i class="fa fa-plus-circle"></i></a>
+                        <a class="item" href="assets/images/profile.jpg" rel="prettyPhoto" title="શ્રી કલ્પેશભાઇ જે. મોરબીયા<br> <br> ઉપપ્રમુખ" class="over-layer">
+    <img src="assets/images/profile.jpg" class="d-block w-85"  />
+</a>
                         </div>
                         <p class="member-name">શ્રી કલ્પેશભાઇ જે. મોરબીયા</p>
                         <p class="member-job">ઉપપ્રમુખ</p>
@@ -181,8 +199,9 @@
                     </div>    
                     <div class="item">                            
                         <div class="post-slide">
-                            <img class="d-block w-85 " src="assets/images/profile.jpg" alt="First slide">
-                            <a  data-toggle="modal" data-target="#myModal" class="over-layer"><i class="fa fa-plus-circle"></i></a>
+                        <a class="item" href="assets/images/profile.jpg" rel="prettyPhoto" title="શ્રી ખીમજીભાઇ કે. ભેડા<br> <br> ઉપપ્રમુખ" class="over-layer">
+    <img src="assets/images/profile.jpg" class="d-block w-85"  />
+</a>
                         </div>
                         <p class="member-name">શ્રી ખીમજીભાઇ કે. ભેડા</p>
                         <p class="member-job">ઉપપ્રમુખ</p>
@@ -191,8 +210,9 @@
                     </div>                     
                     <div class="item">                            
                         <div class="post-slide">
-                            <img class="d-block w-85 " src="assets/images/profile.jpg" alt="First slide">
-                            <a  data-toggle="modal" data-target="#myModal" class="over-layer"><i class="fa fa-plus-circle"></i></a>
+                        <a class="item" href="assets/images/profile.jpg" rel="prettyPhoto" title="શ્રી રાજુભાઇ એ. સરવૈયા<br> <br> પ્રમુખ" class="over-layer">
+    <img src="assets/images/profile.jpg" class="d-block w-85"  />
+</a>
                         </div>
                         <p class="member-name">શ્રી રાજુભાઇ એ. સરવૈયા</p>
                         <p class="member-job">પ્રમુખ</p>
@@ -215,8 +235,9 @@
                 <div id="profile-carousel-3" class="owl-carousel pt-5 pb-5">
                     <div class="item">                            
                     <div class="post-slide">
-                            <img class="d-block w-85 " src="assets/images/profile.jpg" alt="First slide">
-                            <a  data-toggle="modal" data-target="#myModal" class="over-layer"><i class="fa fa-plus-circle"></i></a>
+                    <a class="item" href="assets/images/profile.jpg" rel="prettyPhoto" title="Hashmuk Vagadiya<br> <br> Support" class="over-layer">
+    <img src="assets/images/profile.jpg" class="d-block w-85"  />
+</a>
                         </div>
                         <p class="member-name">Hashmuk Vagadiya</p>
                         <p class="member-job">Support</p>
@@ -230,8 +251,9 @@
                     </div>
                     <div class="item">                            
                         <div class="post-slide">
-                            <img class="d-block w-85 " src="assets/images/profile.jpg" alt="First slide">
-                            <a  data-toggle="modal" data-target="#myModal" class="over-layer"><i class="fa fa-plus-circle"></i></a>
+                        <a class="item" href="assets/images/profile.jpg" rel="prettyPhoto" title="Rameshbhai Muliya<br> <br> Support" class="over-layer">
+    <img src="assets/images/profile.jpg" class="d-block w-85"  />
+</a>
                         </div>
                         <p class="member-name">Rameshbhai Muliya</p>
                         <p class="member-job">Support</p>
@@ -245,8 +267,9 @@
                     </div>
                     <div class="item">                            
                         <div class="post-slide">
-                            <img class="d-block w-85 " src="assets/images/profile.jpg" alt="First slide">
-                            <a  data-toggle="modal" data-target="#myModal" class="over-layer"><i class="fa fa-plus-circle"></i></a>
+                        <a class="item" href="assets/images/profile.jpg" rel="prettyPhoto" title="Bhavesh Devdhariya<br> <br> Support" class="over-layer">
+    <img src="assets/images/profile.jpg" class="d-block w-85"  />
+</a>
                         </div>
                         <p class="member-name">Bhavesh Devdhariya</p>
                         <p class="member-job">Support</p>
@@ -260,8 +283,9 @@
                     </div> 
                     <div class="item">                            
                         <div class="post-slide">
-                            <img class="d-block w-85 " src="assets/images/profile.jpg" alt="First slide">
-                            <a  data-toggle="modal" data-target="#myModal" class="over-layer"><i class="fa fa-plus-circle"></i></a>
+                        <a class="item" href="assets/images/profile.jpg" rel="prettyPhoto" title="Mayurbhai Makwana<br> <br> Support" class="over-layer">
+    <img src="assets/images/profile.jpg" class="d-block w-85"  />
+</a>
                         </div>
                         <p class="member-name">Mayurbhai Makwana</p>
                         <p class="member-job">Support</p>
@@ -275,8 +299,9 @@
                     </div>
                     <div class="item">                            
                         <div class="post-slide">
-                            <img class="d-block w-85 " src="assets/images/profile.jpg" alt="First slide">
-                            <a  data-toggle="modal" data-target="#myModal" class="over-layer"><i class="fa fa-plus-circle"></i></a>
+                        <a class="item" href="assets/images/profile.jpg" rel="prettyPhoto" title="Kishan Morabiya<br> <br> Support" class="over-layer">
+    <img src="assets/images/profile.jpg" class="d-block w-85"  />
+</a>
                         </div>
                         <p class="member-name">Kishan Morabiya</p>
                         <p class="member-job">Support</p>
@@ -290,8 +315,9 @@
                     </div>
                     <div class="item">                            
                         <div class="post-slide">
-                            <img class="d-block w-85 " src="assets/images/profile.jpg" alt="First slide">
-                            <a  data-toggle="modal" data-target="#myModal" class="over-layer"><i class="fa fa-plus-circle"></i></a>
+                        <a class="item" href="assets/images/profile.jpg" rel="prettyPhoto" title="Makvana Bhavesh<br> <br> Support" class="over-layer">
+    <img src="assets/images/profile.jpg" class="d-block w-85"  />
+</a>
                         </div>
                         <p class="member-name">Makvana Bhavesh</p>
                         <p class="member-job">Support</p>
@@ -305,8 +331,9 @@
                     </div>
                     <div class="item">                            
                         <div class="post-slide">
-                            <img class="d-block w-85 " src="assets/images/profile.jpg" alt="First slide">
-                            <a  data-toggle="modal" data-target="#myModal" class="over-layer"><i class="fa fa-plus-circle"></i></a>
+                        <a class="item" href="assets/images/profile.jpg" rel="prettyPhoto" title="Ravindra Sarvaiya<br> <br> Support" class="over-layer">
+    <img src="assets/images/profile.jpg" class="d-block w-85"  />
+</a>
                         </div>
                         <p class="member-name">Ravindra Sarvaiya</p>
                         <p class="member-job">Support</p>
@@ -334,22 +361,7 @@
             </div>
         </div>
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <!-- <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5> -->
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-      <img class="d-block w-100" src="assets/images/profile.jpg" alt="First slide">      
-      </div>
-      <div class="modal-footer">
-      9429563548</p>
-      </div>
-    </div>
-  </div>
+  
 </div>
 
   
@@ -362,10 +374,13 @@
 <script src="assets/js/lightbox-plus-jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script src="assets/js/owl.carousel.js"></script>
+<script src="https://cdn.jsdelivr.net/prettyphoto/3.1.5/js/jquery.prettyPhoto.js"></script>
 
 <script>
 $(document).ready(function() {
-  //  -------profile script------   
+  //  -------profile script------  
+  $("a[rel^='prettyPhoto']").prettyPhoto(); 
+  
 $('#profile-carousel').on('initialized.owl.carousel', function() {
 $('.navigator').eq(0).addClass('active');
 // console.log('initialized');

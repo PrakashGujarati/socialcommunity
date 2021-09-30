@@ -20,10 +20,22 @@ class GalleryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function list(Request $request)
+    public function videolist(Request $request)
     {
         //
-        $data = Gallery::with('galleryImage')->where('status','=','Active')->where(['category' => $request->category])->get();   
+        $data = Gallery::with('galleryImage')->where('status','=','Active')->where('category','=','Videos' )->get();   
+        // dd($data);             
+        return $this->responseOut($data);
+    }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function gallerylist(Request $request)
+    {
+        //
+        $data = Gallery::with('galleryImage')->where('status','=','Active')->where('category','=','Images' )->get();   
         // dd($data);             
         return $this->responseOut($data);
     }
