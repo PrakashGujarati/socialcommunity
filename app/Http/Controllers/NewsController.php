@@ -11,6 +11,8 @@ class NewsController extends Controller
     public $rules = [
         'headline' => 'required',
         'title' => 'required',
+        'thumbnail' => 'mimes:jpeg,jpg,png',
+        'news_image' => 'mimes:jpeg,jpg,png'
     ];
 
     /**
@@ -43,26 +45,16 @@ class NewsController extends Controller
     {
         $request->validate($this->rules);
 
-        $thumbnailNames = [];
+        $thumbnailName = "";
+        $imageName = "";
 
-        if($request->file('thumbnail')){
-            foreach($request->file('thumbnail') as $file) {
-                $name = globallyStoreMedia($file,"/news_thumbnails");
-                array_push($thumbnailNames,$name);
-            }
+        if ($mediaFile = $request->file('thumbnail')) {
+            $thumbnailName = globallyStoreMedia($mediaFile,"/news_thumbnails");
         }
 
-        $imagesNames = [];
-
-        if($request->file('news_image')){
-            foreach($request->file('news_image') as $file) {
-                $name = globallyStoreMedia($file,"/news_images");
-                array_push($imagesNames,$name);
-            }
+        if($mediaFile = $request->file('news_image')){            
+            $imageName = globallyStoreMedia($file,"/news_images");          
         }
-
-        $thumbnailName = implode(",", $thumbnailNames);
-        $news_image = implode(",", $imagesNames);
 
         News::create([
             'headline' => $request->headline,
@@ -70,7 +62,7 @@ class NewsController extends Controller
             'category' => $request->category,
             'detail_report' => $request->detail_report,
             'thumbnail' => $thumbnailName,
-            'news_image' => $news_image,
+            'news_image' => $imageName,
             'reported_datetime' => $request->reported_datetime,
             'reference' => $request->reference,
             'status' => $request->status,
@@ -112,49 +104,25 @@ class NewsController extends Controller
     public function update(Request $request, News $news)
     {
         $request->validate($this->rules);
-        $imageUpdate=null;
-        if ($files=$request->file('thumbnail')) {
-            foreach($files as $file){
-             Storage::delete('public/thumbnails/'.$news->thumbnail);
-             $thumbnailName = time().$file->getClientOriginalName();
-             $file->storeAs('thumbnails', $thumbnailName, 'public');
-            //$news->update(['thumbnail' => $thumbnailName]);
-            $imageUpdate.=$thumbnailName.",";
-            }
+
+        if ($mediaFile = $request->file('thumbnail')) {
+            globallyUpdateMedia($news,$mediaFile,'/news_thumbnails','thumbnail');
         }
-        if ($request->file('news_image')) {
-            Storage::delete('public/news_images/'.$news->news_image);
-            $news_image = time().$request->file('news_image')[0]->getClientOriginalName();
-            $request->file('news_image')[0]->storeAs('news_images', $news_image, 'public');
-            $news->update(['news_image' => $news_image]);
+
+        if ($mediaFile = $request->file('news_image')) {
+            globallyUpdateMedia($news,$mediaFile,'/news_images','news_image');
         }
-        if($imageUpdate != null)
-        {
-            
-            $news->update([
-                'headline' => $request->headline,
-                'title' => $request->title,
-                'category' => $request->category,
-                'detail_report' => $request->detail_report,
-                'reported_datetime' => $request->reported_datetime,
-                'reference' => $request->reference,
-                'status' => $request->status,
-                'thumbnail'=>$imageUpdate
-            ]);
-        }
-        else
-        {
-            $news->update([
-                'headline' => $request->headline,
-                'title' => $request->title,
-                'category' => $request->category,
-                'detail_report' => $request->detail_report,
-                'reported_datetime' => $request->reported_datetime,
-                'reference' => $request->reference,
-                'status' => $request->status
-            ]);
-        }
-            
+        
+        $news->update([
+            'headline' => $request->headline,
+            'title' => $request->title,
+            'category' => $request->category,
+            'detail_report' => $request->detail_report,
+            'reported_datetime' => $request->reported_datetime,
+            'reference' => $request->reference,
+            'status' => $request->status
+        ]);
+          
         return redirect()->route('news.index');
     }
 
@@ -166,8 +134,9 @@ class NewsController extends Controller
      */
     public function destroy(News $news)
     {
-        Storage::delete('public/thumbnails/'.$news->thumbnail);
-        Storage::delete('public/news_images/'.$news->news_image);
+        globallyDeleteMedia($news,'/news_thumbnails','thumbnail');
+        globallyDeleteMedia($news,'/news_images','news_image');
+
         $news->delete();
         return redirect()->route('news.index');
     }

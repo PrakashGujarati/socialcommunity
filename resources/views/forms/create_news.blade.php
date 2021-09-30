@@ -53,7 +53,7 @@
                         <div class="form-group col-md-6">
                             <label class="form-label">Thumbnail</label>
                             <div class="custom-file">
-                                <input type="file" name="thumbnail[]"  multiple class="custom-file-input" id="thumbnailInput">
+                                <input type="file" name="thumbnail"  multiple class="custom-file-input" id="thumbnailInput">
                                 <label class="custom-file-label" for="thumbnailInput">Choose Thumbnail</label>
                             </div>
                             <small class="text-danger">
@@ -65,7 +65,7 @@
                         <div class="form-group col-md-6">
                             <label class="form-label">News Image</label>
                             <div class="custom-file">
-                                <input type="file" name="news_image[]"  multiple class="custom-file-input" id="imageInput">
+                                <input type="file" name="news_image"  multiple class="custom-file-input" id="imageInput">
                                 <label class="custom-file-label" for="imageInput">Choose Image</label>
                             </div>
                             <small class="text-danger">
