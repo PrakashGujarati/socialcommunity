@@ -25,7 +25,7 @@
             "columns": [
                 {"width": "80%"},
                 {"width": "20%"}
-            ]  
+            ]
         });
         </script>
 @endsection
@@ -41,6 +41,7 @@
                     <i class="bi bi-plus-lg"></i> Create Employment
                 </a>
             </div>
+            @include('modals.employments_modal')
             <div class="block-content block-content-full">
                 <table class="table table-responsive table-bordered table-striped table-vcenter js-dataTable-full">
                     <thead>
@@ -67,14 +68,14 @@
                             <td>{{$employment->detail_report}}</td>
                             <td>
                                 @if($employment->thumbnail)
-                                    <img class="border rounded" src="{{asset('image/'.$employment->thumbnail)}}" height="60">
+                                    <img class="border rounded" src="{{asset('employment_thumbnails/'.json_decode($employment->thumbnail)[0])}}" height="60">
                                 @else
                                     <img class="border rounded" src="https://donatepoints.aircanada.com/img/no_image_available.jpg" height="60">
                                 @endif
                             </td>
                             <td>
                                 @if($employment->news_image)
-                                    <img class="border rounded" src="{{asset('news_images/'.$employment->news_image)}}" height="60">
+                                    <img class="border rounded" src="{{asset('employment_images/'.json_decode($employment->news_image)[0])}}" height="60">
                                 @else
                                     <img class="border rounded" src="https://donatepoints.aircanada.com/img/no_image_available.jpg" height="60">
                                 @endif
@@ -84,19 +85,35 @@
                             <td>{{$employment->status}}</td>
                             <td>{{$employment->done_by}}</td>
                             <td>
-                            <div class="d-flex">
-                            <a href="{{route('employment.edit',$employment)}}" class="btn btn-primary mx-2">
-                                        <i class="bi bi-pencil"></i>
-                            </a>
-                            <form action="{{route('employment.destroy',$employment)}}" method="post">
+                                <div class="d-flex">
+                                    <button type="button" class="btn btn-default mx-2" data-toggle="modal" data-target="#Modal-{{$employment->id}}">
+                                        <i class="bi bi-aspect-ratio"></i>
+                                    </button>
+                                    <a href="{{route('employment.edit',$employment)}}" class="btn btn-default mx-2">
+                                        <i class="bi bi-pencil text-info"></i>
+                                    </a>
+                                    <form action="{{route('employment.destroy',$employment)}}" method="post">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-danger mx-2">
-                                            <i class="bi bi-archive-fill"></i>
+                                        <button type="submit" class="btn btn-default mx-2">
+                                            <i class="far fa-trash-alt text-danger"></i>
                                         </button>
                                     </form>
-                            </td>  
-                            <div>     
+                                    <form action="{{route('changeStatus','Employment')}}" method="post">
+                                        @csrf
+                                        <input type="hidden" name="id" value="{{$employment->id}}">
+                                        @if($employment->status == "Active")
+                                        <button type="submit" class="btn btn-default mx-2" data-toggle="tooltip" title="click to Deactive">
+                                            <i class="fas fa-eye-slash text-danger"></i>
+                                        </button>
+                                        @else
+                                        <button type="submit" class="btn btn-default mx-2" data-toggle="tooltip" title="click to Active">
+                                            <i class="fas fa-eye text-success"></i>
+                                        </button>
+                                        @endif
+                                    </form>
+                                </div>
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>

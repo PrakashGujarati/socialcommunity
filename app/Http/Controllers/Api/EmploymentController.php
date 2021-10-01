@@ -48,32 +48,29 @@ class EmploymentController extends Controller
     {
         //
         $validator = Validator::make($request->all(), $this->rules);
+
         if ($validator->fails()) {
             return ['status' => "false",'msg' => $validator->messages()];
         }
-       
-        if ($request->hasFile('thumbnail')){
-            $file = $request->file('thumbnail');
-            $extension = $file->getClientOriginalExtension();
-            $thumbnialName = time().'.'.$extension;
-            $path = public_path().'/employment_thumbnail';
-            $uplaod = $file->move($path,$thumbnialName);   
-        }    
 
-        if ($request->hasFile('news_image')){
-        $file = $request->file('news_image');
-           $extension = $file->getClientOriginalExtension();
-           $news_image = time().'.'.$extension;
-           $path = public_path().'/employment_newsImage';
-           $uplaod = $file->move($path,$news_image);       
-        }    
+        $news_image = "";
+
+        $thumbnail = "";
+
+        if ($mediaFile = $request->file('thumbnail')) {
+            $thumbnail = globallyStoreMedia($mediaFile,"/employment_thumbnails",true);
+        }
+
+        if($mediaFile = $request->file('news_image')){
+            $news_image = globallyStoreMedia($mediaFile,"/employment_images",true);
+        }
 
         $newEmployments = Employment::create([
             'headline' => $request->headline,
             'title' => $request->title,
             'category' => $request->category,
             'detail_report' => $request->detail_report,
-            'thumbnail' => $thumbnialName,
+            'thumbnail' => $thumbnail,
             'news_image' => $news_image,
             'reported_datetime' => $request->reported_datetime,
             'reference' => $request->reference,
@@ -117,30 +114,25 @@ class EmploymentController extends Controller
     public function update(Request $request)
     {
         //
-        $employments = Employment::where(['id'=>$request->employment_id,'done_by'=>Auth::user()->id])->first();
-        if (!empty($employments)) {
+        $employment = Employment::where(['id'=>$request->employment_id,'done_by'=>Auth::user()->id])->first();
+
+        if (!empty($employment)) {
+
             $validator = Validator::make($request->all(), $this->rules);
+
             if ($validator->fails()) {
                 return ['status' => "false",'msg' => $validator->messages()];
             }
-            if ($request->hasFile('thumbnail')){
-                $file = $request->file('thumbnail');
-                $extension = $file->getClientOriginalExtension();
-                $thumbnialName = time().'.'.$extension;
-                $path = public_path().'/employment_thumbnail';
-                $uplaod = $file->move($path,$thumbnialName);
-                $employments->update(['thumbnail' => $thumbnialName]);  
 
-            }  
-            if ($request->hasFile('news_image')){
-                $file = $request->file('news_image');
-                  $extension = $file->getClientOriginalExtension();
-                  $news_image = time().'.'.$extension;
-                  $path = public_path().'/employment_newsImage';
-                  $uplaod = $file->move($path,$news_image);  
-                  $employments->update(['news_image' => $news_image]);      
-               }
-            $employments->update([
+            if ($mediaFile = $request->file('thumbnail')) {
+                globallyUpdateMedia($employment,$mediaFile,'/employment_thumbnails','thumbnail',true);
+            }
+
+            if ($mediaFile = $request->file('news_image')) {
+                globallyUpdateMedia($employment,$mediaFile,'/employment_images','news_image',true);
+            }
+
+            $employment->update([
                 'headline' => $request->headline,
                 'title' => $request->title,
                 'category' => $request->category,
@@ -148,9 +140,11 @@ class EmploymentController extends Controller
                 'reported_datetime' => $request->reported_datetime,
                 'reference' => $request->reference,
             ]);
-            return $this->responseOut($employments);
+
+            return $this->responseOut($employment);
+
         } else {
-            return $this->responseOut($employments);
+            return $this->responseOut($employment);
         }
     }
 

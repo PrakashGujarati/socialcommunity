@@ -10,7 +10,7 @@
     <div class="content">
         <div class="block block-rounded">
             <div class="block-header block-header-default">
-                <h3 class="block-title">Create <small>News</small></h3>
+                <h3 class="block-title">Edit <small>Employment</small></h3>
                 <a href="{{route('employment.index')}}" class="btn btn-primary m-2">
                     <i class="bi bi-x-lg"></i>
                 </a>
@@ -54,7 +54,7 @@
                         <div class="form-group col-md-6">
                             <label class="form-label">Thumbnail</label>
                             <div class="custom-file">
-                                <input type="file" name="thumbnail[]" multiple class="custom-file-input" id="thumbnailInput">
+                                <input type="file" name="thumbnail[]" multiple class="custom-file-input" id="thumbnailInput" accept="image/*" multiple>
                                 <label class="custom-file-label" for="thumbnailInput">Choose Thumbnail</label>
                             </div>
                             <small class="text-danger">
@@ -66,7 +66,7 @@
                         <div class="form-group col-md-6">
                             <label class="form-label">News Image</label>
                             <div class="custom-file">
-                                <input type="file" name="news_image" multiple class="custom-file-input" id="imageInput">
+                                <input type="file" name="news_image[]" multiple class="custom-file-input" id="imageInput" accept="image/*" multiple>
                                 <label class="custom-file-label" for="imageInput">Choose Image</label>
                             </div>
                             <small class="text-danger">
@@ -96,7 +96,7 @@
                         </div>
                     </div>
                     <div class="d-flex justify-content-between">
-                        <button type="submit" class="btn btn-primary my-5 mx-3">Update Event</button>
+                        <button type="submit" class="btn btn-primary my-5 mx-3">Update Employment</button>
                         <a href="{{route('employment.index')}}" class="btn btn-secondary my-5 mx-3">Cancel</a>
                     </div>
                 </form>

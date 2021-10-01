@@ -61,8 +61,8 @@
                         <div class="form-group col-md-6">
                             <label class="form-label">Thumbnail</label>
                             <div class="custom-file">
-                                <input type="file" name="thumbnail[]" multiple class="custom-file-input" id="logoInput">
-                                <label class="custom-file-label" for="logoInput">Choose Logo</label>
+                                <input type="file" name="thumbnail[]" multiple class="custom-file-input" id="logoInput" accept="image/*" multiple>
+                                <label class="custom-file-label" for="logoInput">Choose Picture</label>
                             </div>
                             <small class="text-danger">
                                 @error('thumbnail')
@@ -73,8 +73,8 @@
                         <div class="form-group col-md-6">
                             <label class="form-label">News_image</label>
                             <div class="custom-file">
-                                <input type="file" name="news_image" class="custom-file-input" id="cardInput">
-                                <label class="custom-file-label" for="cardInput">Choose Visiting</label>
+                                <input type="file" name="news_image[]" class="custom-file-input" id="cardInput" accept="image/*" multiple>
+                                <label class="custom-file-label" for="cardInput">Choose Picture</label>
                             </div>
                             <small class="text-danger">
                                 @error('news_image')
