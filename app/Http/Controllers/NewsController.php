@@ -11,8 +11,8 @@ class NewsController extends Controller
     public $rules = [
         'headline' => 'required',
         'title' => 'required',
-        'thumbnail' => 'mimes:jpeg,jpg,png',
-        'news_image' => 'mimes:jpeg,jpg,png'
+        'thumbnail.*' => 'mimes:jpeg,jpg,png',
+        'news_image.*' => 'mimes:jpeg,jpg,png'
     ];
 
     /**
@@ -46,14 +46,15 @@ class NewsController extends Controller
         $request->validate($this->rules);
 
         $thumbnailName = "";
+
         $imageName = "";
 
         if ($mediaFile = $request->file('thumbnail')) {
-            $thumbnailName = globallyStoreMedia($mediaFile,"/news_thumbnails");
+            $thumbnailName = globallyStoreMedia($mediaFile,"/news_thumbnails",true);
         }
 
-        if($mediaFile = $request->file('news_image')){            
-            $imageName = globallyStoreMedia($file,"/news_images");          
+        if($mediaFile = $request->file('news_image')){
+            $imageName = globallyStoreMedia($mediaFile,"/news_images",true);
         }
 
         News::create([
@@ -68,7 +69,7 @@ class NewsController extends Controller
             'status' => $request->status,
             'done_by' => 1
         ]);
-        
+
         return redirect()->route('news.index');
     }
 
@@ -106,13 +107,13 @@ class NewsController extends Controller
         $request->validate($this->rules);
 
         if ($mediaFile = $request->file('thumbnail')) {
-            globallyUpdateMedia($news,$mediaFile,'/news_thumbnails','thumbnail');
+            globallyUpdateMedia($news,$mediaFile,'/news_thumbnails','thumbnail',true);
         }
 
         if ($mediaFile = $request->file('news_image')) {
-            globallyUpdateMedia($news,$mediaFile,'/news_images','news_image');
+            globallyUpdateMedia($news,$mediaFile,'/news_images','news_image',true);
         }
-        
+
         $news->update([
             'headline' => $request->headline,
             'title' => $request->title,
@@ -122,7 +123,7 @@ class NewsController extends Controller
             'reference' => $request->reference,
             'status' => $request->status
         ]);
-          
+
         return redirect()->route('news.index');
     }
 
@@ -134,8 +135,8 @@ class NewsController extends Controller
      */
     public function destroy(News $news)
     {
-        globallyDeleteMedia($news,'/news_thumbnails','thumbnail');
-        globallyDeleteMedia($news,'/news_images','news_image');
+        globallyDeleteMedia($news,'/news_thumbnails','thumbnail',true);
+        globallyDeleteMedia($news,'/news_images','news_image',true);
 
         $news->delete();
         return redirect()->route('news.index');

@@ -59,9 +59,10 @@ class GalleryController extends Controller
                 ]);
             }
         } else {
-            foreach($request->file('gallery_media') as $file){
-                $name = time().'.'.$file->getClientOriginalName();
-                $file->storeAs('Gallery Media', $name, 'public');
+            $name = "";
+            foreach($request->file('gallery_media') as $mediaFile){
+
+                $name = globallyStoreMedia($mediaFile,"/galley_images");
 
                 $newGallery->galleryImages()->create([
                     'path' => $name

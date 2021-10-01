@@ -25,8 +25,8 @@ class CreateBusinessesTable extends Migration
             $table->bigInteger('contact');
             $table->string('email')->nullable();
             $table->text('address')->nullable();
-            $table->string('logo')->nullable();
-            $table->string('visitingcard')->nullable();
+            $table->text('logo')->nullable();
+            $table->text('visitingcard')->nullable();
             $table->string('status')->nullable();
             $table->tinyInteger('done_by');
             $table->timestamps();

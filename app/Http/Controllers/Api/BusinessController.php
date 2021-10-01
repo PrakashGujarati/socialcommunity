@@ -58,11 +58,11 @@ class BusinessController extends Controller
         $visitingcard = "";
 
         if ($mediaFile = $request->file('logo')) {
-            $logo = globallyStoreMedia($mediaFile,"/business_logos");
+            $logo = globallyStoreMedia($mediaFile,"/business_logos",true);
         }
 
         if ($mediaFile = $request->file('visitingcard')) {
-            $visitingcard = globallyStoreMedia($mediaFile,"/business_visitingcards");
+            $visitingcard = globallyStoreMedia($mediaFile,"/business_visitingcards",true);
         }
 
         $newBusiness = Business::create([
@@ -128,11 +128,11 @@ class BusinessController extends Controller
             }
 
             if ($mediaFile = $request->file('logo')) {
-                globallyUpdateMedia($business,$mediaFile,'/business_logos','logo');
+                globallyUpdateMedia($business,$mediaFile,'/business_logos','logo',true);
             }
-    
+
             if ($mediaFile = $request->file('visitingcard')) {
-                globallyUpdateMedia($business,$mediaFile,'/business_visitingcards','visitingcard');
+                globallyUpdateMedia($business,$mediaFile,'/business_visitingcards','visitingcard',true);
             }
 
             $business->update([

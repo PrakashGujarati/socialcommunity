@@ -77,7 +77,7 @@
                         <div class="form-group col-md-6">
                             <label class="form-label">Logo</label>
                             <div class="custom-file">
-                                <input type="file" name="logo" class="custom-file-input" id="logoInput">
+                                <input type="file" name="logo[]" class="custom-file-input" id="logoInput" accept="image/*" multiple>
                                 <label class="custom-file-label" for="logoInput">Choose Picture</label>
                             </div>
                             <small class="text-danger">
@@ -89,7 +89,7 @@
                         <div class="form-group col-md-6">
                             <label class="form-label">Visiting Card</label>
                             <div class="custom-file">
-                                <input type="file" name="visitingcard" class="custom-file-input" id="cardInput">
+                                <input type="file" name="visitingcard[]" class="custom-file-input" id="cardInput" accept="image/*" multiple>
                                 <label class="custom-file-label" for="cardInput">Choose Picture</label>
                             </div>
                             <small class="text-danger">

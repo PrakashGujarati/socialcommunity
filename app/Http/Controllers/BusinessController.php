@@ -12,8 +12,8 @@ class BusinessController extends Controller
         'first_name' => 'required',
         'company' => 'required',
         'contact' => 'required|numeric',
-        'logo' => 'image|mimes:jpg,png,jpeg',
-        'visitingcard' => 'image|mimes:jpg,png,jpeg'
+        'logo.*' => 'mimes:jpg,png,jpeg',
+        'visitingcard.*' => 'mimes:jpg,png,jpeg'
     ];
     /**
      * Display a listing of the resource.
@@ -50,11 +50,11 @@ class BusinessController extends Controller
         $visitingcard = "";
 
         if ($mediaFile = $request->file('logo')) {
-            $logo = globallyStoreMedia($mediaFile,"/business_logos");
+            $logo = globallyStoreMedia($mediaFile,"/business_logos",true);
         }
 
         if ($mediaFile = $request->file('visitingcard')) {
-            $visitingcard = globallyStoreMedia($mediaFile,"/business_visitingcards");
+            $visitingcard = globallyStoreMedia($mediaFile,"/business_visitingcards",true);
         }
 
         Business::create([
@@ -111,11 +111,11 @@ class BusinessController extends Controller
         $request->validate($this->rules);
 
         if ($mediaFile = $request->file('logo')) {
-            globallyUpdateMedia($business,$mediaFile,'/business_logos','logo');
+            globallyUpdateMedia($business,$mediaFile,'/business_logos','logo',true);
         }
 
         if ($mediaFile = $request->file('visitingcard')) {
-            globallyUpdateMedia($business,$mediaFile,'/business_visitingcards','visitingcard');
+            globallyUpdateMedia($business,$mediaFile,'/business_visitingcards','visitingcard',true);
         }
 
         $business->update([
@@ -142,9 +142,8 @@ class BusinessController extends Controller
      */
     public function destroy(Business $business)
     {
-        globallyDeleteMedia($business,'/business_logos','logo');
-        globallyDeleteMedia($business,'/business_visitingcards','visitingcard');
-
+        globallyDeleteMedia($business,'/business_logos','logo',true);
+        globallyDeleteMedia($business,'/business_visitingcards','visitingcard',true);
         $business->delete();
         return redirect()->route('business.index');
     }
