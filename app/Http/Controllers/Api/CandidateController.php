@@ -17,7 +17,7 @@ class CandidateController extends Controller
         'picture' => 'mimes:jpeg,jpg,png'
     ];
 
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -25,7 +25,8 @@ class CandidateController extends Controller
      */
     public function list()
     {
-        $data = Candidate::where('status','=','Active')->get();                
+        $data = Candidate::where('status','=','Active')->get();
+        $data = appendDomainOnPath($data,'picture',true);
         return $this->responseOut($data);
     }
 
@@ -104,6 +105,7 @@ class CandidateController extends Controller
     public function show(Request $request)
     {
         $data = Candidate::where(['id' => $request->candidate_id])->first();
+        $data = appendDomainOnPath($data,'picture');
         return $this->responseOut($data);
     }
 
@@ -128,7 +130,7 @@ class CandidateController extends Controller
      */
     public function update(Request $request)
     {
-    
+
         $candidate = Candidate::where(['id'=>$request->candidate_id,'user_id'=>Auth::user()->id])->first();
 
         if (!empty($candidate)) {
@@ -190,29 +192,29 @@ class CandidateController extends Controller
 
     public function getListUpdate(Request $request)
     {
-       
+
         $candidate = Candidate::where(['id' => $request->candidate_id]);
-        
+
             $validator = Validator::make($request->all(), $this->rules);
             if ($validator->fails()) {
                 return ['status' => "false",'msg' => $validator->messages()];
-            }           
-           
+            }
+
             $candidate->update([
-                'column_status' => $request->column_status                
-            ]);            
-        
+                'column_status' => $request->column_status
+            ]);
+
             return $this->responseOut($candidate);
-        
+
     }
 
     public function getCandidateList(Request $request)
     {
-       
+
         $candidateList = Candidate::find(['id' => $request->candidate_id])->first();
-        
-        $candidateList->makeHidden(explode(",", $candidateList->column_status));            
-        
+
+        $candidateList->makeHidden(explode(",", $candidateList->column_status));
+
         return $this->responseOut($candidateList);
     }
 

@@ -25,6 +25,7 @@ class RecruitmentController extends Controller
     public function list()
     {
         $data = Recruitment::where('status','=','Active')->get();
+        $data = appendDomainOnPath($data,'thumbnail',true);
         return $this->responseOut($data);
     }
 
@@ -84,6 +85,7 @@ class RecruitmentController extends Controller
     public function show(Request $request)
     {
         $data = Recruitment::where(['id' => $request->recruitment_id])->first();
+        $data = appendDomainOnPath($data,'thumbnail');
         return $this->responseOut($data);
     }
 

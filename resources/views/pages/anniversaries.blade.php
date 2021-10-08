@@ -41,8 +41,8 @@
                             <th scope="col">Time</th>
                             <th scope="col">Place</th>
                             <th scope="col">Wishes</th>
-                            <th scope="col">Status</th>
                             <th scope="col">Picture</th>
+                            <th scope="col">Status</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>

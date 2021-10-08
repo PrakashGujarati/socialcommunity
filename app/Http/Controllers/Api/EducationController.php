@@ -25,6 +25,7 @@ class EducationController extends Controller
     {
         //
         $data = Education::where('status','=','Active')->get();
+        $data = appendDomainOnPath($data,'picture',true);
         return $this->responseOut($data);
     }
 
@@ -58,15 +59,15 @@ class EducationController extends Controller
         if ($mediaFile = $request->file('picture')) {
             $pictureName = globallyStoreMedia($mediaFile,"/education_pictures");
         }
-        
+
         $newEducation = Education::create([
             'name' => $request->name,
-            'qualification' => $request->qualification,            
+            'qualification' => $request->qualification,
             'picture' => $pictureName,
             'note' => $request->note,
             'gender' => $request->gender,
             'status' => 'Inactive'
-            
+
         ]);
 
         return $this->responseOut($newEducation);
@@ -82,6 +83,7 @@ class EducationController extends Controller
     {
         //
         $data = Education::where(['id' => $request->education_id])->first();
+        $data = appendDomainOnPath($data,'picture');
         return $this->responseOut($data);
     }
 
@@ -118,11 +120,11 @@ class EducationController extends Controller
 
             if ($mediaFile = $request->file('picture')) {
                 globallyUpdateMedia($education,$mediaFile,'/education_pictures','picture');
-            }  
-           
+            }
+
             $education->update([
                 'name' => $request->name,
-                'qualification' => $request->qualification,            
+                'qualification' => $request->qualification,
                 'picture' => $pictureName,
                 'note' => $request->note,
                 'gender' => $request->gender
