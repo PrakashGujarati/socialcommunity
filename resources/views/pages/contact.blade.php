@@ -25,7 +25,7 @@
             "columns": [
                 {"width": "80%"},
                 {"width": "20%"}
-            ]  
+            ]
         });
         </script>
 @endsection
@@ -64,7 +64,7 @@
                             <td>{{$contact->email}}</td>
                             <td>
                                 @if($contact->picture)
-                                    <img class="border rounded" src="{{ asset('/contact_pictures/'.$contact->picture) }}" height="60">
+                                    <img class="border rounded" src="{{ url($contact->picture) }}" height="60">
                                 @else
                                     <img class="border rounded" src="https://e7.pngegg.com/pngimages/456/700/png-clipart-computer-icons-avatar-user-profile-avatar-heroes-logo.png" height="60">
                                 @endif

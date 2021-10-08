@@ -58,7 +58,7 @@
                             <td>{{$candidate->remark}}</td>
                             <td>
                             @if($candidate->picture)
-                                <img class="border rounded" src="{{asset('candidate_pictures/'.$candidate->picture)}}" height="60">
+                                <img class="border rounded" src="{{url($candidate->picture)}}" height="60">
                             @else
                                 <img class="border rounded" src="https://donatepoints.aircanada.com/img/no_image_available.jpg" height="60">
                             @endif

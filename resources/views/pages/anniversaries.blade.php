@@ -56,7 +56,7 @@
                             <td>{{$anniversary->wishes}}</td>
                             <td>
                                 @if($anniversary->picture)
-                                    <img class="border rounded" src="{{ asset('/anniversary_pictures/'.$anniversary->picture) }}" height="60">
+                                    <img class="border rounded" src="{{ url($anniversary->picture) }}" height="60">
                                 @else
                                     <img class="border rounded" src="https://e7.pngegg.com/pngimages/456/700/png-clipart-computer-icons-avatar-user-profile-avatar-heroes-logo.png" height="60">
                                 @endif

@@ -25,7 +25,7 @@
             "columns": [
                 {"width": "80%"},
                 {"width": "20%"}
-            ]  
+            ]
         });
         </script>
 @endsection
@@ -62,7 +62,7 @@
                             <td>{{$education->qualification}}</td>
                             <td>
                                 @if($education->picture)
-                                    <img class="border rounded" src="{{asset('education_pictures/'.$education->picture)}}" height="60">
+                                    <img class="border rounded" src="{{url($education->picture)}}" height="60">
                                 @else
                                     <img class="border rounded" src="https://donatepoints.aircanada.com/img/no_image_available.jpg" height="60">
                                 @endif
@@ -100,7 +100,7 @@
                                         @endif
                                     </form>
                                 </div>
-                            </td>       
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>

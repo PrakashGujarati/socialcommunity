@@ -58,7 +58,7 @@
                             <td>{{$user->address}}</td>
                             <td>
                                 @if($user->picture)
-                                    <img class="border rounded" src="{{ asset('/user_profiles/'.$user->picture) }}" height="60">
+                                    <img class="border rounded" src="{{ url($user->picture) }}" height="60">
                                 @else
                                     <img class="border rounded" src="https://e7.pngegg.com/pngimages/456/700/png-clipart-computer-icons-avatar-user-profile-avatar-heroes-logo.png" height="60">
                                 @endif

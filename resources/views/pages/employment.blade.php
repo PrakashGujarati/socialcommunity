@@ -68,7 +68,7 @@
                             <td>{{$employment->detail_report}}</td>
                             <td>
                                 @if($employment->thumbnail)
-                                    <img class="border rounded" src="{{asset('employment_thumbnails/'.json_decode($employment->thumbnail)[0])}}" height="60">
+                                    <img class="border rounded" src="{{url(json_decode($employment->thumbnail)[0])}}" height="60">
                                 @else
                                     <img class="border rounded" src="https://donatepoints.aircanada.com/img/no_image_available.jpg" height="60">
                                 @endif

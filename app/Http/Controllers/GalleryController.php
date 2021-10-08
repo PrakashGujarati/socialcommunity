@@ -59,13 +59,14 @@ class GalleryController extends Controller
                 ]);
             }
         } else {
-            $name = "";
-            foreach($request->file('gallery_media') as $mediaFile){
+            foreach($request->file('gallery_media') as $key => $mediaFile){
 
-                $name = globallyStoreMedia($mediaFile,"/galley_images");
+                $mediaName = "(".$key.")".time().".".$mediaFile->getClientOriginalExtension();
+
+                $mediaFile->move(public_path()."/galley_images",$mediaName);
 
                 $newGallery->galleryImages()->create([
-                    'path' => $name
+                    'path' => "/galley_images/".$mediaName
                 ]);
             }
         }
@@ -118,17 +119,26 @@ class GalleryController extends Controller
         ]);
 
         if ($request->file('gallery_media')) {
+
             $gallery_images = GalleryImage::where('gallery_id',$gallery->id)->get();
+
             foreach($gallery_images as $image){
-                Storage::delete('public/Gallery Media/'.$image->path);
+
+                ($image->path && file_exists(public_path()."/".$image->path)) ? unlink(public_path()."/".$image->path) : "";
+
+                $image->delete();
             }
+
             $gallery->galleryImages()->delete();
-            foreach($request->file('gallery_media') as $file){
-                $name = time().'.'.$file->getClientOriginalName();
-                $file->storeAs('Gallery Media', $name, 'public');
+
+            foreach($request->file('gallery_media') as $key => $mediaFile){
+
+                $mediaName = "(".$key.")".time().".".$mediaFile->getClientOriginalExtension();
+
+                $mediaFile->move(public_path()."/galley_images",$mediaName);
 
                 $gallery->galleryImages()->create([
-                    'path' => $name
+                    'path' => "/galley_images/".$mediaName
                 ]);
             }
         }
@@ -156,12 +166,19 @@ class GalleryController extends Controller
     public function destroy(Gallery $gallery)
     {
         $gallery_id = $gallery->id;
+
         $gallery_images = GalleryImage::where('gallery_id',$gallery_id)->get();
+
         foreach($gallery_images as $image){
-            Storage::delete('public/Gallery Media/'.$image->path);
+
+            ($image->path && file_exists(public_path()."/".$image->path)) ? unlink(public_path()."/".$image->path) : "";
+
             $image->delete();
+
         }
+
         $gallery->delete();
+
         return redirect()->route('gallery.index');
     }
 
@@ -169,7 +186,7 @@ class GalleryController extends Controller
     {
         $mediaId = $request->id;
         $gallery_image = GalleryImage::where('id',$mediaId)->first();
-        Storage::delete('public/Gallery Media/'.$gallery_image->path);
+        ($gallery_image->path && file_exists(public_path()."/".$gallery_image->path)) ? unlink(public_path()."/".$gallery_image->path) : "";
         $gallery_image->delete();
     }
 }
