@@ -15,7 +15,6 @@
                     <i class="bi bi-x-lg"></i>
                 </a>
             </div>
-            <div class="block-content block-content-full p-5">
                 <form action="{{route('recruitment.store')}}" method="POST" enctype="multipart/form-data" class="shadow rounded p-5">
                     @csrf
                     <div class="form-row">
@@ -73,7 +72,7 @@
                         <div class="form-group col-md-6">
                             <label class="form-label">Thumbnail</label>
                             <div class="custom-file">
-                                <input type="file" name="thumbnail" class="custom-file-input" id="thumbnailInput">
+                                <input type="file" name="thumbnail" class="custom-file-input" id="thumbnailInput" accept="image/*" />
                                 <label class="custom-file-label" for="thumbnailInput">Choose Thumbnail</label>
                             </div>
                             <small class="text-danger">
@@ -101,7 +100,6 @@
                         <a href="{{route('recruitment.index')}}" class="btn btn-secondary my-5 mx-3">Cancel</a>
                     </div>
                 </form>
-            </div>
         </div>
     </div>
     <!-- END Page Content -->

@@ -1,8 +1,11 @@
 <?php
 
+use App\Http\Controllers\AnniversaryController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\BirthdayController;
 use App\Http\Controllers\BusinessController;
 use App\Http\Controllers\CandidateController;
+use App\Http\Controllers\DonerController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\LateController;
@@ -10,10 +13,22 @@ use App\Http\Controllers\NewsController;
 use App\Http\Controllers\RecruitmentController;
 use App\Http\Controllers\statusController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\SurnameController;
+use App\Http\Controllers\MegazineController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\EmploymentController;
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\SportController;
+use App\Http\Controllers\EducationController;
 use Illuminate\Support\Facades\Auth;
+
 use App\Http\Controllers\NotificationsController;
+use App\Http\Controllers\ImportController;
+use App\Http\Controllers\DashboardController;
+
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -26,8 +41,20 @@ use Illuminate\Http\Request;
 |
 */
 
+
+
+
 // Example Routes
-Route::view('/', 'landing');
+Route::get('/', [DashboardController::class,'index'])->name('dashboard');
+Route::get('history', [DashboardController::class,'history'])->name('history');
+Route::get('contactus', [DashboardController::class,'contact'])->name('contactus');
+// Route::get('gallery', [DashboardController::class,'getGallery'])->name('gallery');
+// Route::get('blog', [DashboardController::class,'blog'])->name('blog');
+Route::get('employees', [DashboardController::class,'employee_records'])->name('employee');
+Route::get('OurEmployees', [DashboardController::class, 'index'])->name('OurEmployees.index');
+Route::get('employess_data' , [DashboardController::class,'getdata'])->name('employee_data.index');
+Route::get('committe', [DashboardController::class,'committe'])->name('commite');
+// Route::get('event', [DashboardController::class,'event'])->name('event');
 Route::view('/pages/slick', 'pages.slick');
 Route::view('/pages/datatables', 'pages.datatables')->name('pages.datatables');
 Route::view('/pages/blank', 'pages.blank');
@@ -45,6 +72,16 @@ Route::group(['middleware'=>'auth'], function () {
     Route::resource('recruitment', RecruitmentController::class);
     Route::resource('late', LateController::class);
     Route::resource('gallery',GalleryController::class);
+    Route::resource('birthday',BirthdayController::class);
+    Route::resource('anniversary',AnniversaryController::class);
+    Route::resource('doner',DonerController::class);
+    Route::resource('megazine',MegazineController::class);
+    Route::resource('employment', EmploymentController::class);
+    Route::resource('event', EventController::class);
+    Route::resource('sport', SportController::class);
+    Route::resource('contact', ContactController::class);
+    Route::resource('education', EducationController::class);
+    Route::resource('surname', SurnameController::class);
 
     Route::view('/notification', 'notification.create_notification');
     Route::get('/notification', [NotificationsController::class,'index'])->name('notification.index');
@@ -54,9 +91,13 @@ Route::group(['middleware'=>'auth'], function () {
     Route::view('profile','forms.profile')->name('user.profile');
 
     Route::get('removeMediaImage',[GalleryController::class,'removeMediaImage'])->name('removeMediaImage');
+    
     Route::post('changeStatus/{model}',function($model, Request $request){
         return statusUpdate($model,$request->id);
     })->name('changeStatus');
+
+    Route::get('import_create',[ImportController::class,'index'])->name('import.index');
+    Route::post('import', [ImportController::class, 'import'])->name('import');
 
 });
 
@@ -64,3 +105,7 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

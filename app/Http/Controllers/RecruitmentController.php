@@ -43,11 +43,13 @@ class RecruitmentController extends Controller
     public function store(Request $request)
     {
         $request->validate($this->rules);
+
         $thumbnailName = '';
-        if ($request->file('thumbnail')) {
-            $thumbnailName = time().$request->file('thumbnail')->getClientOriginalName();
-            $request->file('thumbnail')->storeAs('thumbnails', $thumbnailName, 'public');
+
+        if ($mediaFile = $request->file('thumbnail')) {
+            $thumbnailName = globallyStoreMedia($mediaFile,"/recruitment_thumbnails");
         }
+
         Recruitment::create([
             'headline' => $request->headline,
             'title' => $request->title,
@@ -96,12 +98,11 @@ class RecruitmentController extends Controller
     public function update(Request $request, Recruitment $recruitment)
     {
         $request->validate($this->rules);
-        if ($request->file('thumbnail')) {
-            Storage::delete('public/thumbnails/'.$recruitment->thumbnail);
-            $thumbnailName = time().$request->file('thumbnail')->getClientOriginalName();
-            $request->file('thumbnail')->storeAs('thumbnails', $thumbnailName, 'public');
-            $recruitment->update(['thumbnail' => $thumbnailName]);
+
+        if ($mediaFile = $request->file('thumbnail')) {
+            globallyUpdateMedia($recruitment,$mediaFile,'/recruitment_thumbnails','thumbnail');
         }
+
         $recruitment->update([
             'headline' => $request->headline,
             'title' => $request->title,
@@ -113,6 +114,7 @@ class RecruitmentController extends Controller
             'reported_datetime' => $request->reported_datetime,
             'status' => $request->status,
         ]);
+
         return redirect()->route('recruitment.index');
     }
 
@@ -124,7 +126,7 @@ class RecruitmentController extends Controller
      */
     public function destroy(Recruitment $recruitment)
     {
-        Storage::delete('public/thumbnails/'.$recruitment->thumbnail);
+        globallyDeleteMedia($recruitment,'/recruitment_thumbnails','thumbnail');
         $recruitment->delete();
         return redirect()->route('recruitment.index');
     }

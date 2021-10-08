@@ -10,10 +10,8 @@ class AnniversaryController extends Controller
 {
     public $rules = [
         'name' => 'required',
-        'marriagedate' => 'required',
-        'time' => 'required',
-        'place' => 'required',
-        'wishes' => 'required'
+        'marriage_date' => 'required',
+        'picture' => 'mimes:jpeg,jpg,png'
     ];
     /**
      * Display a listing of the resource.
@@ -51,6 +49,12 @@ class AnniversaryController extends Controller
         if ($validator->fails()) {
             return ['status' => "false",'msg' => $validator->messages()];
         }
+
+        $pictureName = "";
+
+        if ($mediaFile = $request->file('picture')) {
+            $pictureName = globallyStoreMedia($mediaFile,"/anniversary_pictures");
+        }
         
         $newAnniversary = Anniversary::create([           
             'name' => $request->name,
@@ -58,6 +62,7 @@ class AnniversaryController extends Controller
             'time' => $request->time,
             'place' => $request->place,
             'wishes' => $request->wishes,
+            'picture' => $pictureName,
             'status' => 'Inactive'
             
         ]);
@@ -100,9 +105,15 @@ class AnniversaryController extends Controller
         //
         $anniversarys = Anniversary::where(['id'=>$request->anniversary_id])->first();
         if (!empty($anniversarys)) {
+
             $validator = Validator::make($request->all(), $this->rules);
+
             if ($validator->fails()) {
                 return ['status' => "false",'msg' => $validator->messages()];
+            }
+
+            if ($mediaFile = $request->file('picture')) {
+                globallyUpdateMedia($anniversary,$mediaFile,'/anniversary_pictures','picture');
             }
            
             $anniversarys->update([                      
@@ -111,7 +122,6 @@ class AnniversaryController extends Controller
                     'time' => $request->time,
                     'place' => $request->place,
                     'wishes' => $request->wishes
-            
             ]);
             return $this->responseOut($anniversarys);
         } else {

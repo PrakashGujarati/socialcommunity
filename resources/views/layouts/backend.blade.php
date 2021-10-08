@@ -4,9 +4,9 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 
-        <title>Dashmix - Bootstrap 4 Admin Template &amp; UI Framework</title>
+        <title>Khant Rajput Samaj</title>
 
-        <meta name="description" content="Dashmix - Bootstrap 4 Admin Template &amp; UI Framework created by pixelcave and published on Themeforest">
+        <meta name="description" content="Khant Rajput Samaj">
         <meta name="author" content="pixelcave">
         <meta name="robots" content="noindex, nofollow">
 
@@ -352,6 +352,12 @@
                                 </a>
                             </li>
                             <li class="nav-main-item">
+                                <a class="nav-main-link{{ request()->is('birthday'.'*') ? ' active' : '' }}" href="{{route('birthday.index')}}">
+                                    <i class="nav-main-link-icon fas fa-birthday-cake"></i>
+                                    <span class="nav-main-link-name">Birthdays</span>
+                                </a>
+                            </li>
+                            <li class="nav-main-item">
                                 <a class="nav-main-link{{ request()->is('employee'.'*') ? ' active' : '' }}" href="{{route('employee.index')}}">
                                     <i class="nav-main-link-icon bi-person-badge-fill"></i>
                                     <span class="nav-main-link-name">Employees</span>
@@ -378,14 +384,87 @@
                             <li class="nav-main-item">
                                 <a class="nav-main-link{{ request()->is('late'.'*') ? ' active' : '' }}" href="{{route('late.index')}}">
                                     <i class="nav-main-link-icon fas fa-cross"></i>
-                                    <span class="nav-main-link-name">Late</span>
+                                    <span class="nav-main-link-name">Lates</span>
                                 </a>
                             </li>
-                            <!-- <li class="nav-main-heading">More</li> -->
+                            <li class="nav-main-item">
+                                <a class="nav-main-link{{ request()->is('gallery'.'*') ? ' active' : '' }}" href="{{route('gallery.index')}}">
+                                    <i class="nav-main-link-icon fas fa-image"></i>
+                                    <span class="nav-main-link-name">Gallery</span>
+                                </a>
+                            </li>
+                            <li class="nav-main-item">
+                                <a class="nav-main-link{{ request()->is('surname'.'*') ? ' active' : '' }}" href="{{route('surname.index')}}">
+                                    <i class="nav-main-link-icon fab fa-unsplash"></i>
+                                    <span class="nav-main-link-name">Surname</span>
+                                </a>
+                            </li>
+                            <li class="nav-main-item">
+                                <a class="nav-main-link{{ request()->is('megazine'.'*') ? ' active' : '' }}" href="{{route('megazine.index')}}">
+                                    <i class="nav-main-link-icon fas fa-dice-five"></i>
+                                    <span class="nav-main-link-name">Megazines</span>
+                                </a>
+                            </li>
+                            <li class="nav-main-item">
+                                <a class="nav-main-link{{ request()->is('contact'.'*') ? ' active' : '' }}" href="{{route('contact.index')}}">
+                                    <i class="nav-main-link-icon fas fa-id-card"></i>
+                                    <span class="nav-main-link-name">Contacts</span>
+                                </a>
+                            </li>
+                            <li class="nav-main-item">
+                                <a class="nav-main-link{{ request()->is('employment'.'*') ? ' active' : '' }}" href="{{route('employment.index')}}">
+                                    <i class="nav-main-link-icon fas fa-drafting-compass"></i>
+                                    <span class="nav-main-link-name">Employments</span>
+                                </a>
+                            </li>
+                            <li class="nav-main-item">
+                                <a class="nav-main-link{{ request()->is('event'.'*') ? ' active' : '' }}" href="{{route('event.index')}}">
+                                    <i class="nav-main-link-icon fa fa-calendar"></i>
+                                    <span class="nav-main-link-name">Events</span>
+                                </a>
+                            </li>
+                            <li class="nav-main-item">
+                                <a class="nav-main-link{{ request()->is('sport'.'*') ? ' active' : '' }}" href="{{route('sport.index')}}">
+                                    <i class="nav-main-link-icon fa fa-futbol"></i>
+                                    <span class="nav-main-link-name">Sports</span>
+                                </a>
+                            </li>
+                            <li class="nav-main-item">
+                                <a class="nav-main-link{{ request()->is('education'.'*') ? ' active' : '' }}" href="{{route('education.index')}}">
+                                    <i class="nav-main-link-icon fa fa-graduation-cap"></i>
+                                    <span class="nav-main-link-name">Education</span>
+                                </a>
+                            </li>
+                            <li class="nav-main-heading">More</li>
+                            <li class="nav-main-item">
+                                <a class="nav-main-link{{ request()->is('anniversary'.'*') ? ' active' : '' }}" href="{{route('anniversary.index')}}">
+                                    <i class="nav-main-link-icon fas fa-ring"></i>
+                                    <span class="nav-main-link-name">Anniversaries</span>
+                                </a>
+                            </li>
+                            <li class="nav-main-item">
+                                <a class="nav-main-link{{ request()->is('doner'.'*') ? ' active' : '' }}" href="{{route('doner.index')}}">
+                                    <i class="nav-main-link-icon fas fa-hand-holding-usd"></i>
+                                    <span class="nav-main-link-name">Doners</span>
+                                </a>
+                            </li>
+                            <li class="nav-main-heading">More</li>
+                            <li class="nav-main-item">
+                                <a class="nav-main-link" href="">
+                                    <i class="nav-main-link-icon fa fa-cog"></i>
+                                    <span class="nav-main-link-name">Settings</span>
+                                </a>
+                            </li>
+                            <li class="nav-main-item">
+                                <a class="nav-main-link" href="{{route('import.index')}}">
+                                    <i class="nav-main-link-icon fas fa-file-import"></i>
+                                    <span class="nav-main-link-name">Import</span>
+                                </a>
+                            </li>
                             <li class="nav-main-item">
                                 <a class="nav-main-link" href="{{route('notification.index')}}">
-                                    <i class="nav-main-link-icon fa fa-globe"></i>
-                                    <span class="nav-main-link-name">Notification</span>
+                                    <i class="nav-main-link-icon far fa-bell"></i>
+                                    <span class="nav-main-link-name">Notifications</span>
                                 </a>
                             </li>
                         </ul>

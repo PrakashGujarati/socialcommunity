@@ -54,7 +54,7 @@
                             <td>{{$recruitment->reported_datetime}}</td>
                             <td>
                             @if($recruitment->thumbnail)
-                                <img class="border rounded" src="{{asset('thumbnail/'.$recruitment->thumbnail)}}" height="60">
+                                <img class="border rounded" src="{{url($recruitment->thumbnail)}}" height="60">
                             @else
                                 <img class="border rounded" src="https://donatepoints.aircanada.com/img/no_image_available.jpg" height="60">
                             @endif

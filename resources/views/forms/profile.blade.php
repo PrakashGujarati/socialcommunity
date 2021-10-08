@@ -23,7 +23,6 @@
                     <i class="bi bi-x-lg"></i>
                 </a>
             </div>
-            <div class="block-content block-content-full p-5">
                 <form action="{{route('user.update',auth()->user())}}" method="POST" enctype="multipart/form-data" class="shadow rounded p-5">
                     @csrf
                     @method('PUT')
@@ -31,7 +30,7 @@
                         <div>
                             <div class="custom-file">
                                 <input type="file" style="display:none" name="file" class="custom-file-input" id="imgupload">
-                                <img class="img-fluid profile-image"  @if(auth()->user()->picture) src="{{asset('images/'.auth()->user()->picture)}}" @else src="https://e7.pngegg.com/pngimages/456/700/png-clipart-computer-icons-avatar-user-profile-avatar-heroes-logo.png" @endif alt="">
+                                <img class="img-fluid profile-image"  @if(auth()->user()->picture) src="{{asset('user_profiles/'.auth()->user()->picture)}}" @else src="https://e7.pngegg.com/pngimages/456/700/png-clipart-computer-icons-avatar-user-profile-avatar-heroes-logo.png" @endif alt="">
                                 <button type="button" id="OpenImgUpload" class="btn btn-light"><i class="fas fa-edit"></i></button>
                             </div>
                         </div>
@@ -127,7 +126,6 @@
                         <a href="{{route('user.index')}}" class="btn btn-secondary my-5 mx-3">Cancel</a>
                     </div>
                 </form>
-            </div>
         </div>
     </div>
     <!-- END Page Content -->

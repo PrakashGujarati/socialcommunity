@@ -11,10 +11,12 @@ use Illuminate\Support\Facades\Storage;
 
 class CandidateController extends Controller
 {
-    
-   public $rules = [
-       'candidate_id' => 'required'
+    public $rules = [
+        'first_name' => 'required',
+        'contact' => 'required|numeric',
+        'picture' => 'mimes:jpeg,jpg,png'
     ];
+
     
     /**
      * Display a listing of the resource.
@@ -46,14 +48,17 @@ class CandidateController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), $this->rules);
+
         if ($validator->fails()) {
             return ['status' => "false",'msg' => $validator->messages()];
         }
+
         $pictureName = '';
-        if ($request->file('picture')) {
-            $pictureName = time().$request->file('picture')->getClientOriginalName();
-            $request->file('picture')->storeAs('candidate_pictures', $pictureName, 'public');
+
+        if ($mediaFile = $request->file('picture')) {
+            $pictureName = globallyStoreMedia($mediaFile,"/candidate_pictures");
         }
+
         $newCandidate = Candidate::create([
             'user_id' => Auth::user()->id,
             'first_name' => $request->first_name,
@@ -86,6 +91,7 @@ class CandidateController extends Controller
             'status' => 'Inactive',
             'done_by' => Auth::user()->id
         ]);
+
         return $this->responseOut($newCandidate);
     }
 
@@ -97,7 +103,6 @@ class CandidateController extends Controller
      */
     public function show(Request $request)
     {
-        // dd('show');
         $data = Candidate::where(['id' => $request->candidate_id])->first();
         return $this->responseOut($data);
     }
@@ -127,16 +132,17 @@ class CandidateController extends Controller
         $candidate = Candidate::where(['id'=>$request->candidate_id,'user_id'=>Auth::user()->id])->first();
 
         if (!empty($candidate)) {
+
             $validator = Validator::make($request->all(), $this->rules);
+
             if ($validator->fails()) {
                 return ['status' => "false",'msg' => $validator->messages()];
             }
-            if ($request->file('picture')) {
-                Storage::delete('public/candidate_pictures/'.$candidate->picture);
-                $pictureName = time().$request->file('picture')->getClientOriginalName();
-                $request->file('picture')->storeAs('candidate_pictures', $pictureName, 'public');
-                $candidate->update(['picture' => $pictureName]);
+
+            if ($mediaFile = $request->file('picture')) {
+                globallyUpdateMedia($candidate,$mediaFile,'/candidate_pictures','picture');
             }
+
             $candidate->update([
                 'first_name' => $request->first_name,
                 'middle_name' => $request->middle_name,

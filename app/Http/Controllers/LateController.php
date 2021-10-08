@@ -11,7 +11,7 @@ class LateController extends Controller
     public $rules = [
         'first_name' => 'required',
         'late_date' => 'required',
-        'picture' => 'mimes:jpeg,jpg,png',
+        'picture' => 'mimes:jpeg,jpg,png'
     ];
     /**
      * Display a listing of the resource.
@@ -42,11 +42,13 @@ class LateController extends Controller
     public function store(Request $request)
     {
         $pictureName = '';
+        
         $request->validate($this->rules);
-        if ($request->file('picture')) {
-            $pictureName = time().$request->file('picture')->getClientOriginalName();
-            $request->file('picture')->storeAs('late_pictures', $pictureName, 'public');
+
+        if ($mediaFile = $request->file('picture')) {
+            $pictureName = globallyStoreMedia($mediaFile,"/late_pictures");
         }
+        
         Late::create([
             'first_name' => $request->first_name,
             'middle_name' => $request->middle_name,
@@ -62,6 +64,7 @@ class LateController extends Controller
             'status' => $request->status,
             'done_by' => 1
         ]);
+        
         return redirect()->route('late.index');
     }
 
@@ -97,12 +100,11 @@ class LateController extends Controller
     public function update(Request $request, Late $late)
     {
         $request->validate($this->rules);
-        if ($request->file('picture')) {
-            Storage::delete('public/late_pictures/'.$late->picture);
-            $pictureName = time().$request->file('picture')->getClientOriginalName();
-            $request->file('picture')->storeAs('late_pictures', $pictureName, 'public');
-            $late->update(['picture' => $pictureName]);
+
+        if ($mediaFile = $request->file('picture')) {
+            globallyUpdateMedia($late,$mediaFile,'/late_pictures','picture');
         }
+
         $late->update([
             'first_name' => $request->first_name,
             'middle_name' => $request->middle_name,
@@ -116,6 +118,7 @@ class LateController extends Controller
             'contact' => $request->contact,
             'status' => $request->status,
         ]);
+
         return redirect()->route('late.index');
     }
 
@@ -127,7 +130,7 @@ class LateController extends Controller
      */
     public function destroy(Late $late)
     {
-        Storage::delete('public/late_pictures/'.$late->picture);
+        globallyDeleteMedia($late,'/late_pictures','picture');
         $late->delete();
         return redirect()->route('late.index');
     }

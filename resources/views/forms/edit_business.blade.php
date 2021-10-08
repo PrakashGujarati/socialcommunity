@@ -15,7 +15,6 @@
                     <i class="bi bi-x-lg"></i>
                 </a>
             </div>
-            <div class="block-content block-content-full p-5">
                 <form action="{{route('business.update',$business)}}" method="POST" enctype="multipart/form-data" class="shadow rounder p-5">
                     @csrf
                     @method('PUT')
@@ -92,15 +91,15 @@
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label class="form-label">Address</label>
-                            <textarea class="form-control" rows="2" name="address" placeholder="Address...">{{$business->address}}"</textarea>
+                            <textarea class="form-control" rows="2" name="address" placeholder="Address...">{{$business->address}}</textarea>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label class="form-label">Logo</label>
                             <div class="custom-file">
-                                <input type="file" name="logo" class="custom-file-input" id="logoInput">
-                                <label class="custom-file-label" for="logoInput">Choose Logo</label>
+                                <input type="file" name="logo[]" class="custom-file-input" id="logoInput" accept="image/*" multiple>
+                                <label class="custom-file-label" for="logoInput">Choose Picture</label>
                             </div>
                             <small class="text-danger">
                                 @error('logo')
@@ -111,8 +110,8 @@
                         <div class="form-group col-md-6">
                             <label class="form-label">Visiting Card</label>
                             <div class="custom-file">
-                                <input type="file" name="visitingcard" class="custom-file-input" id="cardInput">
-                                <label class="custom-file-label" for="cardInput">Choose Logo</label>
+                                <input type="file" name="visitingcard[]" class="custom-file-input" id="cardInput" accept="image/*" multiple>
+                                <label class="custom-file-label" for="cardInput">Choose Picture</label>
                             </div>
                             <small class="text-danger">
                                 @error('visitingcard')
@@ -135,7 +134,6 @@
                         <a href="{{route('business.index')}}" class="btn btn-secondary my-5 mx-3">Cancel</a>
                     </div>
                 </form>
-            </div>
         </div>
     </div>
     <!-- END Page Content -->

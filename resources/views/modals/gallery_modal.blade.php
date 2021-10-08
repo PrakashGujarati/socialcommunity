@@ -38,7 +38,7 @@
                     <div class="d-flex row justify-content-center">
                         @foreach($gallery->galleryImages as $image)
                         <div class="border border-1 border-dark m-2 p-2 rounded col-md-3 d-flex justify-content-center" id="img-{{$image->id}}">
-                        <img class="media-image" src="{{asset('gallery_image/'.$image->path)}}" alt="" srcset="">
+                        <img class="media-image" src="{{url($image->path)}}" alt="" srcset="">
                         <a href="#" onclick="removeMedia({{$image->id}},'img-{{$image->id}}')" class="text-danger h3">
                             <span aria-hidden="true">&times;</span>
                         </a>

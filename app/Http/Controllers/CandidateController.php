@@ -42,11 +42,13 @@ class CandidateController extends Controller
     public function store(Request $request)
     {
         $request->validate($this->rules);
+
         $pictureName = '';
-        if ($request->file('picture')) {
-            $pictureName = time().$request->file('picture')->getClientOriginalName();
-            $request->file('picture')->storeAs('candidate_pictures', $pictureName, 'public');
+
+        if ($mediaFile = $request->file('picture')) {
+            $pictureName = globallyStoreMedia($mediaFile,"/candidate_pictures");
         }
+
         Candidate::create([
             'user_id' => 1,
             'first_name' => $request->first_name,
@@ -114,12 +116,11 @@ class CandidateController extends Controller
     public function update(Request $request, Candidate $candidate)
     {
         $request->validate($this->rules);
-        if ($request->file('picture')) {
-            Storage::delete('public/candidate_pictures/'.$candidate->picture);
-            $pictureName = time().$request->file('picture')->getClientOriginalName();
-            $request->file('picture')->storeAs('candidate_pictures', $pictureName, 'public');
-            $candidate->update(['picture' => $pictureName]);
+
+        if ($mediaFile = $request->file('picture')) {
+            globallyUpdateMedia($candidate,$mediaFile,'/candidate_pictures','picture');
         }
+
         $candidate->update([
             'first_name' => $request->first_name,
             'middle_name' => $request->middle_name,
@@ -160,7 +161,7 @@ class CandidateController extends Controller
      */
     public function destroy(Candidate $candidate)
     {
-        Storage::delete('public/candidate_pictures/'.$candidate->picture);
+        globallyDeleteMedia($candidate,'/candidate_pictures','picture');
         $candidate->delete();
         return redirect()->route('candidate.index');
     }

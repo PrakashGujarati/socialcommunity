@@ -52,11 +52,13 @@ class EmployeeController extends Controller
         if ($validator->fails()) {
             return ['status' => "false",'msg' => $validator->messages()];
         }
+
         $logo = '';
-        if ($request->file()) {
-            $logo = time().$request->file('logo')->getClientOriginalName();
-            $request->file('logo')->storeAs('employee_logos', $logo, 'public');
+
+        if ($mediaFile = $request->file('logo')) {
+            $logo = globallyStoreMedia($mediaFile,"/employee_logos");
         }
+
         $newEmployee = Employee::create([
             'user_id' => Auth::user()->id,
             'first_name' => $request->first_name,
@@ -72,6 +74,7 @@ class EmployeeController extends Controller
             'status' => 'Inactive',
             'done_by' => Auth::user()->id
         ]);
+        
         return $this->responseOut($newEmployee);
     }
 
@@ -116,11 +119,8 @@ class EmployeeController extends Controller
                 return ['status' => "false",'msg' => $validator->messages()];
             }
 
-            if ($request->file('logo')) {
-                Storage::delete('public/employee_logos/'.$employee->logo);
-                $logo = $request->file('logo')->getClientOriginalName();
-                $request->file('logo')->storeAs('employee_logos', $request->logo->getClientOriginalName(), 'public');
-                $employee->update(['logo' => $logo]);
+            if ($mediaFile = $request->file('logo')) {
+                globallyUpdateMedia($employee,$mediaFile,'/employee_logos','logo');
             }
 
             $employee->update([

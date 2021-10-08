@@ -14,7 +14,6 @@
                     <i class="bi bi-x-lg"></i>
                 </a>
             </div>
-            <div class="block-content block-content-full p-5">
                 <form action="{{route('candidate.store')}}" method="POST" enctype="multipart/form-data" class="shadow rounded p-5">
                     @csrf
                     <div class="form-row">
@@ -94,11 +93,6 @@
                         <div class="form-group col-md-5">
                             <label class="form-label">Father Contact</label>
                             <input name="father_contact" type="text" class="form-control" placeholder="Father Contact">
-                            <small class="text-danger">
-                                @error('father_contact')
-                                    <span class="text-red-500 text-xs"><i class="fa fa-bug"></i> {{ $message }}</span>
-                                @enderror
-                            </small>
                         </div>
                         <div class="form-group col-md-4">
                             <label class="form-label">Brothers</label>
@@ -162,7 +156,7 @@
                         <div class="form-group col-md-6">
                             <label class="form-label">Picture</label>
                             <div class="custom-file">
-                                <input type="file" name="picture" class="custom-file-input" id="pictureInput">
+                                <input type="file" name="picture" class="custom-file-input" id="pictureInput" accept="image/*" />
                                 <label class="custom-file-label" for="pictureInput">Choose file</label>
                             </div>
                             <small class="text-danger">
@@ -186,7 +180,6 @@
                         <a href="{{route('candidate.index')}}" class="btn btn-secondary my-5 mx-3">Cancel</a>
                     </div>
                 </form>
-            </div>
         </div>
     </>
     <!-- END Page Content -->

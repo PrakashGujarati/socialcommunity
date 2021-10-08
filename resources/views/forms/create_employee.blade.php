@@ -15,7 +15,6 @@
                     <i class="bi bi-x-lg"></i>
                 </a>
             </div>
-            <div class="block-content block-content-full p-5">
                 <form action="{{route('employee.store')}}" method="POST" enctype="multipart/form-data" class="shadow rounded p-5">
                     @csrf
                     <div class="form-row">
@@ -93,7 +92,7 @@
                         <div class="form-group col-md-6">
                             <label class="form-label">Logo</label>
                             <div class="custom-file">
-                                <input type="file" name="logo" class="custom-file-input" id="logoInput">
+                                <input type="file" name="logo" class="custom-file-input" id="logoInput" accept="image/*" />
                                 <label class="custom-file-label" for="logoInput">Choose Logo</label>
                             </div>
                             <small class="text-danger">
@@ -115,7 +114,6 @@
                         <a href="{{route('employee.index')}}" class="btn btn-secondary my-5 mx-3">Cancel</a>
                     </div>
                 </form>
-            </div>
         </div>
     </div>
     <!-- END Page Content -->

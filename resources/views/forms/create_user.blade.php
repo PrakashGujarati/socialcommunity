@@ -15,7 +15,6 @@
                     <i class="bi bi-x-lg"></i>
                 </a>
             </div>
-            <div class="block-content block-content-full p-5">
                 <form action="{{route('user.store')}}" method="POST" enctype="multipart/form-data" class="shadow rounded p-5">
                     @csrf
                     <div class="form-row">
@@ -89,7 +88,12 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label class="form-label">Role Id</label>
-                            <input name="role_id" type="text" class="form-control" placeholder="Role Id">
+                              <select class="form-control" name="role_id" id="">
+                                <option value="">--select--</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                              </select>
                             <small class="text-danger">
                                 @error('role_id')
                                     <span class="text-red-500 text-xs"><i class="fa fa-bug"></i> {{ $message }}</span>
@@ -115,7 +119,7 @@
                         <div class="form-group col-md-12">
                             <label class="form-label">Picture</label>
                             <div class="custom-file">
-                                <input type="file" name="file" class="custom-file-input" id="pictureInput">
+                                <input type="file" name="file" class="custom-file-input" id="pictureInput" accept="image/*" />
                                 <label class="custom-file-label" for="pictureInput">Choose file</label>
                             </div>
                             <small class="text-danger">
@@ -130,7 +134,6 @@
                         <a href="{{route('user.index')}}" class="btn btn-secondary my-5 mx-3">Cancel</a>
                     </div>
                 </form>
-            </div>
         </div>
     </div>
     <!-- END Page Content -->
