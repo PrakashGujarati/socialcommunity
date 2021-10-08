@@ -24,6 +24,7 @@ class LateController extends Controller
     public function list()
     {
         $data = Late::where('status','=','Active')->get();
+        $data = appendDomainOnPath($data,'picture',true);
         return $this->responseOut($data);
     }
 
@@ -85,6 +86,7 @@ class LateController extends Controller
     public function show(Request $request)
     {
         $data = Late::where(['id'=>$request->late_id])->first();
+        $data = appendDomainOnPath($data,'picture');
         return $this->responseOut($data);
     }
 

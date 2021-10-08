@@ -25,6 +25,7 @@ class ContactController extends Controller
     {
         //
         $data = Contact::where('status','=','Active')->get();
+        $data = appendDomainOnPath($data,'picture',true);
         return $this->responseOut($data);
     }
 
@@ -36,7 +37,7 @@ class ContactController extends Controller
     public function create()
     {
         //
-        
+
     }
 
     /**
@@ -58,16 +59,16 @@ class ContactController extends Controller
 
         if ($mediaFile = $request->file('picture')) {
             $pictureName = globallyStoreMedia($mediaFile,"/contact_pictures");
-        }   
+        }
 
         $newContact = Contact::create([
             'name' => $request->name,
             'designation' => $request->designation,
             'mobile' => $request->mobile,
             'email' => $request->email,
-            'picture' => $pictureName,            
+            'picture' => $pictureName,
             'status' => 'Inactive'
-            
+
         ]);
         return $this->responseOut($newContact);
     }
@@ -82,6 +83,7 @@ class ContactController extends Controller
     {
         //
         $data = Contact::where(['id' => $request->contact_id])->first();
+        $data = appendDomainOnPath($data,'picture');
         return $this->responseOut($data);
     }
 
@@ -125,9 +127,9 @@ class ContactController extends Controller
             'designation' => $request->designation,
             'mobile' => $request->mobile,
             'email' => $request->email,
-            'picture' => $pictureName           
-           
-            
+            'picture' => $pictureName
+
+
         ]);
         return $this->responseOut($contact);
         } else {

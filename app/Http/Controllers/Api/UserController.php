@@ -20,7 +20,11 @@ class UserController extends Controller
      */
     public function list()
     {
+        return env('APP_URL');
         $data = User::where('status','=','Active')->get();
+        foreach ($data as $key => $value) {
+            $data->picture = env('APP_URL').$data->picture;
+        }
         return $this->responseOut($data);
     }
 
@@ -85,7 +89,7 @@ class UserController extends Controller
             if ($validator->fails()) {
                 return ['status' => "false",'msg' => $validator->messages()];
             }
-            
+
             if ($mediaFile = $request->file('picture')) {
                 globallyUpdateMedia($user,$mediaFile,'/user_profiles','picture');
             }
@@ -93,7 +97,7 @@ class UserController extends Controller
             $user->update([
                 'first_name' => $request->first_name,
                 'middle_name' => $request->middle_name,
-                'last_name' => $request->last_name,                
+                'last_name' => $request->last_name,
                 'email' => $request->email,
                 'mobile_number' =>$request->mobile_number,
                 'gender' => $request->gender,
@@ -101,7 +105,7 @@ class UserController extends Controller
                 'address' => $request->address,
                 'city' => $request->city,
                 'pincode' => $request->pincode,
-               
+
             ]);
             return $this->responseOut($user);
         } else {

@@ -10,6 +10,18 @@ function statusUpdate($model, $id)
     return redirect()->route(strtolower($model).'.index');
 }
 
+function appendDomainOnPath($data,$keyName,$multiple = false)
+{
+    if ($multiple) {
+        foreach ($data as $key => $value) {
+            $value->$keyName = url($value->$keyName);
+        }
+    } else {
+        $data->$keyName = url($data->$keyName);
+    }
+    return $data;
+}
+
 function globallyStoreMedia($mediaFile, $publicDirectoryName, $multiple = false)
 {
     if ($multiple) {

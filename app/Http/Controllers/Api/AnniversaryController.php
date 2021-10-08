@@ -22,6 +22,7 @@ class AnniversaryController extends Controller
     {
         //
         $data = Anniversary::where('status','=','Active')->get();
+        $data = appendDomainOnPath($data,'picture',true);
         return $this->responseOut($data);
     }
 
@@ -55,8 +56,8 @@ class AnniversaryController extends Controller
         if ($mediaFile = $request->file('picture')) {
             $pictureName = globallyStoreMedia($mediaFile,"/anniversary_pictures");
         }
-        
-        $newAnniversary = Anniversary::create([           
+
+        $newAnniversary = Anniversary::create([
             'name' => $request->name,
             'marriagedate' => $request->marriagedate,
             'time' => $request->time,
@@ -64,7 +65,7 @@ class AnniversaryController extends Controller
             'wishes' => $request->wishes,
             'picture' => $pictureName,
             'status' => 'Inactive'
-            
+
         ]);
         return $this->responseOut($newAnniversary);
     }
@@ -79,6 +80,7 @@ class AnniversaryController extends Controller
     {
         //
         $data = Anniversary::where(['id' => $request->anniversary_id])->first();
+        $data = appendDomainOnPath($data,'picture');
         return $this->responseOut($data);
     }
 
@@ -115,8 +117,8 @@ class AnniversaryController extends Controller
             if ($mediaFile = $request->file('picture')) {
                 globallyUpdateMedia($anniversary,$mediaFile,'/anniversary_pictures','picture');
             }
-           
-            $anniversarys->update([                      
+
+            $anniversarys->update([
                     'name' => $request->name,
                     'marriagedate' => $request->marriagedate,
                     'time' => $request->time,

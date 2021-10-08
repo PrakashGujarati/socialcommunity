@@ -24,6 +24,7 @@ class BirthdayController extends Controller
     {
         //
         $data = Birthday::where('status','=','Active')->get();
+        $data = appendDomainOnPath($data,'picture',true);
         return $this->responseOut($data);
     }
 
@@ -57,8 +58,8 @@ class BirthdayController extends Controller
         if ($mediaFile = $request->file('picture')) {
             $pictureName = globallyStoreMedia($mediaFile,"/birthday_pictures");
         }
-        
-        $newBirthday = Birthday::create([           
+
+        $newBirthday = Birthday::create([
             'name' => $request->name,
             'birthdate' => $request->birthdate,
             'time' => $request->time,
@@ -66,7 +67,7 @@ class BirthdayController extends Controller
             'wishes' => $request->wishes,
             'picture' => $pictureName,
             'status' => 'Inactive'
-            
+
         ]);
 
         return $this->responseOut($newBirthday);
@@ -82,6 +83,7 @@ class BirthdayController extends Controller
     {
         //
         $data = Birthday::where(['id' => $request->birthday_id])->first();
+        $data = appendDomainOnPath($data,'picture');
         return $this->responseOut($data);
     }
 
@@ -118,14 +120,14 @@ class BirthdayController extends Controller
             if ($mediaFile = $request->file('picture')) {
                 globallyUpdateMedia($birthday,$mediaFile,'/birthday_pictures','picture');
             }
-           
+
             $birthdays->update([
                 'name' => $request->name,
                 'birthdate' => $request->birthdate,
                 'time' => $request->time,
                 'place' => $request->place,
                 'wishes' => $request->wishes
-            
+
             ]);
             return $this->responseOut($birthdays);
         } else {
