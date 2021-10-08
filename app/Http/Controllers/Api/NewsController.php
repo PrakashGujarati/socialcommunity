@@ -47,18 +47,20 @@ class NewsController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), $this->rules);
+
         if ($validator->fails()) {
             return ['status' => "false",'msg' => $validator->messages()];
         }
-        $thumbnailName = '';
-        $news_image = '';
-        if ($request->file('thumbnail')) {
-            $thumbnailName = time().$request->file('thumbnail')->getClientOriginalName();
-            $request->file('thumbnail')->storeAs('thumbnails', $thumbnailName, 'public');
+
+        $thumbnailName = "";
+        $imageName = "";
+
+        if ($mediaFile = $request->file('thumbnail')) {
+            $thumbnailName = globallyStoreMedia($mediaFile,"/news_thumbnails");
         }
-        if ($request->file('news_image')) {
-            $news_image = time().$request->file('news_image')->getClientOriginalName();
-            $request->file('news_image')->storeAs('news_images', $news_image, 'public');
+
+        if($mediaFile = $request->file('news_image')){            
+            $imageName = globallyStoreMedia($file,"/news_images");          
         }
 
         $newNews = News::create([
@@ -67,7 +69,7 @@ class NewsController extends Controller
             'category' => $request->category,
             'detail_report' => $request->detail_report,
             'thumbnail' => $thumbnailName,
-            'news_image' => $news_image,
+            'news_image' => $imageName,
             'reported_datetime' => $request->reported_datetime,
             'reference' => $request->reference,
             'status' => 'Inactive',
@@ -110,23 +112,23 @@ class NewsController extends Controller
     public function update(Request $request)
     {
         $news = News::where(['id'=>$request->news_id,'done_by'=>Auth::user()->id])->first();
+
         if (!empty($news)) {
+
             $validator = Validator::make($request->all(), $this->rules);
+
             if ($validator->fails()) {
                 return ['status' => "false",'msg' => $validator->messages()];
             }
-            if ($request->file('thumbnail')) {
-                Storage::delete('public/thumbnails/'.$news->thumbnail);
-                $thumbnailName = time().$request->file('thumbnail')->getClientOriginalName();
-                $request->file('thumbnail')->storeAs('thumbnails', $thumbnailName, 'public');
-                $news->update(['thumbnail' => $thumbnailName]);
+
+            if ($mediaFile = $request->file('thumbnail')) {
+                globallyUpdateMedia($news,$mediaFile,'/news_thumbnails','thumbnail');
             }
-            if ($request->file('news_image')) {
-                Storage::delete('public/news_images/'.$news->news_image);
-                $news_image = time().$request->file('news_image')->getClientOriginalName();
-                $request->file('news_image')->storeAs('news_images', $news_image, 'public');
-                $news->update(['news_image' => $news_image]);
+    
+            if ($mediaFile = $request->file('news_image')) {
+                globallyUpdateMedia($news,$mediaFile,'/news_images','news_image');
             }
+
             $news->update([
                 'headline' => $request->headline,
                 'title' => $request->title,
@@ -135,7 +137,9 @@ class NewsController extends Controller
                 'reported_datetime' => $request->reported_datetime,
                 'reference' => $request->reference,
             ]);
+
             return $this->responseOut($news);
+
         } else {
             return $this->responseOut($news);
         }

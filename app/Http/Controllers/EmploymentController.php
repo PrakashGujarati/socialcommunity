@@ -8,6 +8,12 @@ use Illuminate\Support\Facades\Storage;
 
 class EmploymentController extends Controller
 {
+    public $rules = [
+        'headline' => 'required',
+        'title' => 'required',
+        'thumbnail.*' => 'mimes:jpeg,jpg,png',
+        'news_image.*' => 'mimes:jpeg,jpg,png'
+    ];
     /**
      * Display a listing of the resource.
      *
@@ -36,22 +42,19 @@ class EmploymentController extends Controller
      */
     public function store(Request $request)
     {
-        $news_image = '';
-        $data=[];
-        if($request->hasfile('thumbnail'))
-        {
-             foreach($request->file('thumbnail') as $image)
-             {
-                 $name=$image->getClientOriginalName();
-                 $image->move(public_path().'/image/',$name);
-                $data[]=$name;  
-             }
-         }
-         if ($request->file('news_image')) {
-            $news_image = time().$request->file('news_image')->getClientOriginalName();
-            $request->file('news_image')->storeAs('news_images', $news_image, 'public');
+        $request->validate($this->rules);
+
+        $news_image = "";
+
+        $thumbnail = "";
+
+        if ($mediaFile = $request->file('thumbnail')) {
+            $thumbnail = globallyStoreMedia($mediaFile,"/employment_thumbnails",true);
         }
-        $thumbnail=implode(",", $data);
+
+        if($mediaFile = $request->file('news_image')){
+            $news_image = globallyStoreMedia($mediaFile,"/employment_images",true);
+        }
 
         Employment::create([
             'headline' => $request->headline,
@@ -65,6 +68,7 @@ class EmploymentController extends Controller
             'status' => $request->status,
             'done_by' => 1
         ]);
+
         return redirect()->route('employment.index');
 
     }
@@ -86,10 +90,9 @@ class EmploymentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Employment $employment)
     {
-        $employment=Employment::where('id',$id)->first();
-        return view('forms.edit_employment',compact('employment'));
+        return view('forms.edit_employment',['employment' => $employment]);
     }
 
     /**
@@ -101,49 +104,27 @@ class EmploymentController extends Controller
      */
     public function update(Request $request,Employment $employment)
     {
-        $imageUpdate=null;
-        if ($files=$request->file('thumbnail')) {
-            foreach($files as $file){
-             Storage::delete('public/thumbnails/'.$employment->thumbnail);
-             $thumbnailName = time().$file->getClientOriginalName();
-             $file->storeAs('thumbnails', $thumbnailName, 'public');
-            //$news->update(['thumbnail' => $thumbnailName]);
-            $imageUpdate.=$thumbnailName.",";
-            }
+
+        $request->validate($this->rules);
+
+        if ($mediaFile = $request->file('thumbnail')) {
+            globallyUpdateMedia($employment,$mediaFile,'/employment_thumbnails','thumbnail',true);
         }
-        if ($request->file('news_image')) {
-            Storage::delete('public/news_images/'.$employment->news_image);
-            $news_image = time().$request->file('news_image')[0]->getClientOriginalName();
-            $request->file('news_image')[0]->storeAs('news_images', $news_image, 'public');
-            $employment->update(['news_image' => $news_image]);
+
+        if ($mediaFile = $request->file('news_image')) {
+            globallyUpdateMedia($employment,$mediaFile,'/employment_images','news_image',true);
         }
-        if($imageUpdate != null)
-        {
-            
-            $employment->update([
-                'headline' => $request->headline,
-                'title' => $request->title,
-                'category' => $request->category,
-                'detail_report' => $request->detail_report,
-                'reported_datetime' => $request->reported_datetime,
-                'reference' => $request->reference,
-                'status' => $request->status,
-                'thumbnail'=>$imageUpdate
-            ]);
-        }
-        else
-        {
-            $employment->update([
-                'headline' => $request->headline,
-                'title' => $request->title,
-                'category' => $request->category,
-                'detail_report' => $request->detail_report,
-                'reported_datetime' => $request->reported_datetime,
-                'reference' => $request->reference,
-                'status' => $request->status
-            ]);
-        }
-            
+
+        $employment->update([
+            'headline' => $request->headline,
+            'title' => $request->title,
+            'category' => $request->category,
+            'detail_report' => $request->detail_report,
+            'reported_datetime' => $request->reported_datetime,
+            'reference' => $request->reference,
+            'status' => $request->status
+        ]);
+
         return redirect()->route('employment.index');
     }
 
@@ -155,6 +136,9 @@ class EmploymentController extends Controller
      */
     public function destroy(Employment $employment)
     {
+        globallyDeleteMedia($employment,'/employment_thumbnails','thumbnail',true);
+        globallyDeleteMedia($employment,'/employment_images','news_image',true);
+
         $employment->delete();
         return redirect()->route('employment.index');
     }

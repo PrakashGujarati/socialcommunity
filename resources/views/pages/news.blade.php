@@ -55,14 +55,14 @@
                             <td>{{$news->reference}}</td>
                             <td>
                                 @if($news->thumbnail)
-                                    <img class="border rounded" src="{{asset('thumbnail/'.$news->thumbnail)}}" height="60">
+                                    <img class="border rounded" src="{{url(json_decode($news->thumbnail)[0])}}" height="60">
                                 @else
                                     <img class="border rounded" src="https://donatepoints.aircanada.com/img/no_image_available.jpg" height="60">
                                 @endif
                             </td>
                             <td>
                                 @if($news->news_image)
-                                    <img class="border rounded" src="{{asset('news_image/'.$news->news_image)}}" height="60">
+                                    <img class="border rounded" src="{{url(json_decode($news->news_image)[0])}}" height="60">
                                 @else
                                     <img class="border rounded" src="https://donatepoints.aircanada.com/img/no_image_available.jpg" height="60">
                                 @endif

@@ -48,38 +48,37 @@ class SportController extends Controller
     {
         //
         $validator = Validator::make($request->all(), $this->rules);
+
         if ($validator->fails()) {
             return ['status' => "false",'msg' => $validator->messages()];
         }
-       
-        if ($request->hasFile('thumbnail')){
-            $file = $request->file('thumbnail');
-            $extension = $file->getClientOriginalExtension();
-            $thumbnialName = time().'.'.$extension;
-            $path = public_path().'/sport_thumbnail';
-            $uplaod = $file->move($path,$thumbnialName);   
-        }    
 
-        if ($request->hasFile('news_image')){
-         $file = $request->file('news_image');
-           $extension = $file->getClientOriginalExtension();
-           $news_image = time().'.'.$extension;
-           $path = public_path().'/sport_newsImage';
-           $uplaod = $file->move($path,$news_image);       
-        }    
+        $thumbnail = '';
+
+        $news_image = '';
+
+        if ($mediaFile = $request->file('thumbnail')) {
+            $thumbnail = globallyStoreMedia($mediaFile,"/sport_thumbnails",true);
+        }
+
+        if ($mediaFile = $request->file('news_image')) {
+            $news_image = globallyStoreMedia($mediaFile,"/sport_news_images",true);
+        }
+
 
         $newSports = Sport::create([
             'headline' => $request->headline,
             'title' => $request->title,
             'category' => $request->category,
             'detail_report' => $request->detail_report,
-            'thumbnail' => $thumbnialName,
+            'thumbnail' => $thumbnail,
             'news_image' => $news_image,
             'reported_datetime' => $request->reported_datetime,
             'reference' => $request->reference,
             'status' => 'Inactive',
             'done_by' => Auth::user()->id
         ]);
+
         return $this->responseOut($newSports);
     }
 
@@ -118,28 +117,19 @@ class SportController extends Controller
     {
         //
         $sports = Sport::where(['id'=>$request->sport_id,'done_by'=>Auth::user()->id])->first();
-        if (!empty($sports)) {
-            $validator = Validator::make($request->all(), $this->rules);
-            if ($validator->fails()) {
-                return ['status' => "false",'msg' => $validator->messages()];
-            }
-            if ($request->hasFile('thumbnail')){
-                $file = $request->file('thumbnail');
-                $extension = $file->getClientOriginalExtension();
-                $thumbnialName = time().'.'.$extension;
-                $path = public_path().'/sport_thumbnail';
-                $uplaod = $file->move($path,$thumbnialName);
-                $sports->update(['thumbnail' => $thumbnialName]);  
 
-            }  
-            if ($request->hasFile('news_image')){
-                $file = $request->file('news_image');
-                  $extension = $file->getClientOriginalExtension();
-                  $news_image = time().'.'.$extension;
-                  $path = public_path().'/sport_newsImage';
-                  $uplaod = $file->move($path,$news_image);  
-                  $sports->update(['news_image' => $news_image]);      
-               }
+        if (!empty($sports)) {
+
+            $validator = Validator::make($request->all(), $this->rules);
+
+            if ($mediaFile = $request->file('thumbnail')) {
+                globallyUpdateMedia($sports,$mediaFile,'/sport_thumbnails','thumbnail',true);
+            }
+
+            if ($mediaFile = $request->file('news_image')) {
+                globallyUpdateMedia($sports,$mediaFile,'/sport_news_images','news_image',true);
+            }
+
             $sports->update([
                 'headline' => $request->headline,
                 'title' => $request->title,
@@ -148,9 +138,13 @@ class SportController extends Controller
                 'reported_datetime' => $request->reported_datetime,
                 'reference' => $request->reference,
             ]);
+
             return $this->responseOut($sports);
+
         } else {
+
             return $this->responseOut($sports);
+
         }
     }
 

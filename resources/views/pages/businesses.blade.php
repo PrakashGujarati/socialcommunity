@@ -55,14 +55,14 @@
                             <td>{{$business->contact}}</td>
                             <td>
                                 @if($business->logo)
-                                    <img class="border rounded" src="{{asset('business_logo/'.$business->logo)}}" height="60">
+                                    <img class="border rounded" src="{{url(json_decode($business->logo)[0])}}" height="60">
                                 @else
                                     <img class="border rounded" src="https://donatepoints.aircanada.com/img/no_image_available.jpg" height="60">
                                 @endif
                             </td>
                             <td>
                                 @if($business->visitingcard)
-                                    <img class="border rounded" src="{{asset('visiting_card/'.$business->visitingcard)}}" height="60">
+                                    <img class="border rounded" src="{{url(json_decode($business->visitingcard)[0])}}" height="60">
                                 @else
                                     <img class="border rounded" src="https://donatepoints.aircanada.com/img/no_image_available.jpg" height="60">
                                 @endif
@@ -84,7 +84,7 @@
                                             <i class="fas fa-trash-alt text-danger"></i>
                                         </button>
                                     </form>
-                                    <form action="{{route('changeStatus','business')}}" method="post">
+                                    <form action="{{route('changeStatus','Business')}}" method="post">
                                         @csrf
                                         <input type="hidden" name="id" value="{{$business->id}}">
                                         @if($business->status == "Active")

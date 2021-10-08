@@ -102,7 +102,7 @@
                                             <i class="far fa-trash-alt text-danger"></i>
                                         </button>
                                     </form>
-                                    <form action="{{route('changeStatus','gallery')}}" method="post">
+                                    <form action="{{route('changeStatus','Gallery')}}" method="post">
                                         @csrf
                                         <input type="hidden" name="id" value="{{$gallery->id}}">
                                         @if($gallery->status == "Active")

@@ -19,7 +19,7 @@
                 <form action="{{route('doner.store')}}" method="POST" class="shadow rounded p-5">
                     @csrf
                     <div class="form-row">
-                        <div class="form-group col-md-8">
+                        <div class="form-group col-md-12">
                             <label class="form-label">Title</label>
                             <input name="title" type="text" class="form-control" placeholder="Title">
                             <small class="text-danger">
@@ -50,8 +50,6 @@
                                 @enderror
                             </small>
                         </div>
-                    </div>
-                    <div class="form-row">
                         <div class="form-group col-md-6">
                             <label class="form-label">Status</label>
                             <select class="form-select form-control" name="status" aria-label="Default select example">

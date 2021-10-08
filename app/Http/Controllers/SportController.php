@@ -8,6 +8,12 @@ use Illuminate\Support\Facades\Storage;
 
 class SportController extends Controller
 {
+    public $rules = [
+        'headline' => 'required',
+        'title' => 'required',
+        'thumbnail.*' => 'mimes:jpeg,jpg,png',
+        'news_image.*' => 'mimes:jpeg,jpg,png'
+    ];
     /**
      * Display a listing of the resource.
      *
@@ -36,22 +42,19 @@ class SportController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate($this->rules);
+
+        $thumbnail = '';
+
         $news_image = '';
-        $data=[];
-        if($request->hasfile('thumbnail'))
-        {
-             foreach($request->file('thumbnail') as $image)
-             {
-                 $name=$image->getClientOriginalName();
-                 $image->move(public_path().'/image/',$name);
-                $data[]=$name;  
-             }
-         }
-         if ($request->file('news_image')) {
-            $news_image = time().$request->file('news_image')->getClientOriginalName();
-            $request->file('news_image')->storeAs('news_images', $news_image, 'public');
+
+        if ($mediaFile = $request->file('thumbnail')) {
+            $thumbnail = globallyStoreMedia($mediaFile,"/sport_thumbnails",true);
         }
-        $thumbnail=implode(",", $data);
+
+        if ($mediaFile = $request->file('news_image')) {
+            $news_image = globallyStoreMedia($mediaFile,"/sport_news_images",true);
+        }
 
         sport::create([
             'headline' => $request->headline,
@@ -65,6 +68,7 @@ class SportController extends Controller
             'status' => $request->status,
             'done_by' => 1
         ]);
+
         return redirect()->route('sport.index');
 
     }
@@ -88,7 +92,7 @@ class SportController extends Controller
      */
     public function edit($id)
     {
-        $sport=Sport::where('id',$id)->first();
+        $sport = Sport::where('id',$id)->first();
         return view('forms.edit_sport',compact('sport'));
     }
 
@@ -101,49 +105,26 @@ class SportController extends Controller
      */
     public function update(Request $request,Sport $sport)
     {
-        $imageUpdate=null;
-        if ($files=$request->file('thumbnail')) {
-            foreach($files as $file){
-             Storage::delete('public/thumbnails/'.$sport->thumbnail);
-             $thumbnailName = time().$file->getClientOriginalName();
-             $file->storeAs('thumbnails', $thumbnailName, 'public');
-            //$news->update(['thumbnail' => $thumbnailName]);
-            $imageUpdate.=$thumbnailName.",";
-            }
+        $request->validate($this->rules);
+
+        if ($mediaFile = $request->file('thumbnail')) {
+            globallyUpdateMedia($sport,$mediaFile,'/sport_thumbnails','thumbnail',true);
         }
-        if ($request->file('news_image')) {
-            Storage::delete('public/news_images/'.$sport->news_image);
-            $news_image = time().$request->file('news_image')->getClientOriginalName();
-            $request->file('news_image')->storeAs('news_images', $news_image, 'public');
-            $sport->update(['news_image' => $news_image]);
+
+        if ($mediaFile = $request->file('news_image')) {
+            globallyUpdateMedia($sport,$mediaFile,'/sport_news_images','news_image',true);
         }
-        if($imageUpdate != null)
-        {
-            
-            $sport->update([
-                'headline' => $request->headline,
-                'title' => $request->title,
-                'category' => $request->category,
-                'detail_report' => $request->detail_report,
-                'reported_datetime' => $request->reported_datetime,
-                'reference' => $request->reference,
-                'status' => $request->status,
-                'thumbnail'=>$imageUpdate
-            ]);
-        }
-        else
-        {
-            $sport->update([
-                'headline' => $request->headline,
-                'title' => $request->title,
-                'category' => $request->category,
-                'detail_report' => $request->detail_report,
-                'reported_datetime' => $request->reported_datetime,
-                'reference' => $request->reference,
-                'status' => $request->status
-            ]);
-        }
-            
+
+        $sport->update([
+            'headline' => $request->headline,
+            'title' => $request->title,
+            'category' => $request->category,
+            'detail_report' => $request->detail_report,
+            'reported_datetime' => $request->reported_datetime,
+            'reference' => $request->reference,
+            'status' => $request->status
+        ]);
+
         return redirect()->route('sport.index');
     }
 
@@ -155,6 +136,8 @@ class SportController extends Controller
      */
     public function destroy(Sport $sport)
     {
+        globallyDeleteMedia($sport,'/sport_thumbnails','thumbnail',true);
+        globallyDeleteMedia($sport,'/sport_news_images','news_image',true);
         $sport->delete();
         return redirect()->route('sport.index');
     }

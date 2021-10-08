@@ -21,6 +21,7 @@ class CreateEducationsTable extends Migration
             $table->string('note')->nullable();
             $table->string('gender')->nullable();
             $table->string('status')->nullable();
+            $table->string('done_by')->nullable();
             $table->timestamps();
         });
     }
