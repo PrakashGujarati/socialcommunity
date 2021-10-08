@@ -92,7 +92,7 @@ class EventController extends Controller
      */
     public function edit($id)
     {
-        $event=Event::where('id',$id)->first();
+        $event = Event::where('id',$id)->first();
         return view('forms.edit_event',compact('event'));
     }
 
