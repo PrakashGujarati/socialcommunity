@@ -25,7 +25,7 @@
             "columns": [
                 {"width": "80%"},
                 {"width": "20%"}
-            ]  
+            ]
         });
         </script>
 @endsection
@@ -41,6 +41,7 @@
                     <i class="bi bi-plus-lg"></i> Create Event
                 </a>
             </div>
+            @include('modals.events_modal')
             <div class="block-content block-content-full">
                 <table class="table table-responsive table-bordered table-striped table-vcenter js-dataTable-full">
                     <thead>
@@ -67,14 +68,14 @@
                             <td>{{$event->detail_report}}</td>
                             <td>
                                 @if($event->thumbnail)
-                                    <img class="border rounded" src="{{asset('image/'.$event->thumbnail)}}" height="60">
+                                    <img class="border rounded" src="{{url(json_decode($event->thumbnail)[0])}}" height="60">
                                 @else
                                     <img class="border rounded" src="https://donatepoints.aircanada.com/img/no_image_available.jpg" height="60">
                                 @endif
                             </td>
                             <td>
                                 @if($event->news_image)
-                                    <img class="border rounded" src="{{asset('news_images/'.$event->news_image)}}" height="60">
+                                    <img class="border rounded" src="{{url(json_decode($event->news_image)[0])}}" height="60">
                                 @else
                                     <img class="border rounded" src="https://donatepoints.aircanada.com/img/no_image_available.jpg" height="60">
                                 @endif
@@ -84,19 +85,35 @@
                             <td>{{$event->status}}</td>
                             <td>{{$event->done_by}}</td>
                             <td>
-                            <div class="d-flex">
-                            <a href="{{route('event.edit',$event)}}" class="btn btn-primary mx-2">
-                                        <i class="bi bi-pencil"></i>
-                            </a>
-                            <form action="{{route('event.destroy',$event)}}" method="post">
+                                <div class="d-flex">
+                                    <button type="button" class="btn btn-default mx-1" data-toggle="modal" data-target="#Modal-{{$event->id}}">
+                                        <i class="bi bi-aspect-ratio"></i>
+                                    </button>
+                                    <a href="{{route('event.edit',$event)}}" class="btn btn-default mx-1">
+                                        <i class="bi bi-pencil text-info"></i>
+                                    </a>
+                                    <form action="{{route('event.destroy',$event)}}" method="post">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-danger mx-2">
-                                            <i class="bi bi-archive-fill"></i>
+                                        <button type="submit" class="btn btn-default mx-1">
+                                            <i class="fas fa-trash-alt text-danger"></i>
                                         </button>
                                     </form>
-                            </td>  
-                            <div>     
+                                    <form action="{{route('changeStatus','Event')}}" method="post">
+                                        @csrf
+                                        <input type="hidden" name="id" value="{{$event->id}}">
+                                        @if($event->status == "Active")
+                                        <button type="submit" class="btn btn-default mx-2" data-toggle="tooltip" title="click to Deactive">
+                                            <i class="fas fa-eye-slash text-danger"></i>
+                                        </button>
+                                        @else
+                                        <button type="submit" class="btn btn-default mx-2" data-toggle="tooltip" title="click to Active">
+                                            <i class="fas fa-eye text-success"></i>
+                                        </button>
+                                        @endif
+                                    </form>
+                                </div>
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>

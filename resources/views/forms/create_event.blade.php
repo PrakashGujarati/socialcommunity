@@ -41,28 +41,18 @@
                         <div class="form-group col-md-6">
                             <label class="form-label">Category</label>
                             <input name="category" type="text" class="form-control" placeholder="Category">
-                            <small class="text-danger">
-                                @error('category')
-                                    <span class="text-red-500 text-xs"><i class="fa fa-bug"></i> {{ $message }}</span>
-                                @enderror
-                            </small>
                         </div>
                         <div class="form-group col-md-6">
                             <label class="form-label">Detail_report</label>
                             <input name="detail_report" type="text" class="form-control" placeholder="Detail_report">
-                            <small class="text-danger">
-                                @error('detail_report')
-                                    <span class="text-red-500 text-xs"><i class="fa fa-bug"></i> {{ $message }}</span>
-                                @enderror
-                            </small>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label class="form-label">Thumbnail</label>
                             <div class="custom-file">
-                                <input type="file" name="thumbnail[]" multiple class="custom-file-input" id="logoInput">
-                                <label class="custom-file-label" for="logoInput">Choose Logo</label>
+                                <input type="file" name="thumbnail[]" multiple class="custom-file-input" id="logoInput" accept="image/*" multiple>
+                                <label class="custom-file-label" for="logoInput">Choose image</label>
                             </div>
                             <small class="text-danger">
                                 @error('thumbnail')
@@ -73,8 +63,8 @@
                         <div class="form-group col-md-6">
                             <label class="form-label">News_image</label>
                             <div class="custom-file">
-                                <input type="file" name="news_image" class="custom-file-input" id="cardInput">
-                                <label class="custom-file-label" for="cardInput">Choose Newsimage</label>
+                                <input type="file" name="news_image[]" class="custom-file-input" id="cardInput" accept="image/*" multiple>
+                                <label class="custom-file-label" for="cardInput">Choose image</label>
                             </div>
                             <small class="text-danger">
                                 @error('news_image')
@@ -87,20 +77,10 @@
                         <div class="form-group col-md-6">
                             <label class="form-label">reported_datetime</label>
                             <input name="reported_datetime" type="datetime-local" class="form-control" placeholder="reported_datetime">
-                            <small class="text-danger">
-                                @error('reported_datetime')
-                                    <span class="text-red-500 text-xs"><i class="fa fa-bug"></i> {{ $message }}</span>
-                                @enderror
-                            </small>
                         </div>
                         <div class="form-group col-md-6">
                             <label class="form-label">Reference</label>
                             <input name="reference" type="text" class="form-control" placeholder="Reference">
-                            <small class="text-danger">
-                                @error('Reference')
-                                    <span class="text-red-500 text-xs"><i class="fa fa-bug"></i> {{ $message }}</span>
-                                @enderror
-                            </small>
                         </div>
                     </div>
                     <div class="form-row">

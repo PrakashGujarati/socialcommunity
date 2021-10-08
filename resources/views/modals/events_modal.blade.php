@@ -1,10 +1,10 @@
-@foreach ($newses as $news)
-    <div class="modal fade" id="Modal-{{$news->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+@foreach ($events as $event)
+    <div class="modal fade" id="Modal-{{$event->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">
-                        {{$news->title}}
+                        {{$event->title}}
                     </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -15,19 +15,19 @@
                         <div class="row my-12">
                             <div class="col-md-6">
                                 <label class="form-label">Headline :
-                                    <span class="font-weight-normal">{{$news->headline}}</span>
+                                    <span class="font-weight-normal">{{$event->headline}}</span>
                                 </label>
                             </div>
                         </div>
                         <div class="row my-12">
                             <div class="col-md-8">
                                 <label class="form-label">Title :
-                                    <span class="font-weight-normal">{{$news->title}}</span>
+                                    <span class="font-weight-normal">{{$event->title}}</span>
                                 </label>
                             </div>
                             <div class="col-md-12">
                                 <label class="form-label">Category :
-                                    <span class="font-weight-normal">{{$news->category}}</span>
+                                    <span class="font-weight-normal">{{$event->category}}</span>
                                 </label>
                             </div>
                         </div>
@@ -35,7 +35,7 @@
                         <div class="row my-3">
                             <div class="col-md-12">
                                 <label class="form-label">Detail Report : <br>
-                                    <span class="font-weight-normal">{{$news->detail_report}}</span>
+                                    <span class="font-weight-normal">{{$event->detail_report}}</span>
                                 </label>
                             </div>
                         </div>
@@ -43,12 +43,12 @@
                         <div class="row my-3">
                             <div class="col-md-6">
                                 <label class="form-label">Reported datetime :
-                                    <span class="font-weight-normal">{{$news->reported_datetime}}</span>
+                                    <span class="font-weight-normal">{{$event->reported_datetime}}</span>
                                 </label>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label">Reference :
-                                    <span class="font-weight-normal">{{$news->reference}}</span>
+                                    <span class="font-weight-normal">{{$event->reference}}</span>
                                 </label>
                             </div>
                         </div>
@@ -56,7 +56,7 @@
                         <div class="row my-3">
                             <div class="col-md-6">
                                 <label class="form-label">Status :
-                                    <span class="font-weight-normal">{{$news->status}}</span>
+                                    <span class="font-weight-normal">{{$event->status}}</span>
                                 </label>
                             </div>
                         </div>
@@ -64,8 +64,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <a href="{{route('news.edit',$news)}}">
-                        <button type="button" class="btn btn-primary">Edit News</button>
+                    <a href="{{route('event.edit',$event)}}">
+                        <button type="button" class="btn btn-primary">Edit Event</button>
                     </a>
                 </div>
             </div>

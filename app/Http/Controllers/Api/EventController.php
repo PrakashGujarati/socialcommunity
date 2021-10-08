@@ -50,32 +50,29 @@ class EventController extends Controller
     {
         //
         $validator = Validator::make($request->all(), $this->rules);
+
         if ($validator->fails()) {
             return ['status' => "false",'msg' => $validator->messages()];
         }
-       
-        if ($request->hasFile('thumbnail')){
-            $file = $request->file('thumbnail');
-            $extension = $file->getClientOriginalExtension();
-            $thumbnialName = time().'.'.$extension;
-            $path = public_path().'/event_thumbnail';
-            $uplaod = $file->move($path,$thumbnialName);   
-        }    
 
-        if ($request->hasFile('news_image')){
-         $file = $request->file('news_image');
-           $extension = $file->getClientOriginalExtension();
-           $news_image = time().'.'.$extension;
-           $path = public_path().'/event_newsImage';
-           $uplaod = $file->move($path,$news_image);       
-        }    
+        $thumbnail = '';
+
+        $news_image = '';
+
+        if ($mediaFile = $request->file('thumbnail')) {
+            $thumbnail = globallyStoreMedia($mediaFile,"/event_thumbnails",true);
+        }
+
+        if ($mediaFile = $request->file('news_image')) {
+            $news_image = globallyStoreMedia($mediaFile,"/event_news_images",true);
+        }
 
         $newEvents = Event::create([
             'headline' => $request->headline,
             'title' => $request->title,
             'category' => $request->category,
             'detail_report' => $request->detail_report,
-            'thumbnail' => $thumbnialName,
+            'thumbnail' => $thumbnail,
             'news_image' => $news_image,
             'reported_datetime' => $request->reported_datetime,
             'reference' => $request->reference,
@@ -120,29 +117,24 @@ class EventController extends Controller
     public function update(Request $request)
     {
         //
-        $events = Event::where(['id'=>$request->event_id,'done_by'=>Auth::user()->id])->first();
+        $event = Event::where(['id'=>$request->event_id,'done_by'=>Auth::user()->id])->first();
+
         if (!empty($events)) {
+
             $validator = Validator::make($request->all(), $this->rules);
+
             if ($validator->fails()) {
                 return ['status' => "false",'msg' => $validator->messages()];
             }
-            if ($request->hasFile('thumbnail')){
-                $file = $request->file('thumbnail');
-                $extension = $file->getClientOriginalExtension();
-                $thumbnialName = time().'.'.$extension;
-                $path = public_path().'/event_thumbnail';
-                $uplaod = $file->move($path,$thumbnialName);
-                $events->update(['thumbnail' => $thumbnialName]);  
 
-            }  
-            if ($request->hasFile('news_image')){
-                $file = $request->file('news_image');
-                  $extension = $file->getClientOriginalExtension();
-                  $news_image = time().'.'.$extension;
-                  $path = public_path().'/event_newsImage';
-                  $uplaod = $file->move($path,$news_image);  
-                  $events->update(['news_image' => $news_image]);      
-               }
+            if ($mediaFile = $request->file('thumbnail')) {
+                globallyUpdateMedia($event,$mediaFile,'/event_thumbnails','thumbnail',true);
+            }
+
+            if ($mediaFile = $request->file('news_image')) {
+                globallyUpdateMedia($event,$mediaFile,'/event_news_images','news_image',true);
+            }
+
             $events->update([
                 'headline' => $request->headline,
                 'title' => $request->title,
@@ -151,9 +143,13 @@ class EventController extends Controller
                 'reported_datetime' => $request->reported_datetime,
                 'reference' => $request->reference,
             ]);
-            return $this->responseOut($events);
+
+            return $this->responseOut($event);
+
         } else {
-            return $this->responseOut($events);
+
+            return $this->responseOut($event);
+
         }
     }
 
