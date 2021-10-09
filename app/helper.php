@@ -10,14 +10,38 @@ function statusUpdate($model, $id)
     return redirect()->route(strtolower($model).'.index');
 }
 
-function appendDomainOnPath($data,$keyName,$multiple = false)
+function appendDomainOnPath($data,$keyName,$isObject = false,$hasMultipleFiles = false)
 {
-    if ($multiple) {
-        foreach ($data as $key => $value) {
-            $value->$keyName = url($value->$keyName);
+    if ($isObject) {
+        if ($hasMultipleFiles) {
+            foreach($data as $info){
+                if ($info->$keyName) {
+                    foreach (json_decode($info->$keyName) as $key => $values) {
+                        $temporaryVariable[] = url($values);
+                    }
+                    $info->$keyName = $temporaryVariable;
+                }
+            }
+        } else {
+            foreach ($data as $key => $value) {
+                if ($value->$keyName) {
+                    $value->$keyName = url($value->$keyName);
+                }
+            }
         }
     } else {
-        $data->$keyName = url($data->$keyName);
+        if ($hasMultipleFiles) {
+            if ($data->$keyName) {
+                foreach (json_decode($data->$keyName) as $key => $info) {
+                    $temporaryVariable[] = url($info);
+                }
+                $data->$keyName = $temporaryVariable;
+            }
+        } else {
+            if ($data->$keyName) {
+                $data->$keyName = url($data->$keyName);
+            }
+        }
     }
     return $data;
 }

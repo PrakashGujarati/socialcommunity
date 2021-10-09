@@ -61,6 +61,11 @@
                         <div class="form-group col-md-6">
                             <label class="form-label">Contact Number</label>
                             <input name="contact" type="tel" class="form-control" placeholder="Contact Number">
+                            <small class="text-danger">
+                                @error('contact')
+                                    <span class="text-red-500 text-xs"><i class="fa fa-bug"></i> {{ $message }}</span>
+                                @enderror
+                            </small>
                         </div>
                         <div class="form-group col-md-6">
                             <label class="form-label">Email</label><br>

@@ -26,6 +26,8 @@ class BusinessController extends Controller
     public function list()
     {
         $data = Business::where('status','=','Active')->get();
+        $data = appendDomainOnPath($data,'logo',true,true);
+        $data = appendDomainOnPath($data,'visitingcard',true,true);
         return $this->responseOut($data);
     }
 
@@ -94,6 +96,8 @@ class BusinessController extends Controller
     public function show(Request $request)
     {
         $data = Business::where(['id' => $request->business_id])->first();
+        $data = appendDomainOnPath($data,'logo',false,true);
+        $data = appendDomainOnPath($data,'visitingcard',false,true);
         return $this->responseOut($data);
     }
 
