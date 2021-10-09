@@ -25,6 +25,8 @@ class SportController extends Controller
     {
         //
         $data = Sport::where('status','=','Active')->get();
+        $data = appendDomainOnPath($data,'thumbnail',true,true);
+        $data = appendDomainOnPath($data,'news_image',true,true);
         return $this->responseOut($data);
     }
 
@@ -92,6 +94,8 @@ class SportController extends Controller
     {
         //
         $data = Sport::where(['id'=>$request->sport_id])->first();
+        $data = appendDomainOnPath($data,'thumbnail',false,true);
+        $data = appendDomainOnPath($data,'news_image',false,true);
         return $this->responseOut($data);
     }
 

@@ -22,9 +22,7 @@ class UserController extends Controller
     {
         return env('APP_URL');
         $data = User::where('status','=','Active')->get();
-        foreach ($data as $key => $value) {
-            $data->picture = env('APP_URL').$data->picture;
-        }
+        $data = appendDomainOnPath($data,'picture',true);
         return $this->responseOut($data);
     }
 
@@ -58,6 +56,7 @@ class UserController extends Controller
     public function show(Request $request)
     {
         $data = User::where('id', $request->user_id)->first();
+        $data = appendDomainOnPath($data,'picture');
         return $this->responseOut($data);
     }
 

@@ -25,6 +25,8 @@ class NewsController extends Controller
     public function list()
     {
         $data = News::where('status','=','Active')->get();
+        $data = appendDomainOnPath($data,'thumbnail',true,true);
+        $data = appendDomainOnPath($data,'news_image',true,true);
         return $this->responseOut($data);
     }
 
@@ -59,8 +61,8 @@ class NewsController extends Controller
             $thumbnailName = globallyStoreMedia($mediaFile,"/news_thumbnails");
         }
 
-        if($mediaFile = $request->file('news_image')){            
-            $imageName = globallyStoreMedia($file,"/news_images");          
+        if($mediaFile = $request->file('news_image')){
+            $imageName = globallyStoreMedia($mediaFile,"/news_images");
         }
 
         $newNews = News::create([
@@ -87,6 +89,8 @@ class NewsController extends Controller
     public function show(Request $request)
     {
         $data = News::where(['id'=>$request->news_id])->first();
+        $data = appendDomainOnPath($data,'thumbnail',false,true);
+        $data = appendDomainOnPath($data,'news_image',false,true);
         return $this->responseOut($data);
     }
 
@@ -124,7 +128,7 @@ class NewsController extends Controller
             if ($mediaFile = $request->file('thumbnail')) {
                 globallyUpdateMedia($news,$mediaFile,'/news_thumbnails','thumbnail');
             }
-    
+
             if ($mediaFile = $request->file('news_image')) {
                 globallyUpdateMedia($news,$mediaFile,'/news_images','news_image');
             }

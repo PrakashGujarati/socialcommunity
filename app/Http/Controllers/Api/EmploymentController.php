@@ -25,6 +25,8 @@ class EmploymentController extends Controller
     {
         //
         $data = Employment::where('status','=','Active')->get();
+        $data = appendDomainOnPath($data,'thumbnail',true,true);
+        $data = appendDomainOnPath($data,'news_image',true,true);
         return $this->responseOut($data);
     }
 
@@ -90,6 +92,8 @@ class EmploymentController extends Controller
     {
         //
         $data = Employment::where(['id'=>$request->employment_id])->first();
+        $data = appendDomainOnPath($data,'thumbnail',false,true);
+        $data = appendDomainOnPath($data,'news_image',false,true);
         return $this->responseOut($data);
     }
 
