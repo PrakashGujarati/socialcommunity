@@ -16,6 +16,7 @@ function appendDomainOnPath($data,$keyName,$isObject = false,$hasMultipleFiles =
         if ($hasMultipleFiles) {
             foreach($data as $info){
                 if ($info->$keyName) {
+                    $temporaryVariable = [];
                     foreach (json_decode($info->$keyName) as $key => $values) {
                         $temporaryVariable[] = url($values);
                     }
@@ -32,6 +33,7 @@ function appendDomainOnPath($data,$keyName,$isObject = false,$hasMultipleFiles =
     } else {
         if ($hasMultipleFiles) {
             if ($data->$keyName) {
+                $temporaryVariable = [];
                 foreach (json_decode($data->$keyName) as $key => $info) {
                     $temporaryVariable[] = url($info);
                 }
