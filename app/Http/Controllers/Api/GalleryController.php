@@ -23,8 +23,14 @@ class GalleryController extends Controller
     public function list(Request $request)
     {
         //
-        $data = Gallery::with('galleryImage')->where('status','=','Active')->where(['category' => $request->category])->get();   
-        // dd($data);             
+        $data = Gallery::with('galleryImage')->where('status','=','Active')->where(['category' => $request->category])->get();
+        foreach($data as $info){
+            $images = (json_decode($info)->gallery_image);
+            foreach($images as $image){
+                $image->path = url($image->path);
+            }
+            $info->gallery_images_withUrl = $images;
+        }
         return $this->responseOut($data);
     }
 
@@ -50,7 +56,7 @@ class GalleryController extends Controller
         $validator = Validator::make($request->all(), $this->rules);
         if ($validator->fails()) {
             return ['status' => "false",'msg' => $validator->messages()];
-        }        
+        }
 
         $newGallery = Gallery::create([
             'category' => $request->category,
@@ -59,7 +65,7 @@ class GalleryController extends Controller
             'description' => $request->description,
             'date' => $request->date,
             'status' => 'Inactive'
-            
+
         ]);
         // html_entity_decode($request->path);
         // dd(explode(",",$request->path));
@@ -91,8 +97,12 @@ class GalleryController extends Controller
     public function show(Request $request)
     {
         //
-        $data = Gallery::with('galleryImage')->where(['id' => $request->gallery_id])->get();
-        // dd($data);
+        $data = Gallery::with('galleryImage')->where(['id' => $request->gallery_id])->first();
+        $images = (json_decode($data)->gallery_image);
+        foreach($images as $image){
+            $image->path = url($image->path);
+        }
+        $data->gallery_images_withUrl = $images;
         return $this->responseOut($data);
     }
 
@@ -131,7 +141,7 @@ class GalleryController extends Controller
                 'event_title' => $request->event_title,
                 'location' => $request->location,
                 'description' => $request->description,
-                'date' => $request->date     
+                'date' => $request->date
             ]);
 
             if ($request->file('gallery_media')) {
