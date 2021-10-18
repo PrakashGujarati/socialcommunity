@@ -26,6 +26,7 @@ class EmployeeController extends Controller
     public function list()
     {
         $data = Employee::where('status','=','Active')->get();
+        $data = appendDomainOnPath($data,'logo',true);
         return $this->responseOut($data);
     }
 
@@ -74,7 +75,7 @@ class EmployeeController extends Controller
             'status' => 'Inactive',
             'done_by' => Auth::user()->id
         ]);
-        
+
         return $this->responseOut($newEmployee);
     }
 
@@ -87,6 +88,7 @@ class EmployeeController extends Controller
     public function show(Request $request)
     {
         $data = Employee::where(['id' => $request->employee_id])->first();
+        $data = appendDomainOnPath($data,'logo');
         return $this->responseOut($data);
     }
 
