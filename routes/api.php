@@ -19,6 +19,7 @@ use App\Http\Controllers\Api\BirthdayController;
 use App\Http\Controllers\Api\AnniversaryController;
 use App\Http\Controllers\Api\DonerController;
 use App\Http\Controllers\Api\EducationController;
+use App\Http\Controllers\Api\FamilyDetailsController;
 use App\Http\Controllers\Api\NotificationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -62,7 +63,12 @@ Route::group(['middleware'=>'auth:api'], function () {
     Route::post('/candidate_create', [CandidateController::class,'store']);
     Route::post('/candidate_update', [CandidateController::class,'update']);
     Route::post('/candidate_show_update', [CandidateController::class,'getListUpdate']);
-    Route::post('/candidate_list_update', [CandidateController::class,'getCandidateList']);    
+    Route::post('/candidate_list_update', [CandidateController::class,'getCandidateList']);
+    
+    Route::post('family_details_list',[FamilyDetailsController::class,'list']);
+    Route::post('family_details_view',[FamilyDetailsController::class,'show']);
+    Route::post('family_details_create',[FamilyDetailsController::class,'store']);
+    Route::post('family_details_update',[FamilyDetailsController::class,'update']);
 
     Route::post('/news_details', [NewsController::class,'show']);
     Route::post('/news_list', [NewsController::class,'list']);
